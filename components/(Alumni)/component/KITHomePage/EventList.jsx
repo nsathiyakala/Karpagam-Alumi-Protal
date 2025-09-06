@@ -34,12 +34,13 @@ const EventList = ({ isPagination, top, start, end }) => {
               <div className={`col-lg-4 col-md-6 col-12`} key={index}>
                 <div className="rbt-card variation-04 rbt-hover">
                   <div className="rbt-card-img">
-                    <Link href={`/course-details/${data.id}`}>
+                   
                       <Image
                         src={data.courseImg}
                         width={355}
                         height={244}
                         alt="Card image"
+                        className="rounded-3"
                       />
                       {/* {data.offPrice > 0 ? (
                         <div className="rbt-badge-3 bg-white">
@@ -49,7 +50,7 @@ const EventList = ({ isPagination, top, start, end }) => {
                       ) : (
                         ""
                       )} */}
-                    </Link>
+                   
                   </div>
                   <div className="rbt-card-body">
                     <ul className="rbt-meta">
@@ -71,17 +72,17 @@ const EventList = ({ isPagination, top, start, end }) => {
 
                     
 
-                    <div className="rbt-card-bottom">
+                    {/* <div className="rbt-card-bottom">
                       
 
                       <Link
                         className="rbt-btn-link color-primary"
-                        href={`/course-details/${data.id}`}
+                        href={`/login`}
                       >
-                        Enroll Course
+                        View Event
                         <i className="feather-arrow-right"></i>
                       </Link>
-                    </div>
+                    </div> */}
                   </div>
                 </div>
               </div>

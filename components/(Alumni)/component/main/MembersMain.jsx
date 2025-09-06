@@ -1,10 +1,36 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { TeamData } from "@/utils/constant.utils";
+import { useRouter } from "next/navigation";
+import axios from "axios";
+import { BaseURL } from "@/utils/BaseUrl";
 
 
 const MembersMain = () => {
+
+   const router = useRouter();
+  const [latestMembers, setLatestMembers] = useState([]);
+  useEffect(() => {
+    GetAllMembers();
+  }, []);
+
+  const GetAllMembers = () => {
+    axios
+      .get(`${BaseURL}/latest_members/`)
+      .then((response) => {
+        console.log("response:", response.data);
+        setLatestMembers(response.data.slice(0,8));
+      })
+      .catch((error) => {
+        console.log("error:", error);
+      });
+  };
+
+  console.log("latestMembers:", latestMembers);
+
+  const FinalLatestMembers = latestMembers?.slice(0, 8);
+  console.log("✌️FinalLatestMembers --->", FinalLatestMembers);
 
   return (
     <div className="rbt-video-area bg-color-white section-pad overflow-hidden">
@@ -19,23 +45,27 @@ const MembersMain = () => {
           </div>
         </div>
         <div className="row row--15 section-pad">
-          {TeamData &&
-            TeamData.map((data, index) => (
+          {latestMembers &&
+            latestMembers.map((item, index) => (
               <div
                 className="col-lg-3 col-md-6 col-sm-6 col-12 mt--30"
                 key={index}
               >
-                {data.details.map((item, innerIndex) => (
-                  <div className="team" key={innerIndex}>
+                {/* {latestMembers.map((item, innerIndex) => ( */}
+                  <div className="team" >
                     <Link
                     className="rbt-team-thumbnail w-100"
-                    href="#"
+                    href={`/login`}
                     data-bs-toggle="modal"
                     data-bs-target={`#exampleModal${index}`}
                   >
                     <div className="thumbnail">
-                      <Image
-                        src={item.img}
+                      <img
+                      
+                        src={item?.profile_picture &&
+                                !item.profile_picture.includes("undefined")
+                                  ? item.profile_picture
+                                  : "/images/dummy-profile-pic.png"}
                         width={415}
                         height={555}
                         priority
@@ -45,10 +75,10 @@ const MembersMain = () => {
                   </Link>
                     
                     <div className="content">
-                      <h4 className="title">{item.name}</h4>
-                      <p className="designation">{item.type}</p>
+                    <Link href={`/login`}>  <h4 className="title">{item.name ? item.name : item.email}</h4> </Link>
+                      <p className="designation">{item.course}</p>
                     </div>
-                    <ul className="social-icon">
+                    {/* <ul className="social-icon">
                       <li>
                         <Link href="#">
                           <i className="fab fa-facebook-f"></i>
@@ -64,9 +94,9 @@ const MembersMain = () => {
                           <i className="fab fa-twitter"></i>
                         </Link>
                       </li>
-                    </ul>
+                    </ul> */}
                   </div>
-                ))}
+                {/* ))} */}
               </div>
             ))}
         </div>

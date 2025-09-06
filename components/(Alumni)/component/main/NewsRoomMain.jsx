@@ -45,7 +45,7 @@ const NewsRoomMain = () => {
                   </h4>
                   <p className="rbt-card-text">{data.desc}</p>
 
-                  <div className="rbt-card-bottom">
+                  {/* <div className="rbt-card-bottom">
                     <Link
                       className="rbt-btn-link color-primary"
                       href={`/course-details/${data.id}`}
@@ -53,7 +53,7 @@ const NewsRoomMain = () => {
                       Enroll Course
                       <i className="feather-arrow-right"></i>
                     </Link>
-                  </div>
+                  </div> */}
                 </div>
               </div>
             </div>
