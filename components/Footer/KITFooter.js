@@ -90,8 +90,8 @@ const KITFooter = () => {
               />
 
               <SingleFooter
-                classOne="col-lg-2 col-md-6 col-sm-6 col-12 mt--30"
-                // title="Our Company"
+                classOne="col-lg-2 col-md-6 col-sm-6 col-12 mt--50"
+                // title=""
                 footerType={footer.quicklinks2}
               />
 
@@ -100,13 +100,13 @@ const KITFooter = () => {
                   <h5 className="ft-title">Get Contact</h5>
                   <ul className="ft-link">
                     <li>
-                      <span>Phone:</span>
+                      <span>Phone: </span>
                       {footer.phone ? (
                         <Link href={`tel:${footer.phone}`}>{footer.phone}</Link>
                       ) : null}
                     </li>
                     <li>
-                      <span>E-mail:</span>
+                      <span>E-mail: </span>
                       {footer.mail ? (
                         <Link href={`mailto:${footer.mail}`}>
                           {footer.mail}
@@ -114,7 +114,7 @@ const KITFooter = () => {
                       ) : null}
                     </li>
                     <li>
-                      <span>Location:</span> {footer.address}
+                      <span>Location:</span> <br/>{footer.address}
                     </li>
                   </ul>
                 </div>

@@ -20,10 +20,10 @@ const CopyRight = () => {
             <div className="col-xxl-6 col-xl-6 col-lg-6 col-md-12 col-12">
               <ul className="copyright-link rbt-link-hover justify-content-center justify-content-lg-end mt_sm--10 mt_md--10">
                 <li>
-                  <Link href="#">Terms of service</Link>
+                  <Link href="#">Terms of Service</Link>
                 </li>
                 <li>
-                  <Link href="#">Privacy policy</Link>
+                  <Link href="#">Privacy Policy</Link>
                 </li>
                 <li>
                   <Link href="#">Subscription</Link>
