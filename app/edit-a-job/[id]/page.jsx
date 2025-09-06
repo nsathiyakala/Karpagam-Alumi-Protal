@@ -1,5 +1,5 @@
 import BackToTop from "@/app/backToTop";
-import EditJob from "./(edit-a-job)";
+import EditJob from "../(id)";
 
 export const metadata = {
   title: "Histudy - Online Courses & Education NEXTJS14 Template",
