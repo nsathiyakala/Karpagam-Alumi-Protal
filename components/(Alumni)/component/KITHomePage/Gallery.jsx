@@ -20,7 +20,8 @@ const GalleryMain = () => {
     });
   }, []);
   return (
-    <div className="row g-3 parent-gallery-container KITgallery">
+    <div className="container">
+      <div className="row g-3 parent-gallery-container KITgallery">
       {GalleryData &&
         GalleryData.gallery.slice(1, 7).map((data, index) => (
           <div className="col-lg-2 col-md-4 col-sm-6 col-6" key={index}>
@@ -53,6 +54,8 @@ const GalleryMain = () => {
           </div>
         ))}
     </div>
+    </div>
+    
   );
 };
 
