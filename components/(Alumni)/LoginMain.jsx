@@ -191,15 +191,10 @@ const LoginMain = () => {
             </div>
 
             <div className="row mb--30">
-              <div className="col-lg-6">
-                <div className="rbt-checkbox">
-                  <input type="checkbox" id="rememberme" name="rememberme" />
-                  <label htmlFor="rememberme">Remember me</label>
-                </div>
-              </div>
+             
               <div className="col-lg-6">
                 <div className="rbt-lost-password text-end">
-                  <Link className="rbt-btn-link" href="#">
+                  <Link className="rbt-btn-link" href="/change-password">
                     Lost your password?
                   </Link>
                 </div>

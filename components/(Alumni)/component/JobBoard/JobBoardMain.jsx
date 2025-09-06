@@ -602,7 +602,7 @@ const JobBoardMain = () => {
     <div className="rbt-dashboard-area section-pad">
       <div className="container-fluid">
         <div className="row justify-content-center">
-          <div className="col-11 col-xl-10">
+          <div className="col-11 col-xl-10 con-wid">
             <div className="container-fluid">
               <div className="row">
                 <div className="col-lg-12">
@@ -748,23 +748,7 @@ const JobBoardMain = () => {
                                     </a>
                                   </li>
 
-                                  <li className="nav-item" role="presentation">
-                                    <a
-                                      className={`w-100 ${
-                                        pathname === "#" ? "active" : ""
-                                      }`}
-                                      href="#"
-                                    >
-                                      <FormField
-                                        type="select"
-                                        onChange={(e) => handleFilterChange(e)}
-                                        name="post_type"
-                                        placeholder={"Post Type"}
-                                        value={formData.post_type}
-                                        options={JobOption}
-                                      />
-                                    </a>
-                                  </li>
+                                 
                                 </ul>
                               </nav>
 
@@ -857,7 +841,7 @@ const JobBoardMain = () => {
                             </Link>
                           </div> */}
 
-                          <div className="rbt-callto-action rbt-cta-default style-2 mb-5">
+                          <div className="rbt-callto-action rbt-cta-default style-2 mb-2">
                             <div className="content-wrapper overflow-hidden pt--30 pb--30 bg-color-primary-opacity">
                               <div className="row gy-5 align-items-end">
                                 <div className="col-lg-8">
