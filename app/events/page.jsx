@@ -1,8 +1,8 @@
-import Events from "./(events)";
+import Events from './(events)';
 
 export const metadata = {
-  title: "Histudy - Online Courses & Education NEXTJS14 Template",
-  description: "Online Courses & Education NEXTJS14 Template",
+  title: 'Karpagam Institute Of Technology - Events',
+  description: 'Online Courses & Education NEXTJS14 Template',
 };
 
 const EventsPage = async () => {

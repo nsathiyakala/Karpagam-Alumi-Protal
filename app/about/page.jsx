@@ -1,8 +1,8 @@
-import About from "./(about)";
+import About from './(about)';
 
 export const metadata = {
-  title: "Histudy - Online Courses & Education NEXTJS14 Template",
-  description: "Online Courses & Education NEXTJS14 Template",
+  title: ' Karpagam Institute Of Technology - About',
+  description: 'Online Courses & Education NEXTJS14 Template',
 };
 
 const AboutPage = async () => {

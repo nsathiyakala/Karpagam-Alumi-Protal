@@ -1,9 +1,8 @@
-import Contact from "./(contact)";
-
+import Contact from './(contact)';
 
 export const metadata = {
-  title: "Contact - Online Courses & Education NEXTJS14 Template",
-  description: "Online Courses & Education NEXTJS14 Template",
+  title: 'Karpagam Institute Of Technology - Contact',
+  description: 'Online Courses & Education NEXTJS14 Template',
 };
 
 const ContactPage = () => {
