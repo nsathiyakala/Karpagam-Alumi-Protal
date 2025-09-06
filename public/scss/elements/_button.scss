@@ -34,7 +34,7 @@ fieldset:disabled {
     position: relative;
     z-index: 1;
     transition: all .4s ease-in-out;
-    border-radius: 6px;
+    border-radius: 6px !important;
     border: 0 none;
     outline: none;
     text-decoration: none;

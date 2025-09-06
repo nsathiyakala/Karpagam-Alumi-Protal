@@ -550,10 +550,10 @@ const BusinessDirectoryMain = () => {
                         </div>
                       </div>
 
-                      <div className="rbt-dashboard-content p-0 mt-5">
+                      <div className="rbt-dashboard-content p-0 mt-5 mb-2">
                         <div className="content">
                           <div className="section-title">
-                            <h4 className="rbt-title-style-3">
+                            <h4 className="rbt-title-style-3 mb-2" >
                               Business Directory List
                             </h4>
                           </div>
