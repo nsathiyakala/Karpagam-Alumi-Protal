@@ -7,7 +7,7 @@ import Link from "next/link";
 const NewsRoomMain = () => {
   let getAllCourse = EventDetails;
   return (
-    <div className="rbt-rbt-card-area  bg-color-white ">
+    <div className="rbt-rbt-card-area bg-color-white ">
       <div className="container">
     
 
@@ -27,7 +27,7 @@ const NewsRoomMain = () => {
                     
                   </Link>
                 </div>
-                <div className="rbt-card-body">
+                <div className="rbt-card-body" style={{ paddingTop: "0px" }}>
                   <ul className="rbt-meta">
                     <li>
                       <i className="feather-book"></i>
