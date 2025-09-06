@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState, useRef } from "react";
 import { DeleteOutlined, FilePdfOutlined } from "@ant-design/icons";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { Select } from "antd";
 import Link from "next/link";
 import { BaseURL } from "@/utils/BaseUrl";
@@ -12,13 +12,15 @@ import {
   validateForm,
 } from "@/utils/commonFunction.utils";
 import FormField from "@/commonComponents/FormFields";
-import { jobTypeOption, YearOfExperience } from "@/utils/constant.utils";
+import { getFileFormatFromUrl, jobTypeOption, YearOfExperience } from "@/utils/constant.utils";
 import axios from "axios";
 import Models from "@/imports/models.import";
 
 const EditJobForm = () => {
-  const router = useRouter();
+const router = useRouter();
   const { Option } = Select;
+
+  const {id} = useParams()
 
   const [formData, setFormData] = useState({
     job_title: "",
@@ -36,8 +38,6 @@ const EditJobForm = () => {
     job_description: "",
     post_type: "",
   });
-
-  const { id } = useSearchParams();
 
   const [errMsg, setErrMsg] = useState({});
   const [industry, setIndustry] = useState([]);
@@ -72,8 +72,6 @@ const EditJobForm = () => {
     currenLocationPage: 1,
     hasLocationLoadMore: null,
   });
-
-  console.log("params id", id);
 
   useEffect(() => {
     const Token = localStorage.getItem("token");
@@ -136,10 +134,9 @@ const EditJobForm = () => {
         file: data?.file, // Set the converted file
         job_description: data.job_description || "",
         // skills: data.skills || [],
-        skills: data.skills.map((item) => ({
-          value: item.id,
-          label: item.skill,
-        })),
+        skills: data.skills.map((item) => (
+  { value: item.id, label: item.skill }
+)),
       });
 
       if (data.file) {
@@ -326,11 +323,11 @@ const EditJobForm = () => {
         formDataToSend.append("industry", formData.industry.value);
       } else if (key === "role") {
         formDataToSend.append("role", formData.role.value);
-      }
+      } 
       // else if (key === "location") {
       //   formDataToSend.append("location", formData.location.value);
       // }
-      else {
+       else {
         formDataToSend.append(key, formData[key]);
       }
     }
@@ -479,8 +476,6 @@ const EditJobForm = () => {
       console.log("error: ", error);
     }
   };
-
-  console.log("preview", preview);
   return (
     <div className={`rbt-contact-address `}>
       <div className="container section-pad">
