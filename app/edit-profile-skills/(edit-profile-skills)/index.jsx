@@ -41,7 +41,7 @@ const MyProfileSkills = () => {
         <MobileMenu />
         <KITHeader headerSticky="rbt-sticky" headerType="" />
 
-        <BreadCrumb title="Members" text="Members" />
+        <BreadCrumb title="Skills" text="Skills" />
 
         <MyProfileSkillsMain/>
 

@@ -276,7 +276,7 @@ const EventsLoginMain = () => {
     <div className="rbt-dashboard-area section-pad">
       <div className="container-fluid">
         <div className="row justify-content-center">
-          <div className="col-11 col-xxl-10">
+          <div className="col-11 col-xxl-10 con-wid">
             <div className="container-fluid">
               <div className="row">
                 <div className="col-lg-12">

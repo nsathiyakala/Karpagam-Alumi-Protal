@@ -40,7 +40,7 @@ const MyProfileEducation = () => {
         <MobileMenu />
         <KITHeader headerSticky="rbt-sticky" headerType="" />
 
-        <BreadCrumb title="Members" text="Members" />
+        <BreadCrumb title="Education" text="Members" />
 
         <MyProfileEducationMain/>
 

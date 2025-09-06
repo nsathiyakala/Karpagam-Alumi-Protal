@@ -41,7 +41,7 @@ const MyProfileExperience = () => {
         <MobileMenu />
         <KITHeader headerSticky="rbt-sticky" headerType="" />
 
-        <BreadCrumb title="Members" text="Members" />
+        <BreadCrumb title="Experience" text="Experience" />
 
         <MyProfileExperienceMain/>
 

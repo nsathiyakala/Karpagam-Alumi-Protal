@@ -39,7 +39,7 @@ const MyProfilePicture = () => {
         <MobileMenu />
         <KITHeader headerSticky="rbt-sticky" headerType="" />
 
-        <BreadCrumb title="Members" text="Members" />
+        <BreadCrumb title="Profile Picture" text="Profile Picture" />
 
         <MyProfilePictureMain/>
 
