@@ -24,7 +24,7 @@ const EventsMain = () => {
             <div className={`col-lg-4 col-md-6 col-12`} key={index}>
               <div className="rbt-card variation-04 rbt-hover">
                 <div className="rbt-card-img">
-                  <Link href={`/course-details/${data.id}`}>
+                  <Link href={`/login`}>
                     <Image
                       src={data.courseImg}
                       width={355}
@@ -64,7 +64,7 @@ const EventsMain = () => {
                       className="rbt-btn-link color-primary"
                       href={`/course-details/${data.id}`}
                     >
-                      Enroll Course
+                     View Events
                       <i className="feather-arrow-right"></i>
                     </Link>
                   </div>

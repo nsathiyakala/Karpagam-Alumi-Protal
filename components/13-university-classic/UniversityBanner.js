@@ -50,7 +50,7 @@ const UniversityBanner = () => {
                         <div className="button-group mt--30">
                           <Link
                             className="rbt-btn btn-gradient rbt-marquee-btn"
-                            href="#"
+                            href="/about"
                           >
                             <span data-text="More About University">
                               More About University
@@ -116,7 +116,7 @@ const UniversityBanner = () => {
                         <div className="button-group mt--30">
                           <Link
                             className="rbt-btn btn-gradient rbt-marquee-btn radius-round"
-                            href="#"
+                            href="/about"
                           >
                             <span data-text="More About University">
                               More About University
@@ -180,7 +180,7 @@ const UniversityBanner = () => {
                         <div className="button-group mt--30">
                           <Link
                             className="rbt-btn btn-gradient rbt-marquee-btn radius-round"
-                            href="#"
+                            href="/about"
                           >
                             <span data-text="More About University">
                               More About University

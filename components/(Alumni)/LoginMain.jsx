@@ -83,11 +83,17 @@ const LoginMain = () => {
 
       // router?.push("/");
 
+      // if (
+      //   res?.groups?.Alumni_Manager === true ||
+      //   res?.groups?.Administrator === true ||
+      //   res?.groups?.Student === true ||
+      //   res?.groups?.Alumni === true
+      // ) {
+      //   router?.push("/users");
       if (
         res?.groups?.Alumni_Manager === true ||
-        res?.groups?.Administrator === true ||
-        res?.groups?.Student === true ||
-        res?.groups?.Alumni === true
+        res?.groups?.Administrator === true
+        
       ) {
         router?.push("/users");
       } else if (res?.groups?.Alumni === true) {
@@ -113,7 +119,7 @@ const LoginMain = () => {
             modules.module4 === true &&
             modules.milestone === true
           ) {
-            router?.push("/edit-basic-profile");
+            router?.push("/home");
           }
         } else {
           console.error("Modules data is missing.");

@@ -1501,5 +1501,29 @@ select {
     font-size: 14px;
   }
 }
+.team .thumbnail img{
+  object-fit: cover;
+}
+@media (min-width: 768px) {
+  .team .thumbnail img{
+   min-height: 370px;
+  max-height: 370px;
 
+}
+ }
+
+
+
+@media (min-width: 768px) {
+  .rbt-team-modal-thumb .rbt-team-thumbnail .thumb img.large-img{
+  min-height: 370px;
+  max-height: 370px;
+}
+
+
+.rbt-team-modal-thumb .rbt-team-thumbnail .thumb img.sm-image{
+  min-height: 250px;
+  max-height: 250px;
+}
+}
 

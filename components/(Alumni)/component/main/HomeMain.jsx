@@ -64,7 +64,7 @@ const HomeMain = ({ blogs }) => {
                 <div className="call-to-btn  mt-0">
                   <Link
                     className="rbt-btn btn-gradient hover-icon-reverse radius-round"
-                    href="#"
+                    href="/about"
                   >
                     <span className="icon-reverse-wrapper">
                       <span className="btn-text"> More About University</span>
