@@ -599,15 +599,15 @@ const MembersLoginMain = () => {
   console.log("locationList after", state.locationList);
 
   return (
-    <div className="rbt-dashboard-area section-pad">
+    <div className="rbt-dashboard-area section-pad member-login">
       <div className="container-fluid">
         <div className="row justify-content-center">
-          <div className="col-11 col-xl-10">
+          <div className="col-11 col-xxl-10 con-wid">
             <div className="container-fluid">
               <div className="row">
                 <div className="col-lg-12">
                   <div className="row g-5">
-                    <div className="col-lg-3 d-sidebar">
+                    <div className="col-11 col-lg-3 d-sidebar">
                       <div className="rbt-default-sidebar sticky-top rbt-shadow-box rbt-gradient-border">
                         <div className="inner">
                           <div className="content-item-content">
@@ -906,14 +906,14 @@ const MembersLoginMain = () => {
                       </div>
                     </div>
 
-                    <div className="col-lg-9">
+                    <div className="col-11 col-lg-9">
                       <div className="rbt-video-area bg-color-white overflow-hidden">
                         <div className="container">
                           <div className="row row--15 gy-5">
                             {state.memberList &&
                               state.memberList.map((member, index) => (
                                 <div
-                                  className="col-lg-3 col-md-6 col-sm-6 col-12 "
+                                  className="col-xxl-3 col-lg-4 col-md-4 col-sm-6 col-12 "
                                   key={index}
                                 >
                                   {/* {data.details.map((item, innerIndex) => ( */}
@@ -956,8 +956,8 @@ const MembersLoginMain = () => {
                                       </Link>
                                     )}
 
-                                    <div className="content">
-                                      <h4 className="title mb-3">
+                                    <div className="content p-4">
+                                      <h4 className="title mb-3 font-18">
                                         {member?.name == null ||
                                         member?.name == " " ||
                                         member?.name == "" ? (

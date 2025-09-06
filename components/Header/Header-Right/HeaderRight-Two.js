@@ -68,7 +68,7 @@ const HeaderRightTwo = ({ btnClass, btnText, userType }) => {
 
       {!token &&
       <div className="rbt-btn-wrapper d-none d-xl-block">
-        <Link className={`rbt-btn ${btnClass}`} href="#">
+        <Link className={`rbt-btn ${btnClass}`} href="/signin">
           <span data-text={`${btnText}`}>{btnText}</span>
         </Link>
       </div>

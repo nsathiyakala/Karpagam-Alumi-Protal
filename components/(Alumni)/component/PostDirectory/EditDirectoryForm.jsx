@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState, useRef } from "react";
 import { DeleteOutlined, FilePdfOutlined } from "@ant-design/icons";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { Select } from "antd";
 import Link from "next/link";
 import { BaseURL } from "@/utils/BaseUrl";
@@ -20,7 +20,7 @@ import Models from "@/imports/models.import";
 const EditDirectoryForm = () => {
    const router = useRouter();
   const { Option } = Select;
-    const { id } = useSearchParams();
+    const { id } = useParams();
 
   const [formData, setFormData] = useState({
     business_name: "",
@@ -470,7 +470,8 @@ const EditDirectoryForm = () => {
                       {preview && (
                         <div
                           style={{
-                            marginLeft: "10px",
+                            marginTop:"5px",
+                            // marginLeft: "10px",
                             width: "100px",
                             height: "80px",
                             position: "relative",

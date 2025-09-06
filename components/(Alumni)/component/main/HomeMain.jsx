@@ -25,7 +25,7 @@ const HomeMain = ({ blogs }) => {
     <>
       {/* ----------banner start----------- */}
 
-      <div className="rbt-slider-main-wrapper position-relative ">
+      <div className="rbt-slider-main-wrapper position-relative home">
         <Banner />
       </div>
 

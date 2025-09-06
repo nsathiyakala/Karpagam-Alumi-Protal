@@ -76,10 +76,10 @@ const KITUser = () => {
                 {token ? (
                   <>
                    <li
-                 onClick={() => showDeleteConfirm()}
+                 
                 
                 >
-                  <Link href="#">
+                  <Link href="/change-password">
                     <i className="feather-lock"></i>
                     <span>Change Password</span>
                   </Link>
