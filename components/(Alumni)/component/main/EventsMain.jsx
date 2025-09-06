@@ -53,7 +53,7 @@ const EventsMain = () => {
                     </li>
                   </ul>
                   <h4 className="rbt-card-title">
-                    <Link href={`/course-details/${data.id}`}>
+                    <Link href={`/login`}>
                       {data.courseTitle}
                     </Link>
                   </h4>
@@ -62,7 +62,7 @@ const EventsMain = () => {
                   <div className="rbt-card-bottom">
                     <Link
                       className="rbt-btn-link color-primary"
-                      href={`/course-details/${data.id}`}
+                      href={`/login`}
                     >
                      View Events
                       <i className="feather-arrow-right"></i>

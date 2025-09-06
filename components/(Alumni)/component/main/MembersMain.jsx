@@ -55,7 +55,7 @@ const MembersMain = () => {
                   <div className="team" >
                     <Link
                     className="rbt-team-thumbnail w-100"
-                    href="#"
+                    href={`/login`}
                     data-bs-toggle="modal"
                     data-bs-target={`#exampleModal${index}`}
                   >
@@ -75,7 +75,7 @@ const MembersMain = () => {
                   </Link>
                     
                     <div className="content">
-                      <h4 className="title">{item.name ? item.name : item.email}</h4>
+                    <Link href={`/login`}>  <h4 className="title">{item.name ? item.name : item.email}</h4> </Link>
                       <p className="designation">{item.course}</p>
                     </div>
                     {/* <ul className="social-icon">
