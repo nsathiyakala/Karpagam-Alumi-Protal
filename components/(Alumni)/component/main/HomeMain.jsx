@@ -25,7 +25,7 @@ const HomeMain = ({ blogs }) => {
     <>
       {/* ----------banner start----------- */}
 
-      <div className="rbt-slider-main-wrapper position-relative">
+      <div className="rbt-slider-main-wrapper position-relative ">
         <Banner />
       </div>
 
@@ -33,7 +33,7 @@ const HomeMain = ({ blogs }) => {
 
       {/* ----------Connect start----------- */}
 
-      <div className="rbt-category-area bg-color-white rbt-section-gapTop home-connect">
+      <div className="rbt-category-area bg-color-white rbt-section-gapTop home-connect success-story">
         <div className="container">
           <div className="row g-5">
             <Connect />
@@ -45,7 +45,7 @@ const HomeMain = ({ blogs }) => {
 
       {/* ----------testimonial start----------- */}
 
-      <div className="rbt-testimonial-area bg-color-white rbt-section-gapBottom overflow-hidden section-pad">
+      <div className="rbt-testimonial-area bg-color-white rbt-section-gapBottom overflow-hidden section-pad success-story">
         <div className="container-fluid">
           <div className="row g-5 align-items-center">
             <div className="col-xl-3">
@@ -63,7 +63,7 @@ const HomeMain = ({ blogs }) => {
                 </p>
                 <div className="call-to-btn  mt-0">
                   <Link
-                    className="rbt-btn btn-gradient hover-icon-reverse radius-round"
+                    className="rbt-btn btn-gradient hover-icon-reverse radius-round d-flex align-items-center"
                     href="/about"
                   >
                     <span className="icon-reverse-wrapper">

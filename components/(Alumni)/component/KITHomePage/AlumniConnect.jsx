@@ -21,7 +21,7 @@ export default function AlumniConnect() {
           CONNECT with your classmates on your Alumni Association
         </span>
         <div className="call-to-btn text-start mt-0">
-          <Link className="rbt-btn btn-gradient hover-icon-reverse radius-round" href="#">
+          <Link className="rbt-btn btn-gradient hover-icon-reverse radius-round d-flex align-items-center" href="#">
             <span className="icon-reverse-wrapper">
               <span className="btn-text">Register Now</span>
               <span className="btn-icon">
