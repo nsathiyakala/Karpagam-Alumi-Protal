@@ -34,7 +34,7 @@ const MyMiltestone = () => {
         <MobileMenu />
         <KITHeader headerSticky="rbt-sticky" headerType="" />
 
-        <BreadCrumb title="Members" text="Members" />
+        <BreadCrumb title="Milestone" text="Milestone" />
 
         <MyMilestoneMain/>
 
