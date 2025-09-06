@@ -864,7 +864,7 @@ const JobBoardMain = () => {
                                   <div className="inner">
                                     <div className="content text-left">
                                       <h5 className="mb--5">
-                                        {currentDataForAdmin.length} record(s) found
+                                        {listOfPosts.length} record(s) found
                                       </h5>
                                       {/* <p className="b3">Create Announcement</p> */}
                                     </div>
@@ -903,7 +903,7 @@ const JobBoardMain = () => {
                                   {currentDataForAdmin.map((item) => (
                                     <tr key={item.id}>
                                       <th>
-                                        <span className="b3">
+                                        <span className="b3 ">
                                           <Link href="#">{item.job_title}</Link>
                                         </span>
                                       </th>
@@ -1072,8 +1072,8 @@ const JobBoardMain = () => {
                                               {value?.posted_by}
                                             </li>
                                           </ul>
-                                          <h4 className="rbt-card-title">
-                                            <Link href={`#`}>
+                                          <h4 className="rbt-card-title font-20">
+                                            <Link href={`/job-details/${value?.id}`}>
                                               {value.job_title}
                                             </Link>
                                           </h4>

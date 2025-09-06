@@ -15,7 +15,7 @@ const NewsRoomMain = () => {
           {getAllCourse?.map((data, index) => (
             <div className={`col-12`} key={index}>
               <div className="rbt-card variation-04 rbt-hover newsroom-card">
-                <div className="rbt-card-img">
+                <div className="rbt-card-img d-none d-md-block">
                   <Link className="h-100" href={`/course-details/${data.id}`}>
                     <Image
                       src={data.courseImg}
@@ -27,7 +27,7 @@ const NewsRoomMain = () => {
                     
                   </Link>
                 </div>
-                <div className="rbt-card-body" style={{ paddingTop: "0px" }}>
+                <div className="rbt-card-body" style={{ paddingTop: "0px" , width:"100%"}} >
                   <ul className="rbt-meta">
                     <li>
                       <i className="feather-book"></i>
@@ -39,11 +39,11 @@ const NewsRoomMain = () => {
                     </li>
                   </ul>
                   <h4 className="rbt-card-title">
-                    <Link href={`/course-details/${data.id}`}>
+                    {/* <Link href={`/course-details/${data.id}`}> */}
                       {data.courseTitle}
-                    </Link>
+                    {/* </Link> */}
                   </h4>
-                  <p className="rbt-card-text">{data.desc}</p>
+                  <p className="rbt-card-text" style={{width:"100%"}}>{data.desc}</p>
 
                   {/* <div className="rbt-card-bottom">
                     <Link

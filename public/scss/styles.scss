@@ -1501,11 +1501,11 @@ select {
     font-size: 14px;
   }
 }
-.team .thumbnail img{
+.home .team .thumbnail img{
   object-fit: cover;
 }
 @media (min-width: 768px) {
-  .team .thumbnail img{
+ .home .team .thumbnail img{
    min-height: 370px;
   max-height: 370px;
 
@@ -1532,3 +1532,24 @@ select {
   line-height: normal;
   width: fit-content;
 }
+
+.rbt-breadcrumb-default .title{
+  font-size: 26px !important;
+}
+
+.font-18{
+  font-size: 18px !important;
+}
+
+.font-20{
+  font-size: 20px !important;
+}
+
+.rbt-user-wrapper:hover .rbt-user-menu-list-wrapper{
+  left: -180px;
+}
+
+
+
+
+

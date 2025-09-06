@@ -184,7 +184,7 @@ const LoginMain = () => {
                 value={formData.password}
                 onChange={handleChange}
                 error={errMsg.password}
-                className="applicant-input"
+                // className="applicant-input"
                 required={true}
               />
               <span className="focus-border"></span>
