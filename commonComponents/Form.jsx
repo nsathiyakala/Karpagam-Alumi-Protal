@@ -60,7 +60,7 @@ const Form = ({ gap }) => {
                       className="rbt-btn btn-md btn-gradient hover-icon-reverse w-100"
                     >
                       <span className="icon-reverse-wrapper">
-                        <span className="btn-text">GET IT NOW</span>
+                        <span className="btn-text">Submit</span>
                         <span className="btn-icon">
                           <i className="feather-arrow-right"></i>
                         </span>

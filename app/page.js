@@ -3,8 +3,8 @@ import BackToTop from "./backToTop";
 import HomePage from "./home/page";
 
 export const metadata = {
-  title: "Home - Online Courses & Education NEXTJS14 Template",
-  description: "Online Courses & Education NEXTJS14 Template",
+  title: "Karpagam Institute Of Technology",
+  description: "Karpagam Institute Of Technology",
 };
 
 export default function Home() {
