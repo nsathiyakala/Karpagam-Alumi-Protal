@@ -4,10 +4,12 @@ import AccountInfo from "../../../../data/myAccount.json";
 import MyAccount from "../../../My-Account/MyAccount";
 import FormField from "@/commonComponents/FormFields";
 import { useRouter } from "next/navigation";
-import { useSetState } from "@/utils/commonFunction.utils";
+import { useSetState, validateForm } from "@/utils/commonFunction.utils";
 import { message } from "antd";
 import { BloodGroupChooice } from "@/utils/constant.utils";
 import Models from "@/imports/models.import";
+import axios from "axios";
+import { BaseURL } from "@/utils/BaseUrl";
 
 const MyBasicDetailsMain = () => {
   const router = useRouter();
@@ -267,6 +269,7 @@ const MyBasicDetailsMain = () => {
   };
   return (
     <div className="my-account-section bg-color-white section-pad">
+      {contextHolder}
       <div className="container">
         <div className="row">
           <div className="col-12">
