@@ -6,13 +6,14 @@ import { message } from "antd";
 import { useRouter } from "next/navigation";
 import { memberType, registeredMember } from "@/utils/constant.utils";
 import Models from "@/imports/models.import";
-import { objIsEmpty, useSetState } from "@/utils/commonFunction.utils";
+import { objIsEmpty, setDropdownData, useSetState } from "@/utils/commonFunction.utils";
 import useDebounce from "@/commonComponents/useDebounce";
 import { usePathname } from "next/navigation";
 import FormField from "@/commonComponents/FormFields";
 import { TeamData } from "@/utils/constant.utils";
 import Image from "next/image";
 import Pagination from "@/commonComponents/Pagination";
+import Loader from "../loader";
 
 
 
@@ -54,6 +55,7 @@ const MembersLoginMain = () => {
     hasInstitutionLoadMore: null,
     currenLocationPage: 1,
     hasLocationLoadMore: null,
+    loading: true,
   });
 
   const pathname = usePathname();
@@ -452,6 +454,9 @@ const MembersLoginMain = () => {
         //   value: role.batch_id,
         //   label: role.title,
         // }));
+
+        console.log("res", res);
+
         const RoleOption = setDropdownData(res?.results, "role");
 
         setState({
@@ -598,6 +603,9 @@ const MembersLoginMain = () => {
 
   console.log("locationList after", state.locationList);
 
+  console.log("loading", state.loading);
+  
+
   return (
     <div className="rbt-dashboard-area section-pad member-login">
       <div className="container-fluid">
@@ -616,9 +624,8 @@ const MembersLoginMain = () => {
                                 <ul className="dashboard-mainmenu rbt-default-sidebar-list">
                                   <li className="nav-item" role="presentation">
                                     <a
-                                      className={`w-100 ${
-                                        pathname === "#" ? "active" : ""
-                                      }`}
+                                      className={`w-100 ${pathname === "#" ? "active" : ""
+                                        }`}
                                       href="#"
                                     >
                                       <FormField
@@ -638,9 +645,8 @@ const MembersLoginMain = () => {
 
                                   <li className="nav-item" role="presentation">
                                     <a
-                                      className={`w-100 ${
-                                        pathname === "#" ? "active" : ""
-                                      }`}
+                                      className={`w-100 ${pathname === "#" ? "active" : ""
+                                        }`}
                                       href="#"
                                     >
                                       <FormField
@@ -658,9 +664,8 @@ const MembersLoginMain = () => {
 
                                   <li className="nav-item" role="presentation">
                                     <a
-                                      className={`w-100 ${
-                                        pathname === "#" ? "active" : ""
-                                      }`}
+                                      className={`w-100 ${pathname === "#" ? "active" : ""
+                                        }`}
                                       href="#"
                                     >
                                       <FormField
@@ -680,9 +685,8 @@ const MembersLoginMain = () => {
 
                                   <li className="nav-item" role="presentation">
                                     <a
-                                      className={`w-100 ${
-                                        pathname === "#" ? "active" : ""
-                                      }`}
+                                      className={`w-100 ${pathname === "#" ? "active" : ""
+                                        }`}
                                       href="#"
                                     >
                                       <FormField
@@ -700,9 +704,8 @@ const MembersLoginMain = () => {
 
                                   <li className="nav-item" role="presentation">
                                     <a
-                                      className={`w-100 ${
-                                        pathname === "#" ? "active" : ""
-                                      }`}
+                                      className={`w-100 ${pathname === "#" ? "active" : ""
+                                        }`}
                                       href="#"
                                     >
                                       <FormField
@@ -724,9 +727,8 @@ const MembersLoginMain = () => {
 
                                   <li className="nav-item" role="presentation">
                                     <a
-                                      className={`w-100 ${
-                                        pathname === "#" ? "active" : ""
-                                      }`}
+                                      className={`w-100 ${pathname === "#" ? "active" : ""
+                                        }`}
                                       href="#"
                                     >
                                       <FormField
@@ -746,9 +748,8 @@ const MembersLoginMain = () => {
 
                                   <li className="nav-item" role="presentation">
                                     <a
-                                      className={`w-100 ${
-                                        pathname === "#" ? "active" : ""
-                                      }`}
+                                      className={`w-100 ${pathname === "#" ? "active" : ""
+                                        }`}
                                       href="#"
                                     >
                                       <FormField
@@ -768,9 +769,8 @@ const MembersLoginMain = () => {
 
                                   <li className="nav-item" role="presentation">
                                     <a
-                                      className={`w-100 ${
-                                        pathname === "#" ? "active" : ""
-                                      }`}
+                                      className={`w-100 ${pathname === "#" ? "active" : ""
+                                        }`}
                                       href="#"
                                     >
                                       <FormField
@@ -792,9 +792,8 @@ const MembersLoginMain = () => {
 
                                   <li className="nav-item" role="presentation">
                                     <a
-                                      className={`w-100 ${
-                                        pathname === "#" ? "active" : ""
-                                      }`}
+                                      className={`w-100 ${pathname === "#" ? "active" : ""
+                                        }`}
                                       href="#"
                                     >
                                       <FormField
@@ -814,9 +813,8 @@ const MembersLoginMain = () => {
 
                                   <li className="nav-item" role="presentation">
                                     <a
-                                      className={`w-100 ${
-                                        pathname === "#" ? "active" : ""
-                                      }`}
+                                      className={`w-100 ${pathname === "#" ? "active" : ""
+                                        }`}
                                       href="#"
                                     >
                                       <FormField
@@ -834,9 +832,8 @@ const MembersLoginMain = () => {
 
                                   <li className="nav-item" role="presentation">
                                     <a
-                                      className={`w-100 ${
-                                        pathname === "#" ? "active" : ""
-                                      }`}
+                                      className={`w-100 ${pathname === "#" ? "active" : ""
+                                        }`}
                                       href="#"
                                     >
                                       <FormField
@@ -856,7 +853,7 @@ const MembersLoginMain = () => {
                                 </ul>
                               </nav>
 
-                              
+
 
                               <div
                                 className=" d-flex flex-wrap mt-5"
@@ -908,73 +905,75 @@ const MembersLoginMain = () => {
 
                     <div className="col-11 col-lg-9">
                       <div className="rbt-video-area bg-color-white overflow-hidden">
-                        <div className="container">
-                          <div className="row row--15 gy-5">
-                            {state.memberList &&
-                              state.memberList.map((member, index) => (
-                                <div
-                                  className="col-xxl-3 col-lg-4 col-md-4 col-sm-6 col-12 "
-                                  key={index}
-                                >
-                                  {/* {data.details.map((item, innerIndex) => ( */}
-                                  <div className="team">
-                                    {member?.profile_picture ? (
-                                      <Link
-                                        className="rbt-team-thumbnail w-100"
-                                        href="#"
-                                        data-bs-toggle="modal"
-                                        data-bs-target={`#exampleModal${index}`}
-                                      >
-                                        <div className="thumbnail">
-                                          <img
-                                            // src={member?.profile_picture}
-                                            src="/images/team/team-07.jpg"
-                                            width={415}
-                                            height={555}
-                                            priority
-                                            alt="Blog Images"
-                                          />
-                                        </div>
-                                      </Link>
-                                    ) : (
-                                      <Link
-                                        className="rbt-team-thumbnail w-100"
-                                        href="#"
-                                        data-bs-toggle="modal"
-                                        data-bs-target={`#exampleModal${index}`}
-                                      >
-                                        <div className="thumbnail">
-                                          <img
-                                            // src={member?.profile_picture}
-                                            src="/images/team/team-07.jpg"
-                                            width={415}
-                                            height={555}
-                                            priority
-                                            alt="Blog Images"
-                                          />
-                                        </div>
-                                      </Link>
-                                    )}
+                        {state.loading ? <Loader /> :
+                          <div className="container">
+                            <div className="row row--15 gy-5">
 
-                                    <div className="content p-4">
-                                      <h4 className="title mb-3 font-18">
-                                        {member?.name == null ||
-                                        member?.name == " " ||
-                                        member?.name == "" ? (
-                                          <Link href={`/members/${member?.id}`}>
-                                            {member?.email}
-                                          </Link>
-                                        ) : (
-                                          <Link href={`/members/${member?.id}`}>
-                                            {member?.name}
-                                          </Link>
-                                        )}
-                                      </h4>
-                                      <p className="designation">
-                                        {member?.course}
-                                      </p>
-                                    </div>
-                                    {/* <ul className="social-icon">
+                              {state.memberList ?
+                                state.memberList.map((member, index) => (
+                                  <div
+                                    className="col-xxl-3 col-lg-4 col-md-4 col-sm-6 col-12 "
+                                    key={index}
+                                  >
+                                    {/* {data.details.map((item, innerIndex) => ( */}
+                                    <div className="team">
+                                      {member?.profile_picture ? (
+                                        <Link
+                                          className="rbt-team-thumbnail w-100"
+                                          href="#"
+                                          data-bs-toggle="modal"
+                                          data-bs-target={`#exampleModal${index}`}
+                                        >
+                                          <div className="thumbnail">
+                                            <img
+                                              // src={member?.profile_picture}
+                                              src="/images/team/team-07.jpg"
+                                              width={415}
+                                              height={555}
+                                              priority
+                                              alt="Blog Images"
+                                            />
+                                          </div>
+                                        </Link>
+                                      ) : (
+                                        <Link
+                                          className="rbt-team-thumbnail w-100"
+                                          href="#"
+                                          data-bs-toggle="modal"
+                                          data-bs-target={`#exampleModal${index}`}
+                                        >
+                                          <div className="thumbnail">
+                                            <img
+                                              // src={member?.profile_picture}
+                                              src="/images/team/team-07.jpg"
+                                              width={415}
+                                              height={555}
+                                              priority
+                                              alt="Blog Images"
+                                            />
+                                          </div>
+                                        </Link>
+                                      )}
+
+                                      <div className="content p-4">
+                                        <h4 className="title mb-3 font-18">
+                                          {member?.name == null ||
+                                            member?.name == " " ||
+                                            member?.name == "" ? (
+                                            <Link href={`/members/${member?.id}`}>
+                                              {member?.email}
+                                            </Link>
+                                          ) : (
+                                            <Link href={`/members/${member?.id}`}>
+                                              {member?.name}
+                                            </Link>
+                                          )}
+                                        </h4>
+                                        <p className="designation">
+                                          {member?.course}
+                                        </p>
+                                      </div>
+                                      {/* <ul className="social-icon">
                                         <li>
                                           <Link href="#">
                                             <i className="fab fa-facebook-f"></i>
@@ -991,32 +990,41 @@ const MembersLoginMain = () => {
                                           </Link>
                                         </li>
                                       </ul> */}
+                                    </div>
+                                    {/* ))} */}
                                   </div>
-                                  {/* ))} */}
+                                ))
+                                :
+                                <div>
+                                  No data
                                 </div>
-                              ))}
-                          </div>
+                              }
 
-                          {state.memberList?.length > 0 && (
-                            <div>
-                              <div
-                                className="mb-20 "
-                                style={{
-                                  display: "flex",
-                                  justifyContent: "center",
-                                  alignItems: "center",
-                                }}
-                              >
-                                <Pagination
-                                  activeNumber={handlePageChange}
-                                  totalPage={state.total}
-                                  currentPages={state.currentPage}
-                                />
-                              </div>
                             </div>
-                          )}
-                        </div>
+
+                            {state.memberList?.length > 0 && (
+                              <div>
+                                <div
+                                  className="mb-20 "
+                                  style={{
+                                    display: "flex",
+                                    justifyContent: "center",
+                                    alignItems: "center",
+                                  }}
+                                >
+                                  <Pagination
+                                    activeNumber={handlePageChange}
+                                    totalPage={state.total}
+                                    currentPages={state.currentPage}
+                                  />
+                                </div>
+                              </div>
+                            )}
+                          </div>
+                        }
+
                       </div>
+
                     </div>
                   </div>
                 </div>
