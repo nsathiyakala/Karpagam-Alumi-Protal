@@ -17,7 +17,7 @@ import FormField from "@/commonComponents/FormFields";
 import { TeamData } from "@/utils/constant.utils";
 import Image from "next/image";
 import Pagination from "@/commonComponents/Pagination";
-import Loader from "../Loader";
+import Loader from "../../Loader";
 
 const MembersLoginMain = () => {
   const router = useRouter();
