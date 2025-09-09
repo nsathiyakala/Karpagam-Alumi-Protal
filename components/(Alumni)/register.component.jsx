@@ -10,7 +10,7 @@ const Register = (props) => {
   const { updateStep } = props;
 
   const fileInputRef = useRef(null);
-  
+
   const [state, setState] = useSetState({
     email: "",
     confrmModelOpen: false,
@@ -69,14 +69,14 @@ const Register = (props) => {
       e.preventDefault();
 
       const res = await Models.auth.register({ email: state.email });
-      updateStep(res?.member_id,state.email);
+      updateStep(res?.member_id, state.email);
     } catch (error) {
       console.log("✌️errorsddsf --->", error);
       if (error?.error == "Email not found in our records") {
         console.log("✌️records --->");
         setState({ confrmModelOpen: true, proofModelOpen: false });
-      }else{
-        message.error(error?.error)
+      } else {
+        message.error(error?.error);
       }
     }
   };
@@ -242,14 +242,15 @@ const Register = (props) => {
             setState({ confrmModelOpen: false, proofModelOpen: true })
           }
           onCancel={() => setState({ confrmModelOpen: false })}
-          width={300}
+          width={500}
         >
           <div>
             <button
-              className="rbt-btn btn-md btn-gradient hover-icon-reverse w-80"
+              className="rbt-btn btn-md btn-gradient hover-icon-reverse "
               onClick={() =>
                 setState({ confrmModelOpen: false, proofModelOpen: true })
               }
+              style={{ height: "30px", fontSize: "15px" ,paddingTop:"0", display:"flex", alignItems:"center" }}
             >
               Click Here
             </button>
@@ -257,21 +258,22 @@ const Register = (props) => {
         </Modal>
 
         <Modal
-          title="Submit Proof of Graduation"
+          title= {<div >Submit Proof of Graduation</div>}
           open={state.proofModelOpen}
           footer={false}
           onOk={() => setState({ proofModelOpen: false })}
           onCancel={() => setState({ proofModelOpen: false })}
           style={{ width: "200px" }}
+          
         >
-          <div>
+          <div className="event-form">
             <form onSubmit={submitProof}>
               <div className="form-group mt-3">
                 <FormField
                   type="loadMoreSelect"
                   name="salutation"
                   label="Salutation"
-                  // className={"applicant-input"}
+                  
                   onChange={(value) => {
                     setState({ salutation: value });
                   }}
@@ -280,7 +282,7 @@ const Register = (props) => {
                   error={state.errMsg?.salutation}
                   required
                   loadMore={() => {}}
-                  className="applicant-input"
+                  
                 />
               </div>
 
@@ -301,7 +303,8 @@ const Register = (props) => {
                 />
               </div>
 
-              <div className="form-group mt-3">
+              <div className="mb-5">
+                <label htmlFor="propic">Profile picture</label>
                 <FormField
                   placeholder="profile_picture"
                   type="file"
@@ -309,7 +312,7 @@ const Register = (props) => {
                   onChange={handleChange}
                   value={state.profile_picture}
                   error={state.errMsg?.profile_picture}
-                  className="applicant-input"
+                  className="formdate pt-3"
                 />
               </div>
               <div className="form-group mt-3">
@@ -369,10 +372,13 @@ const Register = (props) => {
                 <span className="focus-border"></span>
               </div>
               {/* </div> */}
-              <div className="form-group mt-3 ">
+              <div className="mt-3 mb-5">
+                <label htmlFor="file">
+                  file (Proof of Graduation)
+                </label>
                 <FormField
                   placeholder="file (Proof of Graduation)"
-                  className="applicant-input"
+                  className={"formdate pt-3"}
                   ref={fileInputRef}
                   type="file"
                   name="file"
@@ -392,6 +398,7 @@ const Register = (props) => {
                   value={state.register_no}
                   error={state.errMsg?.register_no}
                   required={true}
+                  className={"application-input"}
                 />
                 <span className="focus-border"></span>
               </div>

@@ -34,11 +34,10 @@ const EventDetailsMain = ({ getMatchEvent, id }) => {
   const router = useRouter();
   const { toggle, setToggle, cartToggle, setCart } = useAppContext();
   const [hideOnScroll, setHideOnScroll] = useState(false);
-   const [isModalOpen, setIsModalOpen] = useState(false);
-    const [messageApi, contextHolder] = message.useMessage();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [messageApi, contextHolder] = message.useMessage();
   const [responses, setResponses] = useState({});
   const [otherInputs, setOtherInputs] = useState({});
-
 
   const dispatch = useDispatch();
   const { cart } = useSelector((state) => state.CartReducer);
@@ -94,10 +93,8 @@ const EventDetailsMain = ({ getMatchEvent, id }) => {
 
   console.log("group", state.group);
 
-
-   useEffect(() => {
-    if (isModalOpen) 
-      register_event();
+  useEffect(() => {
+    if (isModalOpen) register_event();
   }, [isModalOpen]);
 
   const success = (msg) => {
@@ -193,9 +190,9 @@ const EventDetailsMain = ({ getMatchEvent, id }) => {
   // };
 
   const handleClickBtn = () => {
-  // setOpenRegisterModal(true);
-  setIsModalOpen(true);
-};
+    // setOpenRegisterModal(true);
+    setIsModalOpen(true);
+  };
 
   const AddToCalendarButton = () => {
     const startDate = state?.eventData?.start_date; // Event start date (e.g., "2024-12-06")
@@ -235,7 +232,6 @@ const EventDetailsMain = ({ getMatchEvent, id }) => {
     return number;
   };
 
-
   const register_event = async () => {
     try {
       setState({ loading: true });
@@ -268,7 +264,7 @@ const EventDetailsMain = ({ getMatchEvent, id }) => {
       onCancel(); // close modal
     } catch (error) {
       console.log(error);
-      failure(error?.data?.error || error  || "Something went wrong");
+      failure(error?.data?.error || error || "Something went wrong");
       setState({ btnLoading: false });
     }
   };
@@ -328,27 +324,19 @@ const EventDetailsMain = ({ getMatchEvent, id }) => {
               <div className="rbt-participants-area mt--40">
                 <EventParticipants userData={state?.userData} />
 
-                 {state.userData?.length > 0 && (
-                          <div>
-                            <div
-                              className="mt-5"
-                              
-                            >
-                              <Pagination
-                                activeNumber={handlePageChange}
-                                totalPage={state.total}
-                                currentPages={state.currentPage}
-                              />
-                            </div>
-                          </div>
-                        )}
-
+                {state.userData?.length > 0 && (
+                  <div>
+                    <div className="mt-5">
+                      <Pagination
+                        activeNumber={handlePageChange}
+                        totalPage={state.total}
+                        currentPages={state.currentPage}
+                      />
+                    </div>
+                  </div>
+                )}
               </div>
-
-
-              
             )}
-
           </div>
         </div>
         <div className="col-lg-4 mt_md--60 mt_sm--60">
@@ -379,7 +367,6 @@ const EventDetailsMain = ({ getMatchEvent, id }) => {
                   <div className="add-to-card-button mb--15">
                     <div
                       className="rbt-btn btn-gradient icon-hover w-100 d-block text-center"
-                     
                       onClick={() => handleClickBtn()}
                     >
                       <span className="btn-text">Apply Now</span>
@@ -389,7 +376,7 @@ const EventDetailsMain = ({ getMatchEvent, id }) => {
                     </div>
                   </div>
 
-                 {(state.group === "alumni" || state.group === "student") && (
+                  {(state.group === "alumni" || state.group === "student") && (
                     <div className="add-to-card-button mb--15">
                       <div
                         className="rbt-btn btn-border  icon-hover w-100 d-block text-center"
@@ -455,15 +442,6 @@ const EventDetailsMain = ({ getMatchEvent, id }) => {
                   }`}
                 >
                   <ul className="has-show-more-inner-content rbt-course-details-list-wrapper">
-                    {/* {getEventData.roadmap.map((item, innerIndex) => (
-                <li key={innerIndex}>
-                  <span>{item.text}</span>
-                  <span className="rbt-feature-value rbt-badge-5">
-                    {item.desc}
-                  </span>
-                </li>
-              ))} */}
-
                     <li>
                       <span>Start date</span>
                       <span className="rbt-feature-value rbt-badge-5">
@@ -477,6 +455,7 @@ const EventDetailsMain = ({ getMatchEvent, id }) => {
                         {convertTo12HourFormat(state?.eventData?.start_time)}
                       </span>
                     </li>
+
                     <li>
                       <span>Registration Close Date</span>
                       <span className="rbt-feature-value rbt-badge-5">
@@ -507,11 +486,13 @@ const EventDetailsMain = ({ getMatchEvent, id }) => {
                       </span>
                     </li>
                   </ul>
+
+                  {/* Show More / Show Less button */}
                   <div
                     className={`rbt-show-more-btn ${!toggle ? "active" : ""}`}
                     onClick={() => setToggle(!toggle)}
                   >
-                    Show More
+                    {toggle ? "Show More" : "Show Less"}
                   </div>
                 </div>
 
@@ -560,62 +541,63 @@ const EventDetailsMain = ({ getMatchEvent, id }) => {
       </div>
 
       <>
-      {contextHolder}
+        {contextHolder}
 
-       <Modal
-        title={<div className="custom-modal-header">Apply Now</div>}
-        open={isModalOpen}
-        onCancel={() => setIsModalOpen(false)}
-        footer={false}
-        centered
-        width={800}
-      >
-        <form onSubmit={(e) => e.preventDefault()}>
-          <div className="inner-box overflow-auto" style={{ maxHeight: "60vh" }}>
-            {state.question?.map((item, index) => (
-              <div
-                className="mb-4"
-                key={`${item?.id}-${index}`}
-                style={{
-                  marginBottom:
-                    state.question?.length - 1 === index ? "5vh" : "1rem",
-                }}
+        <Modal
+          title={<div className="custom-modal-header">Apply Now</div>}
+          open={isModalOpen}
+          onCancel={() => setIsModalOpen(false)}
+          footer={false}
+          centered
+          width={800}
+        >
+          <form onSubmit={(e) => e.preventDefault()}>
+            <div
+              className="inner-box overflow-auto"
+              style={{ maxHeight: "60vh" }}
+            >
+              {state.question?.map((item, index) => (
+                <div
+                  className="mb-4"
+                  key={`${item?.id}-${index}`}
+                  style={{
+                    marginBottom:
+                      state.question?.length - 1 === index ? "5vh" : "1rem",
+                  }}
+                >
+                  <QuestionForm
+                    data={item}
+                    responses={responses}
+                    setResponses={setResponses}
+                    otherInputs={otherInputs}
+                    setOtherInputs={setOtherInputs}
+                  />
+                </div>
+              ))}
+            </div>
+
+            <div className="d-flex justify-content-end mt-3 gap-2">
+              <button
+                className="rbt-btn btn-gradient radius-round sm-btn"
+                type="button"
+                disabled={state.btnLoading}
+                onClick={getFinalResponses}
               >
-                <QuestionForm
-                  data={item}
-                  responses={responses}
-                  setResponses={setResponses}
-                  otherInputs={otherInputs}
-                  setOtherInputs={setOtherInputs}
-                />
-              </div>
-            ))}
-          </div>
+                {state.btnLoading ? "Submitting..." : "Submit"}
+              </button>
 
-          <div className="d-flex justify-content-end mt-3 gap-2">
-            <button
-              className="rbt-btn btn-gradient radius-round sm-btn"
-              type="button"
-              disabled={state.btnLoading}
-              onClick={getFinalResponses}
-            >
-              {state.btnLoading ? "Submitting..." : "Submit"}
-            </button>
-
-            <button
-              className="rbt-btn btn-gradient radius-round sm-btn"
-              type="button"
-              style={{ cursor: "pointer", borderRadius: "0" }}
-               onClick={() => setIsModalOpen(false)}  
-            >
-              Cancel
-            </button>
-          </div>
-        </form>
-      </Modal>
+              <button
+                className="rbt-btn btn-gradient radius-round sm-btn"
+                type="button"
+                style={{ cursor: "pointer", borderRadius: "0" }}
+                onClick={() => setIsModalOpen(false)}
+              >
+                Cancel
+              </button>
+            </div>
+          </form>
+        </Modal>
       </>
-
-     
     </>
   );
 };

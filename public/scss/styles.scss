@@ -758,6 +758,18 @@ select {
   height: 48px !important;
 }
 
+.event-form .form-group .formdate {
+   border: none;
+     margin-top: 45px;
+    border-bottom: 1px solid #ccc;
+    height: 48px !important;
+    border-radius: 0;
+}
+
+.event-form .form-group label  {
+padding-bottom: 20px;
+}
+
 .event-actions {
   display: grid;
   grid-template-columns: 1fr 1fr; /* two buttons per row */

@@ -192,9 +192,9 @@ const LoginMain = () => {
 
             <div className="row mb--30">
              
-              <div className="col-lg-6">
+              <div className="col-12">
                 <div className="rbt-lost-password text-end">
-                  <Link className="rbt-btn-link" href="/change-password">
+                  <Link className="rbt-btn-link" href="/forgot-password">
                     Lost your password?
                   </Link>
                 </div>
