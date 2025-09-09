@@ -5,19 +5,18 @@ import Store from "@/redux/store";
 import { Provider } from "react-redux";
 
 import Separator from "@/components/Common/Separator";
-import FooterOne from "@/components/Footer/Footer-One";
-
 import MobileMenu from "@/components/Header/MobileMenu";
-
 import BreadCrumb from "@/components/Common/BreadCrumb";
 import KITHeader from "@/components/Header/KITHeader";
-
-
 import NewsRoomMain from "@/components/(Alumni)/component/main/NewsRoomMain";
 import KITFooter from "@/components/Footer/KITFooter";
 import SideBar from "@/components/(Alumni)/component/KITSidebar/SideBar";
 
+import { useState } from "react";
+
 const NewsRoom = () => {
+  const [selectedYear, setSelectedYear] = useState("all"); // 👈 default to all
+
   return (
     <>
       <Provider store={Store}>
@@ -32,11 +31,14 @@ const NewsRoom = () => {
                 <div className="col-lg-12">
                   <div className="row g-5">
                     <div className="col-lg-3">
-                      <SideBar />
+                      <SideBar
+                        selectedYear={selectedYear}
+                        setSelectedYear={setSelectedYear}
+                      />
                     </div>
 
                     <div className="col-lg-9">
-                      <NewsRoomMain />
+                      <NewsRoomMain selectedYear={selectedYear} />
                     </div>
                   </div>
                 </div>
@@ -51,5 +53,6 @@ const NewsRoom = () => {
     </>
   );
 };
+
 
 export default NewsRoom;

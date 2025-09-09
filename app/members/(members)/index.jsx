@@ -13,7 +13,7 @@ import KITFooter from "@/components/Footer/KITFooter";
 import BreadCrumb from "@/components/Common/BreadCrumb";
 import MembersMain from "@/components/(Alumni)/component/main/MembersMain";
 import MembersLoginMain from "@/components/(Alumni)/component/main/MembersLoginMain";
-import Loader from "@/components/(Alumni)/component/loader";
+import Loader from "@/components/(Alumni)/component/Loader";
 
 const Members = () => {
   const [token, setToken] = useState(null);

@@ -354,7 +354,7 @@ const PostJobForm = () => {
             </div>
           </div>
         </div>
-        <div className="row justify-content-center">
+        <div className="row justify-content-center event-form">
           <div className="col-lg-10">
             <div className="form-wrapper">
               <div className="rbt-contact-form contact-form-style-1 max-width-auto">
@@ -518,26 +518,16 @@ const PostJobForm = () => {
                       <span className="focus-border"></span>
                     </div>
 
-                    <div className="form-group">
-                      <FormField
-                        placeholder="Job Type"
-                        type="select"
-                        name="post_type"
-                        value={formData.post_type}
-                        onChange={(e) => handleChange(e)}
-                        error={errMsg.post_type}
-                        options={JobOption}
-                        required={true}
-                      />
-                      <span className="focus-border"></span>
-                    </div>
+                  
 
                     <div className="form-group">
+                      <label htmlFor="date"> Closed Date </label>
                       <FormField
+                      id="date"
                         // placeholder="Closed Date"
                         type="date"
                         name="dead_line"
-                        className="file-input"
+                        className="formdate pt-3"
                         value={formData.dead_line}
                         onChange={(e) => handleChange(e)}
                         error={errMsg.dead_line}
@@ -547,6 +537,7 @@ const PostJobForm = () => {
                     </div>
 
                     <div className="form-group">
+                        <label htmlFor="date"> Attached file  </label>
                       <FormField
                         // placeholder="Attach File"
                         type="file"
@@ -554,7 +545,7 @@ const PostJobForm = () => {
                         ref={fileInputRef}
                         key={fileInputKey}
                         error={errMsg.file}
-                        className="file-input"
+                        className="formdate pt-3"
                         onChange={(e) => handleChange(e)}
                         accept="application/pdf"
                         required={true}
@@ -613,6 +604,20 @@ const PostJobForm = () => {
                           </button>
                         </div>
                       )}
+                    </div>
+
+                      <div className="form-group">
+                      <FormField
+                        placeholder="Job Type"
+                        type="select"
+                        name="post_type"
+                        value={formData.post_type}
+                        onChange={(e) => handleChange(e)}
+                        error={errMsg.post_type}
+                        options={JobOption}
+                        required={true}
+                      />
+                      <span className="focus-border"></span>
                     </div>
 
                     

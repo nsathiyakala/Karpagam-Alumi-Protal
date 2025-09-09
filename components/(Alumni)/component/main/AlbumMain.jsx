@@ -245,33 +245,35 @@ const AlbumMain = () => {
           <div className="d-flex justify-content-between py-4 mb-4">
             <h4 className="mb-0">{state.album_name}</h4>
 
-            <div className="rbt-button-group justify-content-end">
-              <a
-                className="rbt-btn btn-xs bg-primary-opacity radius-round"
-                href="#"
-                title="Edit Album"
-                onClick={() => setState({ isOpen: true })}
-              >
-                <i className="feather-edit pl--0" />
-              </a>
-              <a
-                className="rbt-btn btn-xs bg-color-danger-opacity radius-round color-danger"
-                href="#"
-                title="Delete Album"
-                onClick={() => showDeleteConfirm()}
-              >
-                <i className="feather-trash-2 pl--0" />
-              </a>
+            {(state.data?.is_owner || state.data?.is_admin) && (
+              <div className="rbt-button-group justify-content-end">
+                <a
+                  className="rbt-btn btn-xs bg-primary-opacity radius-round"
+                  href="#"
+                  title="Edit Album"
+                  onClick={() => setState({ isOpen: true })}
+                >
+                  <i className="feather-edit pl--0" />
+                </a>
+                <a
+                  className="rbt-btn btn-xs bg-color-danger-opacity radius-round color-danger"
+                  href="#"
+                  title="Delete Album"
+                  onClick={() => showDeleteConfirm()}
+                >
+                  <i className="feather-trash-2 pl--0" />
+                </a>
 
-              <a
-                className="rbt-btn btn-xs  radius-round"
-                href="#"
-                title="Create Album"
-                onClick={() => setState({ isUploadPic: true })}
-              >
-                <i className="feather-plus-circle pl--0" />
-              </a>
-            </div>
+                <a
+                  className="rbt-btn btn-xs  radius-round"
+                  href="#"
+                  title="Create Album"
+                  onClick={() => setState({ isUploadPic: true })}
+                >
+                  <i className="feather-plus-circle pl--0" />
+                </a>
+              </div>
+            )}
           </div>
 
           {state.photoList?.length > 0 ? (
@@ -283,7 +285,6 @@ const AlbumMain = () => {
                       <div
                         className="child-gallery-single gal-grid"
                         key={index}
-                        
                         data-gall="gallery01"
                         onClick={(e) => {
                           if (e.target.closest(".icon")) {
@@ -317,23 +318,24 @@ const AlbumMain = () => {
                             </span>
                           )}
 
-                          {data?.approved == true ? (
-                            <span
-                              className="icon "
-                              onClick={() => approvel(data)}
-                              title="Approved"
-                            >
-                              <i className="feather-check-circle"></i>
-                            </span>
-                          ) : (
-                            <span
-                              className="icon "
-                              onClick={() => approvel(data)}
-                              title="Pending"
-                            >
-                              <i className="feather-x-circle"></i>
-                            </span>
-                          )}
+                          {data?.is_admin &&
+                            (data?.approved == true ? (
+                              <span
+                                className="icon "
+                                onClick={() => approvel(data)}
+                                title="Approved"
+                              >
+                                <i className="feather-check-circle"></i>
+                              </span>
+                            ) : (
+                              <span
+                                className="icon "
+                                onClick={() => approvel(data)}
+                                title="Pending"
+                              >
+                                <i className="feather-x-circle"></i>
+                              </span>
+                            ))}
                         </div>
 
                         <span className="user-info">
@@ -350,15 +352,17 @@ const AlbumMain = () => {
             <>
               <div className=" album-none">
                 <h5>Album is Empty !</h5>
-                <a
-                  className="rbt-btn btn-xs  radius-round"
-                  href="#"
-                  title="Create Album"
-                  onClick={() => setState({ isUploadPic: true })}
-                >
-                  Upload Images
-                  <i className="feather-plus-circle pl--2" />
-                </a>
+               
+                  <a
+                    className="rbt-btn btn-xs  radius-round"
+                    href="#"
+                    title="Create Album"
+                    onClick={() => setState({ isUploadPic: true })}
+                  >
+                    Upload Images
+                    <i className="feather-plus-circle pl--2" />
+                  </a>
+                
               </div>
             </>
           )}
