@@ -301,3 +301,40 @@ export const TrimText = (text, length = 100) => {
   if (!text) return "";
   return text.length > length ? text.substring(0, length) + "..." : text;
 };
+
+
+export const XLFormat = (data) => {
+  // Create a new workbook and add a worksheet
+  const wb = XLSX.utils.book_new();
+  const ws = XLSX.utils.json_to_sheet(data);
+
+  // Add the worksheet to the workbook
+  XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
+
+  // Write the workbook and trigger a download
+  XLSX.writeFile(wb, "Applicants Data.xlsx");
+};
+
+export const downloadExcel = (data) => {
+  if (!data || typeof data !== "object") {
+    console.error("Invalid data: Data should be an object.");
+    return;
+  }
+
+  try {
+    // Convert the object to an array of objects
+    const formattedData = Object.keys(data).map((key) => {
+      return { [key]: data[key] }; // Convert object to an array of key-value pairs
+    });
+
+    // Now we have an array of objects, each object has a key-value pair from the original object
+    const ws = XLSX.utils.json_to_sheet(formattedData); // Convert JSON to worksheet
+    const wb = XLSX.utils.book_new(); // Create a new workbook
+    XLSX.utils.book_append_sheet(wb, ws, "Events"); // Append worksheet to workbook
+
+    // Create a Blob with the Excel file and trigger download
+    XLSX.writeFile(wb, "event_data.xlsx");
+  } catch (error) {
+    console.error("Error during Excel download:", error);
+  }
+};

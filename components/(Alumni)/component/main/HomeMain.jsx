@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import sal from "sal.js";
 import Banner from "../KITHomePage/Banner";
@@ -13,14 +13,24 @@ import Members from "../KITHomePage/Members";
 import Gallery from "../KITHomePage/Gallery";
 import CallToActionFour from "../../../Call-To-Action/CallToAction-Four";
 import EventList from "../KITHomePage/EventList";
+import Loader from "../../Loader";
 
 const HomeMain = ({ blogs }) => {
+
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     sal({
       threshold: 0.01,
       once: true,
     });
+    setLoading(false);
   }, []);
+
+  // if (loading) {
+  //     return <Loader />; // Show loader while checking token
+  //   }
+
   return (
     <>
       {/* ----------banner start----------- */}

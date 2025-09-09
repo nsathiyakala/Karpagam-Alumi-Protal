@@ -13,27 +13,21 @@ import KITHeader from "@/components/Header/KITHeader";
 import KITFooter from "@/components/Footer/KITFooter";
 import BreadCrumb from "@/components/Common/BreadCrumb";
 
-import JobBoardMain from "@/components/(Alumni)/component/JobBoard/JobBoardMain";
-import Loader from "@/components/(Alumni)/Loader";
 
-const JobBoard = () => {
+import ApplicantsMain from "@/components/(Alumni)/component/main/ApplicantsMain";
+
+const Applicants = () => {
   const [token, setToken] = useState("");
   const [isAdmin, setIsAdmin] = useState(false);
   const [isAlumniManager, setIsAlumniManager] = useState(false);
   const [isFatulty, setIsFatulty] = useState(false);
   const [isAlumni, setIsAlumni] = useState(false);
-    const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const Token = localStorage.getItem("token");
 
     setToken(Token);
-    setLoading(false);
   });
-
-    if (loading) {
-      return <Loader />; // Show loader while checking token
-    }
 
   return (
     <Provider store={Store}>
@@ -41,9 +35,9 @@ const JobBoard = () => {
         <MobileMenu />
         <KITHeader headerSticky="rbt-sticky" headerType="" />
 
-        <BreadCrumb title="Job Board" text="JobBoard" />
+        <BreadCrumb title="My Job List" text="My Job List" />
 
-         <JobBoardMain /> 
+         <ApplicantsMain /> 
 
         <Separator />
         <KITFooter />
@@ -52,4 +46,4 @@ const JobBoard = () => {
   );
 };
 
-export default JobBoard;
+export default Applicants;

@@ -33,9 +33,9 @@ const MembersMain = () => {
   console.log("✌️FinalLatestMembers --->", FinalLatestMembers);
 
   return (
-    <div className="rbt-video-area bg-color-white section-pad overflow-hidden">
+    <div className="rbt-video-area bg-color-white section-pad overflow-hidden home-mem">
       <div className="container">
-        <div className="row ">
+        {/* <div className="row ">
           <div className="col-lg-12">
             <div className="section-title text-center">
               <h2 className="title w-600">
@@ -43,12 +43,12 @@ const MembersMain = () => {
               </h2>
             </div>
           </div>
-        </div>
-        <div className="row row--15 section-pad">
+        </div> */}
+        <div className="row row--15 ">
           {latestMembers &&
             latestMembers.map((item, index) => (
               <div
-                className="col-lg-3 col-md-6 col-sm-6 col-12 mt--30"
+                className="col-lg-3 col-md-6 col-sm-6 col-12 "
                 key={index}
               >
                 {/* {latestMembers.map((item, innerIndex) => ( */}
