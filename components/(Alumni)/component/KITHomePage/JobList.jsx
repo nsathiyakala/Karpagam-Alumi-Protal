@@ -193,7 +193,7 @@ const JobList = ({
           </div>
         ))}
       </div>
-      {isPagination ? (
+      {/* {isPagination ? (
         <div className="row">
           <div className="col-lg-12 mt--60">
             <Pagination
@@ -205,7 +205,7 @@ const JobList = ({
         </div>
       ) : (
         ""
-      )}
+      )} */}
     </>
   );
 };

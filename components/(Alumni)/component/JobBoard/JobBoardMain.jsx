@@ -14,6 +14,7 @@ import axios from "axios";
 import { BaseURL } from "@/utils/BaseUrl";
 import Models from "@/imports/models.import";
 import { jobTypeOption } from "@/utils/constant.utils";
+import Loader from "../../Loader";
 
 const JobBoardMain = () => {
   const { confirm } = Modal;
@@ -65,6 +66,7 @@ const JobBoardMain = () => {
     hasInstitutionLoadMore: null,
     currenLocationPage: 1,
     hasLocationLoadMore: null,
+     pageLoading: false,
   });
 
   const pathname = usePathname();
@@ -154,6 +156,7 @@ const JobBoardMain = () => {
   };
 
   const GetMyJobPosts = () => {
+     setState({ pageLoading: true });
     axios
       .get(`${BaseURL}/my_job_post/`, {
         headers: {
@@ -164,9 +167,11 @@ const JobBoardMain = () => {
         // setAdminDataLists(response.data);
         // setFilteredData(response.data);
         setMyJobPosts(response.data?.results);
+         setState({ pageLoading: false });
       })
       .catch((error) => {
         console.log("❌error --->", error);
+         setState({ pageLoading: false });
       });
   };
 
@@ -405,6 +410,8 @@ const JobBoardMain = () => {
   };
 
   const handleFiltersSubmit = (e) => {
+     setState({ pageLoading: true });
+    
     const body = bodyData();
 
     console.log("bodyData", body);
@@ -424,6 +431,7 @@ const JobBoardMain = () => {
           setListOfPosts(response.data?.results);
           setNormelUserFilter(response.data?.results);
           setAllUserFilterFinalDataList(formData);
+           setState({ pageLoading: false });
           // setFormData({
           //   job_title: "",
           //   industry: "",
@@ -434,8 +442,10 @@ const JobBoardMain = () => {
         })
         .catch((error) => {
           console.log("❌error --->", error);
+           setState({ pageLoading: false });
         });
     } else if (isAlumni == "true" || isFatulty == "true") {
+       setState({ pageLoading: true });
       axios
         .post(`${BaseURL}/filter_job/`, body, {
           headers: {
@@ -448,6 +458,7 @@ const JobBoardMain = () => {
           setFilteredData(response.data?.results);
           setListOfPosts(response.data?.results);
           setNormelUserFilter(response.data?.results);
+           setState({ pageLoading: false });
           // setFormData({
           //   job_title: "",
           //   industry: "",
@@ -457,6 +468,7 @@ const JobBoardMain = () => {
           // });
         })
         .catch((error) => {
+           setState({ pageLoading: false });
           console.log("❌error --->", error);
         });
     }
@@ -747,8 +759,6 @@ const JobBoardMain = () => {
                                       />
                                     </a>
                                   </li>
-
-                                 
                                 </ul>
                               </nav>
 
@@ -805,29 +815,36 @@ const JobBoardMain = () => {
                     {/* --------------------table start--------------------- */}
 
                     <div className="col-lg-9">
-                      <div className="rbt-elements-area bg-color-extra2 mb-5">
-                        <div className="container">
-                          <div className="row p-0">
-                            <div className="col-lg-12 p-0">
-                              <form action="#" className="rbt-search-style-1">
-                                <input
-                                  type="text"
-                                  placeholder="Search Job with Job title and Role"
-                                  // name="search_filter"
-                                  onChange={handleSearchFilter}
-                                />
-                                <button className="search-btn">
-                                  <i className="feather-search"></i>
-                                </button>
-                              </form>
+                      {state.pageLoading ? (
+                        <Loader />
+                      ) : (
+                        <>
+                          <div className="rbt-elements-area bg-color-extra2 mb-5">
+                            <div className="container">
+                              <div className="row p-0">
+                                <div className="col-lg-12 p-0">
+                                  <form
+                                    action="#"
+                                    className="rbt-search-style-1"
+                                  >
+                                    <input
+                                      type="text"
+                                      placeholder="Search Job with Job title and Role"
+                                      // name="search_filter"
+                                      onChange={handleSearchFilter}
+                                    />
+                                    <button className="search-btn">
+                                      <i className="feather-search"></i>
+                                    </button>
+                                  </form>
+                                </div>
+                              </div>
                             </div>
                           </div>
-                        </div>
-                      </div>
 
-                      <div className="rbt-dashboard-content  p-0">
-                        <div className="content">
-                          {/* <div className="section-title d-flex justify-content-between ">
+                          <div className="rbt-dashboard-content  p-0">
+                            <div className="content">
+                              {/* <div className="section-title d-flex justify-content-between ">
                             <h4 className="rbt-title-style-3">
                               {" "}
                               {listOfPosts.length} record(s) found
@@ -841,187 +858,195 @@ const JobBoardMain = () => {
                             </Link>
                           </div> */}
 
-                          <div className="rbt-callto-action rbt-cta-default style-2 mb-2">
-                            <div className="content-wrapper overflow-hidden pt--30 pb--30 bg-color-primary-opacity">
-                              <div className="row gy-5 align-items-end">
-                                <div className="col-lg-8">
-                                  <div className="inner">
-                                    <div className="content text-left">
-                                      <h5 className="mb--5">
-                                        {listOfPosts.length} record(s) found
-                                      </h5>
-                                      {/* <p className="b3">Create Announcement</p> */}
+                              <div className="rbt-callto-action rbt-cta-default style-2 mb-2">
+                                <div className="content-wrapper overflow-hidden pt--30 pb--30 bg-color-primary-opacity">
+                                  <div className="row gy-5 align-items-end">
+                                    <div className="col-lg-8">
+                                      <div className="inner">
+                                        <div className="content text-left">
+                                          <h5 className="mb--5">
+                                            {listOfPosts.length} record(s) found
+                                          </h5>
+                                          {/* <p className="b3">Create Announcement</p> */}
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div className="col-lg-4 d-flex justify-content-start justify-content-lg-end">
+                                      <div className="call-to-btn text-start text-lg-end position-relative">
+                                        <Link
+                                          className="rbt-btn btn-gradient radius-round sm-btn"
+                                          href="/my-job-posts"
+                                        >
+                                          <span data-text="Add New Announcement">
+                                            My Job List
+                                          </span>
+                                        </Link>
+                                      </div>
                                     </div>
                                   </div>
                                 </div>
-                                <div className="col-lg-4 d-flex justify-content-start justify-content-lg-end">
-                                  <div className="call-to-btn text-start text-lg-end position-relative">
-                                    <Link
-                                      className="rbt-btn btn-gradient radius-round sm-btn"
-                                      href="/my-job-posts"
-                                    >
-                                      <span data-text="Add New Announcement">
-                                        My Job List
-                                      </span>
-                                    </Link>
-                                  </div>
-                                </div>
                               </div>
-                            </div>
-                          </div>
 
-                          {(isAdmin == "true" || isAlumniManager == "true") && (
-                            <div className="rbt-dashboard-table table-responsive mobile-table-750">
-                              <table className="rbt-table table table-borderless">
-                                <thead>
-                                  <tr>
-                                    <th>Job Title</th>
-                                    <th>Industry</th>
-                                    <th>Role</th>
-                                    <th>N.Of Applicants</th>
-                                    <th>Posted Date</th>
-                                    <th></th>
-                                  </tr>
-                                </thead>
-                                <tbody>
-                                  {currentDataForAdmin.map((item) => (
-                                    <tr key={item.id}>
-                                      <th>
-                                        <span className="b3 ">
-                                          <Link href="#">{item.job_title}</Link>
-                                        </span>
-                                      </th>
-                                      <td>
-                                        <span className="b3">
-                                          <Link href="#">{item?.industry}</Link>
-                                        </span>
-                                      </td>
-                                      <td>
-                                        <span className="b3">
-                                          <Link href="#">{item?.role}</Link>
-                                        </span>
-                                      </td>
-                                      <td>
-                                        <span className="b3">
-                                          <Link href="#">
-                                            {item.application_count}
-                                          </Link>
-                                        </span>
-                                      </td>
-                                      <td>
-                                        <span className="b3">
-                                          <Link href="#">
-                                            {item?.posted_on}
-                                          </Link>
-                                        </span>
-                                      </td>
-
-                                      <td>
-                                        <div className="rbt-button-group justify-content-end gap-2">
-                                          {item?.is_active && (
-                                            <>
-                                              <Link
-                                                className={`rbt-btn btn-xs radius-round ${
-                                                  item.application_count === 0
-                                                    ? "bg-gray"
-                                                    : "bg-coral-opacity"
-                                                } `}
-                                                href={
-                                                  item.application_count > 0
-                                                    ? `/applicants/${item?.id}`
-                                                    : "#"
-                                                }
-                                                title="View"
-                                                // onClick={
-                                                //   item.application_count > 0
-                                                //     ? () =>
-                                                //         router.push(
-                                                //           `/applicants/${item?.id}`
-                                                //         )
-                                                //     : null
-                                                // }
-
-                                                style={{
-                                                  opacity:
-                                                    item.application_count === 0
-                                                      ? 0.5
-                                                      : 1,
-                                                  cursor:
-                                                    item.application_count === 0
-                                                      ? "not-allowed"
-                                                      : "pointer",
-                                                }}
-                                              >
-                                                <i className="feather-eye pl--0"></i>
+                              {(isAdmin == "true" ||
+                                isAlumniManager == "true") && (
+                                <div className="rbt-dashboard-table table-responsive mobile-table-750">
+                                  <table className="rbt-table table table-borderless">
+                                    <thead>
+                                      <tr>
+                                        <th>Job Title</th>
+                                        <th>Industry</th>
+                                        <th>Role</th>
+                                        <th>N.Of Applicants</th>
+                                        <th>Posted Date</th>
+                                        <th></th>
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                      {currentDataForAdmin.map((item) => (
+                                        <tr key={item.id}>
+                                          <th>
+                                            <span className="b3 ">
+                                              <Link href="#">
+                                                {item.job_title}
                                               </Link>
+                                            </span>
+                                          </th>
+                                          <td>
+                                            <span className="b3">
+                                              <Link href="#">
+                                                {item?.industry}
+                                              </Link>
+                                            </span>
+                                          </td>
+                                          <td>
+                                            <span className="b3">
+                                              <Link href="#">{item?.role}</Link>
+                                            </span>
+                                          </td>
+                                          <td>
+                                            <span className="b3">
+                                              <Link href="#">
+                                                {item.application_count}
+                                              </Link>
+                                            </span>
+                                          </td>
+                                          <td>
+                                            <span className="b3">
+                                              <Link href="#">
+                                                {item?.posted_on}
+                                              </Link>
+                                            </span>
+                                          </td>
 
-                                              <div
-                                                className="rbt-btn btn-xs bg-primary-opacity radius-round color-info"
-                                                href={`/edit-a-job/${item?.id}/`}
-                                                title="Edit"
-                                                onClick={() =>
-                                                  handleEditClick(item?.id)
+                                          <td>
+                                            <div className="rbt-button-group justify-content-end gap-2">
+                                              {item?.is_active && (
+                                                <>
+                                                  <Link
+                                                    className={`rbt-btn btn-xs radius-round ${
+                                                      item.application_count ===
+                                                      0
+                                                        ? "bg-gray"
+                                                        : "bg-coral-opacity"
+                                                    } `}
+                                                    href={
+                                                      item.application_count > 0
+                                                        ? `/applicants/${item?.id}`
+                                                        : "#"
+                                                    }
+                                                    title="View"
+                                                    // onClick={
+                                                    //   item.application_count > 0
+                                                    //     ? () =>
+                                                    //         router.push(
+                                                    //           `/applicants/${item?.id}`
+                                                    //         )
+                                                    //     : null
+                                                    // }
+
+                                                    style={{
+                                                      opacity:
+                                                        item.application_count ===
+                                                        0
+                                                          ? 0.5
+                                                          : 1,
+                                                      cursor:
+                                                        item.application_count ===
+                                                        0
+                                                          ? "not-allowed"
+                                                          : "pointer",
+                                                    }}
+                                                  >
+                                                    <i className="feather-eye pl--0"></i>
+                                                  </Link>
+
+                                                  <div
+                                                    className="rbt-btn btn-xs bg-primary-opacity radius-round color-info"
+                                                    href={`/edit-a-job/${item?.id}/`}
+                                                    title="Edit"
+                                                    onClick={() =>
+                                                      handleEditClick(item?.id)
+                                                    }
+                                                  >
+                                                    <i className="feather-edit pl--0"></i>
+                                                  </div>
+                                                </>
+                                              )}
+
+                                              <Tooltip
+                                                title={
+                                                  item?.is_active
+                                                    ? "Active"
+                                                    : "InActive"
                                                 }
                                               >
-                                                <i className="feather-edit pl--0"></i>
-                                              </div>
-                                            </>
-                                          )}
+                                                {item?.is_active ? (
+                                                  <Link
+                                                    className="rbt-btn btn-xs bg-color-success-opacity radius-round color-success"
+                                                    href="#"
+                                                    title="Active"
+                                                    onClick={() =>
+                                                      showDeleteConfirm(item)
+                                                    }
+                                                  >
+                                                    <i className="feather-check-circle pl--0"></i>
+                                                  </Link>
+                                                ) : (
+                                                  <Link
+                                                    className="rbt-btn btn-xs bg-color-danger-opacity radius-round color-danger"
+                                                    href="#"
+                                                    title="Inactive"
+                                                    onClick={() =>
+                                                      showDeleteConfirm(item)
+                                                    }
+                                                  >
+                                                    <i className="feather-x-circle pl--0"></i>
+                                                  </Link>
+                                                )}
+                                              </Tooltip>
+                                            </div>
+                                          </td>
+                                        </tr>
+                                      ))}
+                                    </tbody>
+                                  </table>
+                                </div>
+                              )}
 
-                                          <Tooltip
-                                            title={
-                                              item?.is_active
-                                                ? "Active"
-                                                : "InActive"
-                                            }
+                              {(isAlumni == "true" || isFatulty == "true") && (
+                                <div className="rbt-dashboard-table table-responsive mobile-table-750">
+                                  <div className="row g-5 m-0">
+                                    {listOfPosts.length > 0 ? (
+                                      listOfPosts.map((value, index) => (
+                                        <div
+                                          className="col-lg-6 col-12"
+                                          key={index}
+                                        >
+                                          <div
+                                            className="rbt-card  event-list-card variation-01 rbt-hover relative"
+                                            style={{ position: "relative" }}
                                           >
-                                            {item?.is_active ? (
-                                              <Link
-                                                className="rbt-btn btn-xs bg-color-success-opacity radius-round color-success"
-                                                href="#"
-                                                title="Active"
-                                                onClick={() =>
-                                                  showDeleteConfirm(item)
-                                                }
-                                              >
-                                                <i className="feather-check-circle pl--0"></i>
-                                              </Link>
-                                            ) : (
-                                              <Link
-                                                className="rbt-btn btn-xs bg-color-danger-opacity radius-round color-danger"
-                                                href="#"
-                                                title="Inactive"
-                                                onClick={() =>
-                                                  showDeleteConfirm(item)
-                                                }
-                                              >
-                                                <i className="feather-x-circle pl--0"></i>
-                                              </Link>
-                                            )}
-                                          </Tooltip>
-                                        </div>
-                                      </td>
-                                    </tr>
-                                  ))}
-                                </tbody>
-                              </table>
-                            </div>
-                          )}
-
-                          {(isAlumni == "true" || isFatulty == "true") && (
-                            <div className="rbt-dashboard-table table-responsive mobile-table-750">
-                              <div className="row g-5 m-0">
-                                {listOfPosts.length > 0 ? (
-                                  listOfPosts.map((value, index) => (
-                                    <div
-                                      className="col-lg-6 col-12"
-                                      key={index}
-                                    >
-                                      <div
-                                        className="rbt-card  event-list-card variation-01 rbt-hover relative"
-                                        style={{ position: "relative" }}
-                                      >
-                                        {/* Edit Icon in Top Right
+                                            {/* Edit Icon in Top Right
                                     <div
                                       className="rbt-button-group"
                                       style={{
@@ -1040,54 +1065,60 @@ const JobBoardMain = () => {
                                       </a>
                                     </div> */}
 
-                                        <div className="rbt-card-body pt-0">
-                                          <ul className="rbt-meta">
-                                            <li>
-                                              <i className="feather-map-pin"></i>
-                                              {value?.location}
-                                            </li>
-                                            <li>
-                                              <i className="feather-calendar"></i>
-                                              {value?.dead_line}
-                                            </li>
+                                            <div className="rbt-card-body pt-0">
+                                              <ul className="rbt-meta">
+                                                <li>
+                                                  <i className="feather-map-pin"></i>
+                                                  {value?.location}
+                                                </li>
+                                                <li>
+                                                  <i className="feather-calendar"></i>
+                                                  {value?.dead_line}
+                                                </li>
 
-                                            <li>
-                                              <i className="feather-user"></i>
-                                              {value?.posted_by}
-                                            </li>
-                                          </ul>
-                                          <h4 className="rbt-card-title font-20">
-                                            <Link href={`/job-details/${value?.id}`}>
-                                              {value.job_title}
-                                            </Link>
-                                          </h4>
-                                          <p
-                                            className="text-gray mt--dec-40 mb-3"
-                                            style={{ fontSize: "16px" }}
-                                          >
-                                            {TrimText(value.job_description)}
-                                          </p>
-                                          <div className="rbt-card-bottom mt-0">
-                                            <a
-                                              className="rbt-btn-link color-primary"
-                                              href={`/job-details/${value?.id}`}
-                                            >
-                                              View Job
-                                              <i className="feather-arrow-right"></i>
-                                            </a>
+                                                <li>
+                                                  <i className="feather-user"></i>
+                                                  {value?.posted_by}
+                                                </li>
+                                              </ul>
+                                              <h4 className="rbt-card-title font-20">
+                                                <Link
+                                                  href={`/job-details/${value?.id}`}
+                                                >
+                                                  {value.job_title}
+                                                </Link>
+                                              </h4>
+                                              <p
+                                                className="text-gray mt--dec-40 mb-3"
+                                                style={{ fontSize: "16px" }}
+                                              >
+                                                {TrimText(
+                                                  value.job_description
+                                                )}
+                                              </p>
+                                              <div className="rbt-card-bottom mt-0">
+                                                <a
+                                                  className="rbt-btn-link color-primary"
+                                                  href={`/job-details/${value?.id}`}
+                                                >
+                                                  View Job
+                                                  <i className="feather-arrow-right"></i>
+                                                </a>
+                                              </div>
+                                            </div>
                                           </div>
                                         </div>
-                                      </div>
-                                    </div>
-                                  ))
-                                ) : (
-                                  <div> No Jobs Found</div>
-                                )}
-                              </div>
+                                      ))
+                                    ) : (
+                                      <div> No Jobs Found</div>
+                                    )}
+                                  </div>
+                                </div>
+                              )}
                             </div>
-                          )}
-                        </div>
-                      </div>
+                          </div>
+                        </>
+                      )}
                     </div>
 
                     {/* --------------------table end--------------------- */}

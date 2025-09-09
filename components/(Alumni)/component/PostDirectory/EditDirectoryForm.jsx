@@ -16,11 +16,10 @@ import { jobTypeOption, YearOfExperience } from "@/utils/constant.utils";
 import axios from "axios";
 import Models from "@/imports/models.import";
 
-
 const EditDirectoryForm = () => {
-   const router = useRouter();
+  const router = useRouter();
   const { Option } = Select;
-    const { id } = useParams();
+  const { id } = useParams();
 
   const [formData, setFormData] = useState({
     business_name: "",
@@ -43,12 +42,12 @@ const EditDirectoryForm = () => {
   const [token, setToken] = useState("");
   const [industryType, setIndustryType] = useState([]);
 
-   const [state, setState] = useSetState({
-         currenIndustryTypePage: 1,
-        hasIndustryTypeLoadMore: null,
-        currenCountryPage: 1,
-        hasCountryLoadMore: null,
-      })
+  const [state, setState] = useSetState({
+    currenIndustryTypePage: 1,
+    hasIndustryTypeLoadMore: null,
+    currenCountryPage: 1,
+    hasCountryLoadMore: null,
+  });
 
   useEffect(() => {
     const Token = localStorage.getItem("token");
@@ -87,14 +86,20 @@ const EditDirectoryForm = () => {
       .then((response) => {
         setFormData({
           business_name: response.data.business_name,
-          country_code: {value:response.data.country_detail.country_code, label:response.data.country_detail.country_name},
+          country_code: {
+            value: response.data.country_detail.id,
+            label: response.data.country_detail.country_name,
+          },
           contact_email: response.data.contact_email,
           contact_number: response.data.contact_number,
           website: response.data.website,
           location: response.data.location,
           logo: response.data.logo,
           description: response.data.description,
-          industry_type: {value:response.data.industry_type_detail.id, label:response.data.industry_type_detail.type_name},
+          industry_type: {
+            value: response.data.industry_type_detail.id,
+            label: response.data.industry_type_detail.type_name,
+          },
           are_you_part_of_management: response.data.are_you_part_of_management,
         });
 
@@ -107,41 +112,39 @@ const EditDirectoryForm = () => {
         console.log("❌error --->", error);
       });
   };
-  const GetDepartmentList = async() => {
+  const GetDepartmentList = async () => {
     try {
-        const res = await Models.masters.GetCountryList(1);
-  
-        const countryOptions = res?.results?.map((cou) => ({
-          value: cou.id,
-          label: cou.country_name,
-        }));
-        setCountry(countryOptions);
-         setState({
-          hasCountryLoadMore: res?.next,
-        });
-      } catch (error) {
-        console.log("✌️error --->", error);
-      }
+      const res = await Models.masters.GetCountryList(1);
+
+      const countryOptions = res?.results?.map((cou) => ({
+        value: cou.id,
+        label: cou.country_name,
+      }));
+      setCountry(countryOptions);
+      setState({
+        hasCountryLoadMore: res?.next,
+      });
+    } catch (error) {
+      console.log("✌️error --->", error);
+    }
   };
 
-
-
   const GetIndustryType = async () => {
-      try {
-        const res = await Models.masters.bussinessTypeList(1);
-        const JobOption = res?.results?.map((job) => ({
-          value: job.id,
-          label: job.type_name,
-        }));
-  
-        setIndustryType(JobOption);
-        setState({
-          hasIndustryTypeLoadMore: res?.next,
-        });
-      } catch (error) {
-        console.log("✌️error --->", error);
-      }
-    };
+    try {
+      const res = await Models.masters.bussinessTypeList(1);
+      const JobOption = res?.results?.map((job) => ({
+        value: job.id,
+        label: job.type_name,
+      }));
+
+      setIndustryType(JobOption);
+      setState({
+        hasIndustryTypeLoadMore: res?.next,
+      });
+    } catch (error) {
+      console.log("✌️error --->", error);
+    }
+  };
 
   const handleChange = (e) => {
     const { name, type, value, files, checked } = e.target;
@@ -195,6 +198,9 @@ const EditDirectoryForm = () => {
 
     const isValid = validateForm(formData, validationRules, setErrMsg);
 
+    console.log(" formData.country_code",  formData.country_code);
+    
+
     if (!isValid) {
       console.log("Validation errors:", errMsg);
       return;
@@ -206,21 +212,17 @@ const EditDirectoryForm = () => {
       // Convert are_you_part_of_management to a boolean string if it's a checkbox
       if (key === "are_you_part_of_management") {
         formDataToSend.append(key, formData[key] ? "True" : "False"); // Ensure it's a string of 'true' or 'false'
-      } 
-      else if( key === "country_code"){
-         formDataToSend.append("country_code", formData.country_code.value);
-        
-      }
-      else if( key === "industry_type"){
-         formDataToSend.append("industry_type", formData.industry_type.value);
-        
-      }
-      else {
+      } else if (key === "country_code") {
+        formDataToSend.append("country_code", formData.country_code.value);
+      } else if (key === "industry_type") {
+        formDataToSend.append("industry_type", formData.industry_type.value);
+      } else {
         formDataToSend.append(key, formData[key]);
       }
     }
 
     try {
+      setState({ btnLoading: true });
       const response = await axios.post(
         `${BaseURL}/update_business_directory/${id}/`,
         formDataToSend,
@@ -247,8 +249,10 @@ const EditDirectoryForm = () => {
       setErrMsg({});
       setPreview(null);
       setFileInputKey(Date.now());
+      setState({ btnLoading: false });
     } catch (error) {
       console.log("❌error --->", error);
+      setState({ btnLoading: false });
     }
   };
 
@@ -263,54 +267,59 @@ const EditDirectoryForm = () => {
   }));
 
   const industryTypeListLoadMore = async () => {
-      try {
-        if (state.hasIndustryTypeLoadMore) {
-          const res = await Models.masters.bussinessTypeList(
-            state.currenIndustryTypePage + 1
-          );
-  
-          const IndustryTypeOption = res?.results?.map((job) => ({
+    try {
+      if (state.hasIndustryTypeLoadMore) {
+        const res = await Models.masters.bussinessTypeList(
+          state.currenIndustryTypePage + 1
+        );
+
+        const IndustryTypeOption = res?.results?.map((job) => ({
           value: job.id,
           label: job.type_name,
         }));
-  
-          setIndustryType([...industryType, ...IndustryTypeOption]);
-          setState({
-            currenIndustryTypePage: state.currenIndustryTypePage + 1,
-            hasIndustryTypeLoadMore: res.next,
-          });
-        } else {
-          setIndustryType(industryType);
-        }
-      } catch (error) {
-        console.log("error: ", error);
-      }
-    };
 
-    const CountryListLoadMore = async () => {
-        try {
-          if (state.hasCountryLoadMore) {
-            const res = await Models.masters.GetCountryList(
-              state.currenCountryPage + 1
-            );
-    
-             const countryOptions = res?.results?.map((cou) => ({
-            value: cou.id,
-            label: cou.country_name,
-          }));
-    
-            setCountry([...country, ...countryOptions]);
-            setState({
-              currenCountryPage: state.currenCountryPage + 1,
-              hasCountryLoadMore: res.next,
-            });
-          } else {
-            setCountry(country);
-          }
-        } catch (error) {
-          console.log("error: ", error);
-        }
-      };
+        setIndustryType([...industryType, ...IndustryTypeOption]);
+        setState({
+          currenIndustryTypePage: state.currenIndustryTypePage + 1,
+          hasIndustryTypeLoadMore: res.next,
+        });
+      } else {
+        setIndustryType(industryType);
+      }
+    } catch (error) {
+      console.log("error: ", error);
+    }
+  };
+
+  const CountryListLoadMore = async () => {
+    try {
+      if (state.hasCountryLoadMore) {
+        const res = await Models.masters.GetCountryList(
+          state.currenCountryPage + 1
+        );
+
+
+
+        const countryOptions = res?.results?.map((cou) => ({
+          value: cou.id,
+          label: cou.country_name,
+        }));
+
+        setCountry([...country, ...countryOptions]);
+        setState({
+          currenCountryPage: state.currenCountryPage + 1,
+          hasCountryLoadMore: res.next,
+        });
+      } else {
+        setCountry(country);
+      }
+    } catch (error) {
+      console.log("error: ", error);
+    }
+  };
+
+  console.log("country",country);
+  
 
   return (
     <div className={`rbt-contact-address `}>
@@ -347,7 +356,7 @@ const EditDirectoryForm = () => {
                         type="text"
                         name="business_name"
                         value={formData.business_name}
-                         onChange={(e) => handleChange(e)}
+                        onChange={(e) => handleChange(e)}
                         error={errMsg.business_name}
                         required={true}
                       />
@@ -356,11 +365,11 @@ const EditDirectoryForm = () => {
 
                     <div className="form-group">
                       <FormField
-                       placeholder="Contact Email"
+                        placeholder="Contact Email"
                         type="email"
                         name="contact_email"
                         value={formData.contact_email}
-                         onChange={(e) => handleChange(e)}
+                        onChange={(e) => handleChange(e)}
                         error={errMsg.contact_email}
                         required={true}
                       />
@@ -369,41 +378,37 @@ const EditDirectoryForm = () => {
 
                     <div className="form-group">
                       <FormField
-                         placeholder="Contact Number"
+                        placeholder="Contact Number"
                         type="tel"
                         name="contact_number"
                         value={formData.contact_number}
-                         onChange={(e) => handleChange(e)}
+                        onChange={(e) => handleChange(e)}
                         error={errMsg.contact_number}
-                         required={true}
+                        required={true}
                       />
                       <span className="focus-border"></span>
                     </div>
 
                     <div className="form-group">
                       <FormField
-                       placeholder="Website"
+                        placeholder="Website"
                         type="text"
                         name="website"
                         value={formData.website}
-                         onChange={(e) => handleChange(e)}
+                        onChange={(e) => handleChange(e)}
                         error={errMsg.website}
-                        
                         required={true}
-                        
                       />
                       <span className="focus-border"></span>
                     </div>
 
-                    
-
                     <div className="form-group">
                       <FormField
-                          placeholder="Address"
+                        placeholder="Address"
                         type="text"
                         name="location"
                         value={formData.location}
-                         onChange={(e) => handleChange(e)}
+                        onChange={(e) => handleChange(e)}
                         error={errMsg.location}
                         required={true}
                       />
@@ -412,19 +417,18 @@ const EditDirectoryForm = () => {
 
                     <div className="form-group">
                       <FormField
-                       placeholder="Country"
-                         type="loadMoreSelect"
+                        placeholder="Country"
+                        type="loadMoreSelect"
                         className="form-dd"
                         name="country_code"
                         value={formData.country_code}
-                         onChange={(e) => {
+                        onChange={(e) => {
                           setFormData({ ...formData, country_code: e });
                         }}
                         error={errMsg.country_code}
-                       
                         options={country}
                         required={true}
-                        loadMore={()=>CountryListLoadMore()}
+                        loadMore={() => CountryListLoadMore()}
                       />
                       <span className="focus-border"></span>
                     </div>
@@ -436,20 +440,16 @@ const EditDirectoryForm = () => {
                         className="form-dd"
                         name="industry_type"
                         value={formData.industry_type}
-                       
                         onChange={(e) => {
-                         
                           setFormData({ ...formData, industry_type: e });
                         }}
                         error={errMsg.industry_type}
                         options={industryType}
                         required={true}
-                        loadMore={()=>industryTypeListLoadMore()}
+                        loadMore={() => industryTypeListLoadMore()}
                       />
                       <span className="focus-border"></span>
                     </div>
-
-                    
 
                     <div className="form-group">
                       <FormField
@@ -459,60 +459,58 @@ const EditDirectoryForm = () => {
                         ref={fileInputRef}
                         key={fileInputKey}
                         error={errMsg.logo}
-                       
-                         onChange={(e) => handleChange(e)}
+                        onChange={(e) => handleChange(e)}
                         accept="image/*,application/pdf"
                         required={true}
                         className="file-input"
-                        
                       />
                       <span className="focus-border"></span>
                       {preview && (
                         <div
                           style={{
-                            marginTop:"5px",
+                            marginTop: "5px",
                             // marginLeft: "10px",
                             width: "100px",
                             height: "80px",
                             position: "relative",
                           }}
                         >
-                           {preview && (
-                        <div
-                          style={{
-                            marginLeft: "10px",
-                            width: "100px",
-                            height: "80px",
-                            position: "relative",
-                          }}
-                        >
-                          <img
-                            src={preview}
-                            alt="preview"
-                            style={{
-                              width: "100%",
-                              height: "100%",
-                              objectFit: "cover",
-                            }}
-                          />
-                          <button
-                            type="button"
-                            onClick={handleDeleteImage}
-                            style={{
-                              position: "absolute",
-                              top: "0",
-                              right: "0",
-                              background: "transparent",
-                              border: "none",
-                              cursor: "pointer",
-                              color: "red",
-                              fontSize: "20px",
-                            }}
-                          >
-                            {/* <DeleteOutlined /> */}
-                          </button>
-                        </div>
-                      )}
+                          {preview && (
+                            <div
+                              style={{
+                                marginLeft: "10px",
+                                width: "100px",
+                                height: "80px",
+                                position: "relative",
+                              }}
+                            >
+                              <img
+                                src={preview}
+                                alt="preview"
+                                style={{
+                                  width: "100%",
+                                  height: "100%",
+                                  objectFit: "cover",
+                                }}
+                              />
+                              <button
+                                type="button"
+                                onClick={handleDeleteImage}
+                                style={{
+                                  position: "absolute",
+                                  top: "0",
+                                  right: "0",
+                                  background: "transparent",
+                                  border: "none",
+                                  cursor: "pointer",
+                                  color: "red",
+                                  fontSize: "20px",
+                                }}
+                              >
+                                {/* <DeleteOutlined /> */}
+                              </button>
+                            </div>
+                          )}
                           <button
                             type="button"
                             onClick={handleDeleteImage}
@@ -532,24 +530,22 @@ const EditDirectoryForm = () => {
                         </div>
                       )}
                     </div>
-
-                    
                   </div>
 
                   <div className="form-group w-100">
-                      <FormField
-                        placeholder="Job Description"
-                        type="textarea"
-                        className="file-input"
-                        name="description"
-                         value={formData.description}
-                         onChange={(e) => handleChange(e)}
-                        error={errMsg.description}
-                        required={true}
-                      />
-                    </div>
+                    <FormField
+                      placeholder="Job Description"
+                      type="textarea"
+                      className="file-input"
+                      name="description"
+                      value={formData.description}
+                      onChange={(e) => handleChange(e)}
+                      error={errMsg.description}
+                      required={true}
+                    />
+                  </div>
 
-                      {/* <div className="form-group w-100">
+                  {/* <div className="form-group w-100">
                          <FormField
                         label="Are you part of management?"
                         type="checkbox"
@@ -559,23 +555,51 @@ const EditDirectoryForm = () => {
                       />
                       </div> */}
 
+                  <div style={{ marginTop: "15px" }}>
+                    <input
+                      type="checkbox"
+                      name="are_you_part_of_management"
+                      onChange={(e) => handleChange(e)}
+                      checked={formData.are_you_part_of_management}
+                      id="partofmanagement"
+                    />
+                    <label
+                      htmlFor={`partofmanagement`}
+                      style={{
+                        marginRight: "5px",
+                        color: "black",
+                        marginTop: "2px",
+                      }}
+                    >
+                      Are you part of management?
+                    </label>
+                  </div>
+
                   {/* Submit */}
-                  <div className="form-submit-group">
+                  <div className="form-submit-group mt--50">
                     <button
                       name="submit"
                       type="submit"
                       id="submit"
                       className="rbt-btn btn-md btn-gradient hover-icon-reverse w-100"
+                      style={{
+                        cursor: state?.btnLoading ? "not-allowed" : "pointer",
+                      }}
+                      disabled={state.btnLoading}
                     >
-                      <span className="icon-reverse-wrapper">
-                        <span className="btn-text">Submit</span>
-                        <span className="btn-icon">
-                          <i className="feather-arrow-right"></i>
+                      {state?.btnLoading ? (
+                        <span className="btn-loader"></span>
+                      ) : (
+                        <span className="icon-reverse-wrapper">
+                          <span className="btn-text">Submit</span>
+                          <span className="btn-icon">
+                            <i className="feather-arrow-right"></i>
+                          </span>
+                          <span className="btn-icon">
+                            <i className="feather-arrow-right"></i>
+                          </span>
                         </span>
-                        <span className="btn-icon">
-                          <i className="feather-arrow-right"></i>
-                        </span>
-                      </span>
+                      )}
                     </button>
                   </div>
                 </form>

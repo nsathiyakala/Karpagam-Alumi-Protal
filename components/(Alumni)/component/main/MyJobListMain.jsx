@@ -14,6 +14,7 @@ import axios from "axios";
 import { BaseURL } from "@/utils/BaseUrl";
 import Models from "@/imports/models.import";
 import { jobTypeOption } from "@/utils/constant.utils";
+import Loader from "../../Loader";
 
 const MyJobListMain = () => {
   const { confirm } = Modal;
@@ -43,6 +44,10 @@ const MyJobListMain = () => {
   const [isAlumniManager, setIsAlumniManager] = useState(false);
   const [isAlumni, setIsAlumni] = useState(false);
   const [isFatulty, setIsFatulty] = useState(false);
+
+  const [state, setState] = useSetState({
+    pageLoading: false,
+  });
 
   useEffect(() => {
     const Token = localStorage.getItem("token");
@@ -109,6 +114,9 @@ const MyJobListMain = () => {
 
   console.log("accessToken", token);
   const getJobsAdmin = () => {
+    setState({
+      pageLoading: true,
+    });
     axios
       .get(`${BaseURL}/my_job_post/`, {
         headers: {
@@ -119,9 +127,15 @@ const MyJobListMain = () => {
         setAdminDataLists(response.data?.results);
         setFilteredData(response.data?.results);
         console.log("✌️response --->", response);
+        setState({
+          pageLoading: false,
+        });
       })
       .catch((error) => {
         console.log("❌error --->", error);
+        setState({
+          pageLoading: false,
+        });
       });
   };
 
@@ -332,197 +346,203 @@ const MyJobListMain = () => {
   console.log("isAlumni", isAlumni);
   console.log("isFatulty", isFatulty);
 
+  if (state.pageLoading) {
+    return <Loader />; // Show loader while checking token
+  }
+
   return (
     <div className="rbt-dashboard-area section-pad">
       <div className="container-fluid">
         <div className="row justify-content-center">
           <div className="col-11 col-xl-10">
             <div className="container-fluid">
-              <div className="row">
-                <div className="col-lg-12">
-                  <div className="rbt-elements-area bg-color-extra2 mb-5">
-                    <div className="container-fluid">
-                      <div className="row p-0">
-                        <div className="col-lg-12 p-0">
-                          <form action="#" className="rbt-search-style-1">
-                            <input
-                              type="text"
-                              placeholder="Search Job with Job title and Role"
-                              // name="search_filter"
-                              onChange={handleSearchFilter}
-                            />
-                            <button className="search-btn">
-                              <i className="feather-search"></i>
-                            </button>
-                          </form>
+              
+                <div className="row">
+                  <div className="col-lg-12">
+                    <div className="rbt-elements-area bg-color-extra2 mb-5">
+                      <div className="container-fluid">
+                        <div className="row p-0">
+                          <div className="col-lg-12 p-0">
+                            <form action="#" className="rbt-search-style-1">
+                              <input
+                                type="text"
+                                placeholder="Search Job with Job title and Role"
+                                // name="search_filter"
+                                onChange={handleSearchFilter}
+                              />
+                              <button className="search-btn">
+                                <i className="feather-search"></i>
+                              </button>
+                            </form>
+                          </div>
                         </div>
                       </div>
                     </div>
+
+                    {(isAdmin == "true" ||
+                      isAlumniManager == "true" ||
+                      isAlumni == "true" ||
+                      isFatulty == "true") && (
+                      <div className="rbt-dashboard-content  p-0">
+                        <div className="content">
+                          <div className="section-title d-flex justify-content-between ">
+                            <h4 className="rbt-title-style-3">My Job Lists</h4>
+
+                            <Link
+                              className="rbt-btn btn-gradient radius-round sm-btn"
+                              href="/post-a-job"
+                            >
+                              Post Job
+                            </Link>
+                          </div>
+
+                          <div className="rbt-dashboard-table table-responsive mobile-table-750">
+                            {AdminDataLists.length > 0 ? (
+                              <table className="rbt-table table table-borderless">
+                                <thead>
+                                  <tr>
+                                    <th>Job Title</th>
+                                    <th>Industry</th>
+                                    <th>Role</th>
+                                    <th>N.Of Applicants</th>
+                                    <th>Posted Date</th>
+                                    <th></th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  {currentDataForAdmin.map((item) => (
+                                    <tr key={item.id}>
+                                      <th>
+                                        <span className="b3">
+                                          <Link href="#">{item.job_title}</Link>
+                                        </span>
+                                      </th>
+                                      <td>
+                                        <span className="b3">
+                                          <Link href="#">{item?.industry}</Link>
+                                        </span>
+                                      </td>
+                                      <td>
+                                        <span className="b3">
+                                          <Link href="#">{item?.role}</Link>
+                                        </span>
+                                      </td>
+                                      <td>
+                                        <span className="b3">
+                                          <Link href="#">
+                                            {item.application_count}
+                                          </Link>
+                                        </span>
+                                      </td>
+                                      <td>
+                                        <span className="b3">
+                                          <Link href="#">
+                                            {item?.posted_on}
+                                          </Link>
+                                        </span>
+                                      </td>
+
+                                      <td>
+                                        <div className="rbt-button-group justify-content-end gap-2">
+                                          {item?.is_active && (
+                                            <>
+                                              <Link
+                                                className={`rbt-btn btn-xs radius-round ${
+                                                  item.application_count === 0
+                                                    ? "bg-gray"
+                                                    : "bg-coral-opacity"
+                                                } `}
+                                                href={
+                                                  item.application_count > 0
+                                                    ? `/applicants/${item?.id}`
+                                                    : "#"
+                                                }
+                                                title="View"
+                                                // onClick={
+                                                //   item.application_count > 0
+                                                //     ? () =>
+                                                //         router.push(
+                                                //           `/applicants/${item?.id}`
+                                                //         )
+                                                //     : null
+                                                // }
+
+                                                style={{
+                                                  opacity:
+                                                    item.application_count === 0
+                                                      ? 0.5
+                                                      : 1,
+                                                  cursor:
+                                                    item.application_count === 0
+                                                      ? "not-allowed"
+                                                      : "pointer",
+                                                }}
+                                              >
+                                                <i className="feather-eye pl--0"></i>
+                                              </Link>
+
+                                              <div
+                                                className="rbt-btn btn-xs bg-primary-opacity radius-round color-info"
+                                                href={`/edit-a-job/${item?.id}/`}
+                                                title="Edit"
+                                                onClick={() =>
+                                                  handleEditClick(item?.id)
+                                                }
+                                              >
+                                                <i className="feather-edit pl--0"></i>
+                                              </div>
+                                            </>
+                                          )}
+
+                                          <Tooltip
+                                            title={
+                                              item?.is_active
+                                                ? "Active"
+                                                : "InActive"
+                                            }
+                                          >
+                                            {item?.is_active ? (
+                                              <Link
+                                                className="rbt-btn btn-xs bg-color-success-opacity radius-round color-success"
+                                                href="#"
+                                                title="Active"
+                                                onClick={() =>
+                                                  showDeleteConfirm(item)
+                                                }
+                                              >
+                                                <i className="feather-check-circle pl--0"></i>
+                                              </Link>
+                                            ) : (
+                                              <Link
+                                                className="rbt-btn btn-xs bg-color-danger-opacity radius-round color-danger"
+                                                href="#"
+                                                title="Inactive"
+                                                onClick={() =>
+                                                  showDeleteConfirm(item)
+                                                }
+                                              >
+                                                <i className="feather-x-circle pl--0"></i>
+                                              </Link>
+                                            )}
+                                          </Tooltip>
+                                        </div>
+                                      </td>
+                                    </tr>
+                                  ))}
+                                </tbody>
+                              </table>
+                            ) : (
+                              <div>No Data</div>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    )}
                   </div>
 
-                  {(isAdmin == "true" ||
-                    isAlumniManager == "true" ||
-                    isAlumni == "true" ||
-                    isFatulty == "true") && (
-                    <div className="rbt-dashboard-content  p-0">
-                      <div className="content">
-                        <div className="section-title d-flex justify-content-between ">
-                          <h4 className="rbt-title-style-3">My Job Lists</h4>
-
-                          <Link
-                            className="rbt-btn btn-gradient radius-round sm-btn"
-                            href="/post-a-job"
-                          >
-                            Post Job
-                          </Link>
-                        </div>
-
-                        <div className="rbt-dashboard-table table-responsive mobile-table-750">
-
-                            {AdminDataLists.length > 0 ? (
-                                <table className="rbt-table table table-borderless">
-                            <thead>
-                              <tr>
-                                <th>Job Title</th>
-                                <th>Industry</th>
-                                <th>Role</th>
-                                <th>N.Of Applicants</th>
-                                <th>Posted Date</th>
-                                <th></th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              {currentDataForAdmin.map((item) => (
-                                <tr key={item.id}>
-                                  <th>
-                                    <span className="b3">
-                                      <Link href="#">{item.job_title}</Link>
-                                    </span>
-                                  </th>
-                                  <td>
-                                    <span className="b3">
-                                      <Link href="#">{item?.industry}</Link>
-                                    </span>
-                                  </td>
-                                  <td>
-                                    <span className="b3">
-                                      <Link href="#">{item?.role}</Link>
-                                    </span>
-                                  </td>
-                                  <td>
-                                    <span className="b3">
-                                      <Link href="#">
-                                        {item.application_count}
-                                      </Link>
-                                    </span>
-                                  </td>
-                                  <td>
-                                    <span className="b3">
-                                      <Link href="#">{item?.posted_on}</Link>
-                                    </span>
-                                  </td>
-
-                                  <td>
-                                    <div className="rbt-button-group justify-content-end gap-2">
-                                      {item?.is_active && (
-                                        <>
-                                          <Link
-                                            className={`rbt-btn btn-xs radius-round ${
-                                              item.application_count === 0
-                                                ? "bg-gray"
-                                                : "bg-coral-opacity"
-                                            } `}
-                                            href={
-                                              item.application_count > 0
-                                                ? `/applicants/${item?.id}`
-                                                : "#"
-                                            }
-                                            title="View"
-                                            // onClick={
-                                            //   item.application_count > 0
-                                            //     ? () =>
-                                            //         router.push(
-                                            //           `/applicants/${item?.id}`
-                                            //         )
-                                            //     : null
-                                            // }
-
-                                            style={{
-                                              opacity:
-                                                item.application_count === 0
-                                                  ? 0.5
-                                                  : 1,
-                                              cursor:
-                                                item.application_count === 0
-                                                  ? "not-allowed"
-                                                  : "pointer",
-                                            }}
-                                          >
-                                            <i className="feather-eye pl--0"></i>
-                                          </Link>
-
-                                          <div
-                                            className="rbt-btn btn-xs bg-primary-opacity radius-round color-info"
-                                            href={`/edit-a-job/${item?.id}/`}
-                                            title="Edit"
-                                            onClick={() =>
-                                              handleEditClick(item?.id)
-                                            }
-                                          >
-                                            <i className="feather-edit pl--0"></i>
-                                          </div>
-                                        </>
-                                      )}
-
-                                      <Tooltip
-                                        title={
-                                          item?.is_active
-                                            ? "Active"
-                                            : "InActive"
-                                        }
-                                      >
-                                        {item?.is_active ? (
-                                          <Link
-                                            className="rbt-btn btn-xs bg-color-success-opacity radius-round color-success"
-                                            href="#"
-                                            title="Active"
-                                            onClick={() =>
-                                              showDeleteConfirm(item)
-                                            }
-                                          >
-                                            <i className="feather-check-circle pl--0"></i>
-                                          </Link>
-                                        ) : (
-                                          <Link
-                                            className="rbt-btn btn-xs bg-color-danger-opacity radius-round color-danger"
-                                            href="#"
-                                            title="Inactive"
-                                            onClick={() =>
-                                              showDeleteConfirm(item)
-                                            }
-                                          >
-                                            <i className="feather-x-circle pl--0"></i>
-                                          </Link>
-                                        )}
-                                      </Tooltip>
-                                    </div>
-                                  </td>
-                                </tr>
-                              ))}
-                            </tbody>
-                          </table>
-                             ) : (
-                                <div>No Data</div>
-                             )}
-                          
-                        </div>
-                      </div>
-                    </div>
-                  )}
+                  {/* --------------------table end--------------------- */}
                 </div>
-
-                {/* --------------------table end--------------------- */}
-              </div>
+            
             </div>
           </div>
         </div>

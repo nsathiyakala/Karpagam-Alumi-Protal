@@ -16,7 +16,6 @@ import { jobTypeOption, YearOfExperience } from "@/utils/constant.utils";
 import axios from "axios";
 import Models from "@/imports/models.import";
 
-
 const PostJobForm = () => {
   const router = useRouter();
   const { Option } = Select;
@@ -66,6 +65,7 @@ const PostJobForm = () => {
     hasInstitutionLoadMore: null,
     currenLocationPage: 1,
     hasLocationLoadMore: null,
+    btnloading:false
   });
 
   useEffect(() => {
@@ -195,6 +195,8 @@ const PostJobForm = () => {
   };
 
   const handleSubmit = async (e) => {
+
+    setState({btnloading:true})
     e.preventDefault();
 
     const validationRules = {
@@ -231,8 +233,7 @@ const PostJobForm = () => {
         formDataToSend.append("industry", formData.industry.value);
       } else if (key === "role") {
         formDataToSend.append("role", formData.role.value);
-      }
-      else {
+      } else {
         formDataToSend.append(key, formData[key]);
       }
     }
@@ -266,9 +267,11 @@ const PostJobForm = () => {
         setErrMsg({});
         setPreview(null);
         setFileInputKey(Date.now());
+        setState({btnLoading:false})
       })
       .catch((error) => {
         console.log("❌error --->", error);
+        setState({btnLoading:false})
       });
   };
 
@@ -337,7 +340,6 @@ const PostJobForm = () => {
     }
   };
 
-
   return (
     <div className={`rbt-contact-address `}>
       <div className="container section-pad">
@@ -354,7 +356,7 @@ const PostJobForm = () => {
             </div>
           </div>
         </div>
-        <div className="row justify-content-center event-form">
+        <div className="row justify-content-center job-form">
           <div className="col-lg-10">
             <div className="form-wrapper">
               <div className="rbt-contact-form contact-form-style-1 max-width-auto">
@@ -518,12 +520,10 @@ const PostJobForm = () => {
                       <span className="focus-border"></span>
                     </div>
 
-                  
-
                     <div className="form-group">
                       <label htmlFor="date"> Closed Date </label>
                       <FormField
-                      id="date"
+                        id="date"
                         // placeholder="Closed Date"
                         type="date"
                         name="dead_line"
@@ -537,7 +537,7 @@ const PostJobForm = () => {
                     </div>
 
                     <div className="form-group">
-                        <label htmlFor="date"> Attached file  </label>
+                      <label htmlFor="date"> Attached file </label>
                       <FormField
                         // placeholder="Attach File"
                         type="file"
@@ -606,7 +606,7 @@ const PostJobForm = () => {
                       )}
                     </div>
 
-                      <div className="form-group">
+                    <div className="form-group">
                       <FormField
                         placeholder="Job Type"
                         type="select"
@@ -619,22 +619,20 @@ const PostJobForm = () => {
                       />
                       <span className="focus-border"></span>
                     </div>
-
-                    
                   </div>
 
                   <div className="form-group w-100">
-                      <FormField
-                        placeholder="Job Description"
-                        type="textarea"
-                        className="file-input"
-                        name="job_description"
-                        value={formData.job_description}
-                        onChange={(e) => handleChange(e)}
-                        error={errMsg.job_description}
-                        required={true}
-                      />
-                    </div>
+                    <FormField
+                      placeholder="Job Description"
+                      type="textarea"
+                      className="file-input"
+                      name="job_description"
+                      value={formData.job_description}
+                      onChange={(e) => handleChange(e)}
+                      error={errMsg.job_description}
+                      required={true}
+                    />
+                  </div>
 
                   {/* Submit */}
                   <div className="form-submit-group">
@@ -643,16 +641,22 @@ const PostJobForm = () => {
                       type="submit"
                       id="submit"
                       className="rbt-btn btn-md btn-gradient hover-icon-reverse w-100"
+                      style={{ cursor: state?.btnLoading ? "not-allowed" : "pointer" }}
+                      disabled={state.btnLoading}
                     >
-                      <span className="icon-reverse-wrapper">
-                        <span className="btn-text">Submit</span>
-                        <span className="btn-icon">
-                          <i className="feather-arrow-right"></i>
+                      {state?.btnLoading ? (
+                        <span className="btn-loader"></span>
+                      ) : (
+                        <span className="icon-reverse-wrapper">
+                          <span className="btn-text">Submit</span>
+                          <span className="btn-icon">
+                            <i className="feather-arrow-right"></i>
+                          </span>
+                          <span className="btn-icon">
+                            <i className="feather-arrow-right"></i>
+                          </span>
                         </span>
-                        <span className="btn-icon">
-                          <i className="feather-arrow-right"></i>
-                        </span>
-                      </span>
+                      )}
                     </button>
                   </div>
                 </form>

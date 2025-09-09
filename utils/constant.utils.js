@@ -28,7 +28,8 @@ export const menus = {
     // { label: "Change Password", href: "/change-password" },
   ],
   faculty: [
-    { label: "Dashboard", href: "/dashboard" },
+    // { label: "Dashboard", href: "/dashboard" },
+    { label: "Home", href: "/home" },
     { label: "Members", href: "/members" },
     { label: "Job Board", href: "/job-board" },
     { label: "Business Directory", href: "/business-directory" },

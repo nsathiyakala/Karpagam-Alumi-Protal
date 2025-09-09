@@ -338,3 +338,9 @@ export const downloadExcel = (data) => {
     console.error("Error during Excel download:", error);
   }
 };
+
+export const isUrl = (string) => {
+  const pattern =
+    /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?(\?[^\s]*)?$/;
+  return pattern.test(string);
+};

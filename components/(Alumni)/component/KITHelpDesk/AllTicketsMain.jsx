@@ -430,7 +430,7 @@ const AllTicketsMain = () => {
 
     setStatusData({
       id: item.ticket_id,
-      status_id: item.status_id.label,
+      status_id: item?.status?.label,
       priority: item.priority,
       due_date: item.due_date,
     });

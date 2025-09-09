@@ -10,6 +10,7 @@ import axios from "axios";
 import { BaseURL } from "@/utils/BaseUrl";
 import Models from "@/imports/models.import";
 import Image from "next/image";
+import Loader from "../../Loader";
 
 const BusinessDirectoryMain = () => {
   const { confirm } = Modal;
@@ -45,6 +46,7 @@ const BusinessDirectoryMain = () => {
   const [state, setState] = useSetState({
     currenIndustryPage: 1,
     hasIndustryLoadMore: null,
+    pageLoading: false,
   });
 
   useEffect(() => {
@@ -111,6 +113,9 @@ const BusinessDirectoryMain = () => {
   console.log("myBusinessDirCount", myBusinessDirCount);
 
   const getJobsAdmin = () => {
+    setState({
+      pageLoading: true,
+    });
     axios
       .get(`${BaseURL}/retrieve_business_directory/`, {
         headers: {
@@ -121,9 +126,15 @@ const BusinessDirectoryMain = () => {
         setAdminDataLists(response.data?.results);
         setFilteredData(response.data?.results);
         console.log("✌️response --->", response);
+        setState({
+          pageLoading: false,
+        });
       })
       .catch((error) => {
         console.log("❌error --->", error);
+        setState({
+          pageLoading: false,
+        });
         if (error?.response?.data?.code === "token_not_valid") {
           localStorage.removeItem("token");
           router.push("/login");
@@ -293,6 +304,9 @@ const BusinessDirectoryMain = () => {
   };
 
   const handleFiltersSubmit = (e) => {
+    setState({
+      pageLoading: true,
+    });
     const body = bodyData();
 
     console.log(body);
@@ -313,6 +327,9 @@ const BusinessDirectoryMain = () => {
         setListOfPosts(response.data?.results);
         setNormelUserFilter(response.data?.results);
         setAllUserFilterFinalDataList(formData);
+        setState({
+          pageLoading: false,
+        });
         // setFormData({
         //   business_name: "",
         //   industry: "",
@@ -321,10 +338,16 @@ const BusinessDirectoryMain = () => {
       })
       .catch((error) => {
         console.log("❌error --->", error);
+        setState({
+          pageLoading: false,
+        });
       });
   };
 
   const handleClearFilter = () => {
+    setState({
+      pageLoading: true,
+    });
     const Body = {
       business_name: "",
       industry: "",
@@ -348,9 +371,15 @@ const BusinessDirectoryMain = () => {
           industry: "",
           location: "",
         });
+        setState({
+          pageLoading: false,
+        });
       })
       .catch((error) => {
         console.log("❌error --->", error);
+        setState({
+          pageLoading: false,
+        });
       });
   };
 
@@ -376,6 +405,10 @@ const BusinessDirectoryMain = () => {
 
   console.log("departmentList", departmentList);
 
+  if (state.pageLoading) {
+    return <Loader />; // Show loader while checking token
+  }
+
   return (
     <div className="rbt-dashboard-area section-pad">
       <div className="container-fluid">
@@ -395,7 +428,7 @@ const BusinessDirectoryMain = () => {
                           Add a Business Listing
                         </Link>
                       </div>
-                    </div> 
+                    </div>
                   </div>
 
                   <div className="row g-5">
@@ -501,136 +534,155 @@ const BusinessDirectoryMain = () => {
                     {/* --------------------table start--------------------- */}
 
                     <div className="col-lg-9">
-                      <div className="rbt-elements-area bg-color-extra2 mb-5">
-                        <div className="container-fluid">
-                          <div className="row p-0">
-                            <div className="col-lg-12 p-0">
-                              <form action="#" className="rbt-search-style-1">
-                                <input
-                                  type="text"
-                                  placeholder="Search Job with Job title and Role"
-                                  // name="search_filter"
-                                  onChange={handleSearchFilter}
-                                />
-                                <button className="search-btn">
-                                  <i className="feather-search"></i>
-                                </button>
-                              </form>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div className="rbt-callto-action rbt-cta-default style-2">
-                        <div className="content-wrapper overflow-hidden pt--30 pb--30 bg-color-primary-opacity">
-                          <div className="row gy-5 align-items-end">
-                            <div className="col-lg-8">
-                              <div className="inner">
-                                <div className="content text-left">
-                                  <h5 className="mb--5">
-                                    {AdminDataLists.length} Business Found
-                                  </h5>
-                                  {/* <p className="b3">Create Announcement</p> */}
+                      {state.pageLoading ? (
+                        <Loader />
+                      ) : (
+                        <>
+                          <div className="rbt-elements-area bg-color-extra2 mb-5">
+                            <div className="container-fluid">
+                              <div className="row p-0">
+                                <div className="col-lg-12 p-0">
+                                  <form
+                                    action="#"
+                                    className="rbt-search-style-1"
+                                  >
+                                    <input
+                                      type="text"
+                                      placeholder="Search Job with Job title and Role"
+                                      // name="search_filter"
+                                      onChange={handleSearchFilter}
+                                    />
+                                    <button className="search-btn">
+                                      <i className="feather-search"></i>
+                                    </button>
+                                  </form>
                                 </div>
                               </div>
                             </div>
-                            <div className="col-lg-4 d-flex justify-content-start justify-content-lg-end">
-                              <div className="call-to-btn text-start text-lg-end position-relative">
-                                <Link
-                                  className="rbt-btn btn-gradient radius-round sm-btn"
-                                  href="/my-business-directory"
-                                >
-                                  <span data-text="Add New Announcement">
-                                    My Business Directory
-                                  </span>
-                                </Link>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div className="rbt-dashboard-content p-0 mt-5 mb-2">
-                        <div className="content">
-                          <div className="section-title">
-                            <h4 className="rbt-title-style-3 mb-2" >
-                              Business Directory List
-                            </h4>
                           </div>
 
-                          <div className="rbt-dashboard-table table-responsive mobile-table-750">
-                            <div className="row g-5 m-0">
-                              {currentDataForAdmin.map((item, index) => (
-                                <div className="col-lg-6 col-12" key={index}>
-                                  <div
-                                    className="rbt-card card-list-2 event-list-card variation-01 rbt-hover relative"
-                                    style={{ position: "relative" }}
-                                  >
-                                    {/* Edit Icon in Top Right */}
-                                    <div
-                                      className="rbt-button-group"
-                                      style={{
-                                        position: "absolute",
-                                        top: "15px",
-                                        right: "15px",
-                                        zIndex: 10,
-                                      }}
-                                    >
-                                      <a
-                                        className="rbt-btn btn-xs bg-primary-opacity radius-round"
-                                        href={`/edit-a-directory/${item.id}/`}
-                                        title="Edit"
-                                      >
-                                        <i className="feather-edit pl--0" />
-                                      </a>
-                                    </div>
-
-                                    <div className="rbt-card-img">
-                                      <Link href={`/event-details/${item.id}`}>
-                                        <Image
-                                          src="/images/event/grid-type-01.jpg"
-                                          width={355}
-                                          height={240}
-                                          priority
-                                          alt="Card image"
-                                        />
-                                      </Link>
-                                    </div>
-
-                                    <div className="rbt-card-body">
-                                      <ul className="rbt-meta">
-                                        <li>
-                                          <i className="feather-map-pin"></i>
-                                          {item?.location}
-                                        </li>
-                                      </ul>
-                                      <h4 className="rbt-card-title">
-                                        <Link href={`business-directory/${item.id}`}>
-                                          {item.business_name}
-                                        </Link>
-                                      </h4>
-                                      <p
-                                        className="text-gray mt--dec-40"
-                                        style={{ fontSize: "16px" }}
-                                      >
-                                        <Link href={"#"}>
-                                          {item.industry_type}
-                                        </Link>
-                                      </p>
+                          <div className="rbt-callto-action rbt-cta-default style-2">
+                            <div className="content-wrapper overflow-hidden pt--30 pb--30 bg-color-primary-opacity">
+                              <div className="row gy-5 align-items-end">
+                                <div className="col-lg-8">
+                                  <div className="inner">
+                                    <div className="content text-left">
+                                      <h5 className="mb--5">
+                                        {AdminDataLists.length} Business Found
+                                      </h5>
+                                      {/* <p className="b3">Create Announcement</p> */}
                                     </div>
                                   </div>
                                 </div>
-                              ))}
-                            
-
-                         
-                        
-                              
+                                <div className="col-lg-4 d-flex justify-content-start justify-content-lg-end">
+                                  <div className="call-to-btn text-start text-lg-end position-relative">
+                                    <Link
+                                      className="rbt-btn btn-gradient radius-round sm-btn"
+                                      href="/my-business-directory"
+                                    >
+                                      <span data-text="Add New Announcement">
+                                        My Business Directory
+                                      </span>
+                                    </Link>
+                                  </div>
+                                </div>
+                              </div>
                             </div>
-                            
                           </div>
-                        </div>
-                      </div>
+
+                          <div className="rbt-dashboard-content p-0 mt-5 mb-2">
+                            {!currentDataForAdmin.length > 0 ? (
+                              <div className=" album-none">
+                                <h5>No Data Found</h5>
+                              </div>
+                            ) : (
+                              <div className="content">
+                                <div className="section-title">
+                                  <h4 className="rbt-title-style-3 mb-2">
+                                    Business Directory List
+                                  </h4>
+                                </div>
+
+                                <div className="rbt-dashboard-table table-responsive mobile-table-750">
+                                  <div className="row g-5 m-0">
+                                    {currentDataForAdmin.map((item, index) => (
+                                      <div
+                                        className="col-lg-6 col-12"
+                                        key={index}
+                                      >
+                                        <div
+                                          className="rbt-card card-list-2 event-list-card variation-01 rbt-hover relative"
+                                          style={{ position: "relative" }}
+                                        >
+                                          {/* Edit Icon in Top Right */}
+                                          {(isAdmin == "true" ||
+                                            isAlumniManager == "true") && (
+                                            <div
+                                              className="rbt-button-group"
+                                              style={{
+                                                position: "absolute",
+                                                top: "15px",
+                                                right: "15px",
+                                                zIndex: 10,
+                                              }}
+                                            >
+                                              <a
+                                                className="rbt-btn btn-xs bg-primary-opacity radius-round"
+                                                href={`/edit-a-directory/${item.id}/`}
+                                                title="Edit"
+                                              >
+                                                <i className="feather-edit pl--0" />
+                                              </a>
+                                            </div>
+                                          )}
+
+                                          <div className="rbt-card-img">
+                                            <Link
+                                              href={`/event-details/${item.id}`}
+                                            >
+                                              <Image
+                                                src="/images/event/grid-type-01.jpg"
+                                                width={355}
+                                                height={240}
+                                                priority
+                                                alt="Card image"
+                                              />
+                                            </Link>
+                                          </div>
+
+                                          <div className="rbt-card-body">
+                                            <ul className="rbt-meta">
+                                              <li>
+                                                <i className="feather-map-pin"></i>
+                                                {item?.location}
+                                              </li>
+                                            </ul>
+                                            <h4 className="rbt-card-title">
+                                              <Link
+                                                href={`business-directory/${item.id}`}
+                                              >
+                                                {item.business_name}
+                                              </Link>
+                                            </h4>
+                                            <p
+                                              className="text-gray mt--dec-40"
+                                              style={{ fontSize: "16px" }}
+                                            >
+                                              <Link href={"#"}>
+                                                {item.industry_type}
+                                              </Link>
+                                            </p>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    ))}
+                                  </div>
+                                </div>
+                              </div>
+                            )}
+                          </div>
+                        </>
+                      )}
                     </div>
 
                     {/* --------------------table end--------------------- */}
