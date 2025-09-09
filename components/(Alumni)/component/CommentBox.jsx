@@ -47,13 +47,13 @@ const CommentBox = (props) => {
           />
           <div className="d-flex gap-2">
             <button
-              className="btn btn-primary btn-sm kit-memo-submit"
+              className="rbt-btn btn-gradient btn-sm kit-memo-submit comment-submit-button"
               onClick={newComment}
             >
               Submit
             </button>
             <button
-              className="btn btn-outline-secondary btn-sm kit-memo-cancel"
+              className="rbt-btn btn-border-gradient btn-sm kit-memo-cancel comment-submit-button"
               data-bs-toggle="collapse"
               data-bs-target="#kitMemoComments"
               onClick={cancelOnClick}
