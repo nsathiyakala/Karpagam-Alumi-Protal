@@ -15,6 +15,7 @@ import KITFooter from "@/components/Footer/KITFooter";
 import BreadCrumb from "@/components/Common/BreadCrumb";
 import EventsMain from "@/components/(Alumni)/component/main/EventsMain";
 import EventsLoginMain from "@/components/(Alumni)/component/main/EventsLoginMain";
+import Loader from "@/components/(Alumni)/Loader";
 
 const Events = () => {
    const [token, setToken] = useState("");
@@ -22,12 +23,19 @@ const Events = () => {
       const [isAlumniManager, setIsAlumniManager] = useState(false);
       const [isFatulty, setIsFatulty] = useState(false);
       const [isAlumni, setIsAlumni] = useState(false);
+      const [loading, setLoading] = useState(true);
     
       useEffect(() => {
         const Token = localStorage.getItem("token");
     
         setToken(Token);
+        setLoading(false); 
       });
+
+       if (loading) {
+          return <Loader />; // Show loader while checking token
+        }
+      
   
   return (
     <Provider store={Store}>
