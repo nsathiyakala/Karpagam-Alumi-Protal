@@ -1,21 +1,22 @@
-import React, { useEffect } from "react";
+import React, { useEffect } from 'react';
 
-import MembersLoginCard from "./MembersLoginCard";
-import Link from "next/link";
-import { message, Modal } from "antd";
-import { useRouter } from "next/navigation";
-import { memberType, registeredMember } from "@/utils/constant.utils";
-import Models from "@/imports/models.import";
-import { objIsEmpty, useSetState } from "@/utils/commonFunction.utils";
-import useDebounce from "@/commonComponents/useDebounce";
-import { usePathname } from "next/navigation";
-import FormField from "@/commonComponents/FormFields";
-import { TeamData } from "@/utils/constant.utils";
-import Image from "next/image";
+import MembersLoginCard from './MembersLoginCard';
+import Link from 'next/link';
+import { message, Modal } from 'antd';
+import { useRouter } from 'next/navigation';
+import { memberType, registeredMember } from '@/utils/constant.utils';
+import Models from '@/imports/models.import';
+import { objIsEmpty, useSetState } from '@/utils/commonFunction.utils';
+import useDebounce from '@/commonComponents/useDebounce';
+import { usePathname } from 'next/navigation';
+import FormField from '@/commonComponents/FormFields';
+import { TeamData } from '@/utils/constant.utils';
+import Image from 'next/image';
 
-import EventDetails from "../../../../data/KitEvents.json";
-import UpCommingEvents from "../KITEvents/UpCommingEvents";
-import Pagination from "@/commonComponents/Pagination";
+import EventDetails from '../../../../data/KitEvents.json';
+import UpCommingEvents from '../KITEvents/UpCommingEvents';
+import Pagination from '@/commonComponents/Pagination';
+import Loader from '../../Loader';
 
 const EventsLoginMain = () => {
   let getAllCourse = EventDetails;
@@ -30,8 +31,9 @@ const EventsLoginMain = () => {
     isAlumniManager: false,
     isAlumni: false,
     isFaculty: false,
-    token: "",
+    token: '',
     activeTab: 0,
+    pageLoading: false,
   });
 
   const { confirm } = Modal;
@@ -39,11 +41,11 @@ const EventsLoginMain = () => {
   const router = useRouter();
 
   useEffect(() => {
-    const Token = localStorage.getItem("token");
-    const Admin = localStorage.getItem("isAdmin");
-    const AlumniManager = localStorage.getItem("isAlumniManager");
-    const Alumni = localStorage.getItem("isAlumni");
-    const Faculty = localStorage.getItem("isFaculty");
+    const Token = localStorage.getItem('token');
+    const Admin = localStorage.getItem('isAdmin');
+    const AlumniManager = localStorage.getItem('isAlumniManager');
+    const Alumni = localStorage.getItem('isAlumni');
+    const Faculty = localStorage.getItem('isFaculty');
 
     setState({
       isAdmin: Admin,
@@ -63,7 +65,7 @@ const EventsLoginMain = () => {
   useEffect(() => {
     // if (state?.isAdmin == "true" || state?.isAlumniManager == "true") {
     const body = bodyData();
-    console.log("✌️body --->", body);
+    console.log('✌️body --->', body);
     if (Object.keys(body).length > 0) {
       filterData(1);
     } else {
@@ -76,7 +78,8 @@ const EventsLoginMain = () => {
   ]);
 
   const GetAllEventsAdmin = async (page) => {
-    console.log("✌️page --->", page);
+    setState({ pageLoading: true }); 
+    console.log('✌️page --->', page);
     try {
       const res = await Models?.event?.GetAllEventsAdminData(page);
       setState({
@@ -85,18 +88,20 @@ const EventsLoginMain = () => {
         next: res?.next,
         previous: res?.previous,
         total: res?.count,
+        pageLoading: false,
       });
     } catch (error) {
-      if (error?.code === "token_not_valid") {
-        localStorage.removeItem("token");
-        router.push("/login");
+      if (error?.code === 'token_not_valid') {
+        localStorage.removeItem('token');
+        router.push('/login');
       }
       console.log(error);
-    }
+      setState({ pageLoading: false });
+    } 
   };
 
   const filterData = async (page) => {
-    console.log("filterData --->", page);
+    console.log('filterData --->', page);
     try {
       const body = bodyData();
 
@@ -109,9 +114,9 @@ const EventsLoginMain = () => {
         total: res?.count,
       });
     } catch (error) {
-      if (error?.code === "token_not_valid") {
-        localStorage.removeItem("token");
-        router.push("/login");
+      if (error?.code === 'token_not_valid') {
+        localStorage.removeItem('token');
+        router.push('/login');
       }
       console.log(error);
     }
@@ -120,30 +125,30 @@ const EventsLoginMain = () => {
   // Fetch upcoming events based on selected category
   const GetUpComingEvents = async (tab) => {
     const Body = {
-      category_id: tab?.category_id || "", // Use the selected category ID, or "" for 'All'
+      category_id: tab?.category_id || '', // Use the selected category ID, or "" for 'All'
     };
 
     try {
       const res = await Models?.event?.GetUpcomingEventsData(Body);
       setState({ upComingEventData: res?.results });
     } catch (err) {
-      if (err?.code === "token_not_valid") {
-        localStorage.removeItem("token");
-        router.push("/login");
+      if (err?.code === 'token_not_valid') {
+        localStorage.removeItem('token');
+        router.push('/login');
       }
     }
   };
   const GetPassedEventsData = async (tab) => {
     const Body = {
-      category_id: tab?.category_id || "", // Use the selected category ID, or "" for 'All'
+      category_id: tab?.category_id || '', // Use the selected category ID, or "" for 'All'
     };
     try {
       const res = await Models?.event?.GetPastEventsData(Body);
       setState({ pastEventData: res?.results });
     } catch (error) {
-      if (error?.code === "token_not_valid") {
-        localStorage.removeItem("token");
-        router.push("/login");
+      if (error?.code === 'token_not_valid') {
+        localStorage.removeItem('token');
+        router.push('/login');
       }
     }
   };
@@ -152,21 +157,21 @@ const EventsLoginMain = () => {
   const GetEventCategory = async () => {
     try {
       const res = await Models.masters.GetEventCategoryData(1);
-      console.log("GetEventCategory --->", res);
+      console.log('GetEventCategory --->', res);
 
       // Prepend "All" category to the list
       const allEventsList = [
-        { category_id: "", title: "All" },
+        { category_id: '', title: 'All' },
         ...res?.results,
       ];
 
       // Update state with the event categories list
       setState({ eventCategoryList: allEventsList });
     } catch (error) {
-      console.log("error: ", error);
-      if (error?.response?.data?.code === "token_not_valid") {
-        localStorage.removeItem("token");
-        router.push("/login");
+      console.log('error: ', error);
+      if (error?.response?.data?.code === 'token_not_valid') {
+        localStorage.removeItem('token');
+        router.push('/login');
       }
     }
   };
@@ -184,11 +189,11 @@ const EventsLoginMain = () => {
   const showEventDeleteConfirm = (event) => {
     confirm({
       title: event.is_active
-        ? "Are you sure you want to InActive this Event?"
-        : "Are you sure you want to Active this Event?",
-      okText: event.is_active ? "InActive" : "Active",
-      okType: "danger",
-      cancelText: "Cancel",
+        ? 'Are you sure you want to InActive this Event?'
+        : 'Are you sure you want to Active this Event?',
+      okText: event.is_active ? 'InActive' : 'Active',
+      okType: 'danger',
+      cancelText: 'Cancel',
       async onOk() {
         try {
           const body = {
@@ -201,35 +206,35 @@ const EventsLoginMain = () => {
 
           GetAllEventsAdmin(state.currentPage);
         } catch (error) {
-          console.log("error: ", error);
+          console.log('error: ', error);
 
           // Handle error response properly
           const errorMessage =
-            error.response?.data?.error || "An error occurred";
+            error.response?.data?.error || 'An error occurred';
           message.error(errorMessage);
         }
       },
       onCancel() {
-        console.log("Cancel");
+        console.log('Cancel');
       },
     });
 
-    console.log("Deleting event:", event);
+    console.log('Deleting event:', event);
     // Perform is_active logic here if needed
   };
 
   const tabs = [
     {
-      value: "all",
-      label: "All",
+      value: 'all',
+      label: 'All',
     },
     {
       value: 2,
-      label: "Reunions",
+      label: 'Reunions',
     },
     {
       value: 1,
-      label: "Webinars",
+      label: 'Webinars',
     },
   ];
 
@@ -242,7 +247,7 @@ const EventsLoginMain = () => {
     }
 
     setState({ currentPage: number });
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
 
     return number;
   };
@@ -261,11 +266,11 @@ const EventsLoginMain = () => {
     }
 
     if (state.filterCategory) {
-      if (state.filterCategory == "upcoming") {
-        bodyData.is_past = "false";
+      if (state.filterCategory == 'upcoming') {
+        bodyData.is_past = 'false';
       }
-      if (state.filterCategory == "completed") {
-        bodyData.is_past = "true";
+      if (state.filterCategory == 'completed') {
+        bodyData.is_past = 'true';
       }
     }
 
@@ -273,20 +278,20 @@ const EventsLoginMain = () => {
   };
 
   return (
-    <div className="rbt-dashboard-area section-pad">
-      <div className="container-fluid">
-        <div className="row justify-content-center">
-          <div className="col-11 col-xxl-10 con-wid">
-            <div className="container-fluid">
-              <div className="row">
-                <div className="col-lg-12">
-                  <div className="row mb-4">
-                    <div className="col-12">
-                      <div className="d-flex justify-content-between ">
+    <div className='rbt-dashboard-area section-pad'>
+      <div className='container-fluid'>
+        <div className='row justify-content-center'>
+          <div className='col-11 col-xxl-10 con-wid'>
+            <div className='container-fluid'>
+              <div className='row'>
+                <div className='col-lg-12'>
+                  <div className='row mb-4'>
+                    <div className='col-12'>
+                      <div className='d-flex justify-content-between '>
                         <h5>Filter</h5>
                         <Link
-                          className="rbt-btn btn-gradient radius-round sm-btn"
-                          href="/create-event"
+                          className='rbt-btn btn-gradient radius-round sm-btn'
+                          href='/create-event'
                         >
                           Create Event
                         </Link>
@@ -294,21 +299,21 @@ const EventsLoginMain = () => {
                     </div>
                   </div>
 
-                  <div className="row g-2">
-                    <div className="col-lg-3 d-sidebar">
-                      <div className="rbt-default-sidebar sticky-top rbt-shadow-box rbt-gradient-border">
-                        <div className="inner">
-                          <div className="content-item-content">
-                            <div className="rbt-default-sidebar-wrapper rbt-single-widget ">
-                              <nav className="mainmenu-nav ">
-                                <h5 className="rbt-widget-title">Categories</h5>
-                                <ul className="rbt-sidebar-list-wrapper categories-list-check has-show-more-inner-content">
+                  <div className='row g-2'>
+                    <div className='col-lg-3 d-sidebar'>
+                      <div className='rbt-default-sidebar sticky-top rbt-shadow-box rbt-gradient-border'>
+                        <div className='inner'>
+                          <div className='content-item-content'>
+                            <div className='rbt-default-sidebar-wrapper rbt-single-widget '>
+                              <nav className='mainmenu-nav '>
+                                <h5 className='rbt-widget-title'>Categories</h5>
+                                <ul className='rbt-sidebar-list-wrapper categories-list-check has-show-more-inner-content'>
                                   {tabs.map((tab, index) => (
-                                    <li className="rbt-check-group" key={index}>
+                                    <li className='rbt-check-group' key={index}>
                                       <input
                                         key={tab?.value}
                                         id={`cat-list-${index}`}
-                                        type="checkbox"
+                                        type='checkbox'
                                         name={`cat-list-${index}`}
                                         checked={state.activeTab === index}
                                         onClick={() =>
@@ -325,43 +330,43 @@ const EventsLoginMain = () => {
                                   ))}
                                 </ul>
 
-                                <h5 className=" mt-5">Select Event Type</h5>
-                                <ul className="rbt-sidebar-list-wrapper categories-list-check has-show-more-inner-content">
+                                <h5 className=' mt-5'>Select Event Type</h5>
+                                <ul className='rbt-sidebar-list-wrapper categories-list-check has-show-more-inner-content'>
                                   <li
-                                    className="nav-item"
-                                    role="presentation"
+                                    className='nav-item'
+                                    role='presentation'
                                     // style={{
                                     //   borderBottom:"1px solid #6b7385"
                                     // }}
                                   >
                                     <a
                                       className={`w-100 ${
-                                        pathname === "#" ? "active" : ""
+                                        pathname === '#' ? 'active' : ''
                                       }`}
-                                      href="#"
+                                      href='#'
                                     >
                                       <FormField
-                                        type="select"
+                                        type='select'
                                         disabled={false}
                                         onChange={(e) =>
                                           setState({
                                             filterCategory: e.target.value,
                                           })
                                         }
-                                        name="filterCategory"
-                                        placeholder="Event Type"
+                                        name='filterCategory'
+                                        placeholder='Event Type'
                                         value={state.filterCategory}
                                         options={[
                                           {
-                                            value: "upcoming",
-                                            label: "Upcoming",
+                                            value: 'upcoming',
+                                            label: 'Upcoming',
                                           },
                                           {
-                                            value: "completed",
-                                            label: "Completed",
+                                            value: 'completed',
+                                            label: 'Completed',
                                           },
                                         ]}
-                                        className={"border px-3"}
+                                        className={'border px-3'}
                                       />
                                     </a>
                                   </li>
@@ -393,35 +398,39 @@ const EventsLoginMain = () => {
                       </div>
                     </div>
 
-                    <div className="col-lg-9">
-                      <div className="rbt-rbt-card-area  bg-color-white ">
-                        <div className="container">
-                          <UpCommingEvents
-                            isAdmin={state.isAdmin}
-                            data={state.allEventsAdmin} // Use the data fetched for upcoming events
-                            // onClick={(id) => {
-                            //   router.push(`edit-event/${id}`);
-                            // }}
-                            Admin={state?.isAdmin}
-                            AlumniManager={state?.isAlumniManager}
-                            showDeleteConfirm={(event) =>
-                              showEventDeleteConfirm(event)
-                            }
-                          />
+                    <div className='col-lg-9'>
+                      {state.pageLoading ? (
+                        <Loader /> // 👈 show loader
+                      ) : (
+                        <div className='rbt-rbt-card-area  bg-color-white '>
+                          <div className='container'>
+                            <UpCommingEvents
+                              isAdmin={state.isAdmin}
+                              data={state.allEventsAdmin} // Use the data fetched for upcoming events
+                              // onClick={(id) => {
+                              //   router.push(`edit-event/${id}`);
+                              // }}
+                              Admin={state?.isAdmin}
+                              AlumniManager={state?.isAlumniManager}
+                              showDeleteConfirm={(event) =>
+                                showEventDeleteConfirm(event)
+                              }
+                            />
 
-                          {state.allEventsAdmin?.length > 0 && (
-                            <div>
-                              <div className="mb-20 ">
-                                <Pagination
-                                  activeNumber={handlePageChange}
-                                  totalPage={state.total}
-                                  currentPages={state.currentPage}
-                                />
+                            {state.allEventsAdmin?.length > 0 && (
+                              <div>
+                                <div className='mb-20 '>
+                                  <Pagination
+                                    activeNumber={handlePageChange}
+                                    totalPage={state.total}
+                                    currentPages={state.currentPage}
+                                  />
+                                </div>
                               </div>
-                            </div>
-                          )}
+                            )}
+                          </div>
                         </div>
-                      </div>
+                      )}
                     </div>
                   </div>
                 </div>

@@ -48,7 +48,6 @@ const Events = () => {
        {token ? <EventsLoginMain /> :  <EventsMain /> }
 
         
-
         <Separator />
         <KITFooter />
       </Context>

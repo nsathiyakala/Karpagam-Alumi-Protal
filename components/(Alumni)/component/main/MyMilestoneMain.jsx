@@ -14,6 +14,7 @@ import { BloodGroupChooice } from "@/utils/constant.utils";
 import Models from "@/imports/models.import";
 import axios from "axios";
 import { BaseURL } from "@/utils/BaseUrl";
+import Loader from '../../Loader';
 
 const MyMilestoneMain = () => {
   const { confirm } = Modal;
@@ -35,6 +36,9 @@ const MyMilestoneMain = () => {
   });
   const [memberId, setMemberId] = useState("");
   const [getMemberEducation, setMemberEducation] = useState([]);
+  const [state, setState] = useSetState({
+      pageLoading: false,
+  });
 
   const router = useRouter();
 
@@ -55,13 +59,23 @@ const MyMilestoneMain = () => {
       GetMemberEducation();
     }
   }, [memberId]);
+  
 
   const GetMemberEducation = async () => {
+    setState({
+      pageLoading: true,
+    });
     try {
       const res = await Models.masters.milestone(memberId);
       setMemberEducation(res?.results);
+      setState({
+      pageLoading: false,
+    });
     } catch (error) {
       console.log("✌️error --->", error);
+      setState({
+      pageLoading: false,
+    });
     }
   };
 
@@ -271,7 +285,9 @@ const MyMilestoneMain = () => {
     });
   };
 
-  return (
+  return state.pageLoading ? (
+    <Loader /> // 👈 show loader
+  ) : (
     <>
       {contextHolder}
 

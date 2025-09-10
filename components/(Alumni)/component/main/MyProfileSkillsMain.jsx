@@ -14,6 +14,7 @@ import { BloodGroupChooice } from "@/utils/constant.utils";
 import Models from "@/imports/models.import";
 import axios from "axios";
 import { BaseURL } from "@/utils/BaseUrl";
+import Loader from '../../Loader';
 
 const MyProfileSkillsMain = () => {
   const { confirm } = Modal;
@@ -49,6 +50,7 @@ const MyProfileSkillsMain = () => {
   const [state, setState] = useSetState({
     currenSkillPage: 1,
     hasSkillLoadMore: null,
+    pageLoading: false,
   });
 
   useEffect(() => {
@@ -107,11 +109,20 @@ const MyProfileSkillsMain = () => {
   };
 
   const GetMemberEducation = async () => {
+    setState({
+        pageLoading: true,
+      });
     try {
       const res = await Models.member.member_skills(memberId);
       setMemberEducation(res?.results || []);
+      setState({
+        pageLoading: false,
+      });
     } catch (error) {
       console.log("✌️error --->", error);
+      setState({
+        pageLoading: false,
+      });
     }
   };
 
@@ -272,7 +283,9 @@ const MyProfileSkillsMain = () => {
     // Perform is_active logic here if needed
   };
 
-  return (
+ return state.pageLoading ? (
+     <Loader /> // 👈 show loader
+   ) : (
     <>
      {contextHolder}
 
@@ -467,7 +480,7 @@ const MyProfileSkillsMain = () => {
           </div>
         </form>
       </Modal>
-    </>
+   </>
   );
 };
 

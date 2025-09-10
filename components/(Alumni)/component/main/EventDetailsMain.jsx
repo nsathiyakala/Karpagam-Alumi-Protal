@@ -3,25 +3,26 @@ import {
   useSetState,
   formatForGoogleCalendar,
   convertTo12HourFormat,
-} from "@/utils/commonFunction.utils";
-import { useEffect, useState } from "react";
-import Link from "next/link";
-import "venobox/dist/venobox.min.css";
+} from '@/utils/commonFunction.utils';
+import { useEffect, useState } from 'react';
+import Link from 'next/link';
+import 'venobox/dist/venobox.min.css';
 
-import { useDispatch, useSelector } from "react-redux";
-import { useAppContext } from "@/context/Context";
-import { addToCartAction } from "@/redux/action/CartAction";
-import Models from "@/imports/models.import";
-import { useRouter } from "next/navigation";
-import * as XLSX from "xlsx";
-import EventParticipants from "../EventDetails/EventParticipants";
-import { message, Modal } from "antd";
-import QuestionForm from "../EventDetails/QuestionForm";
-import Pagination from "@/components/Common/Pagination";
+import { useDispatch, useSelector } from 'react-redux';
+import { useAppContext } from '@/context/Context';
+import { addToCartAction } from '@/redux/action/CartAction';
+import Models from '@/imports/models.import';
+import { useRouter } from 'next/navigation';
+import * as XLSX from 'xlsx';
+import EventParticipants from '../EventDetails/EventParticipants';
+import { message, Modal } from 'antd';
+import QuestionForm from '../EventDetails/QuestionForm';
+import Pagination from '@/components/Common/Pagination';
+import Loader from '../../Loader';
 
 const EventDetailsMain = ({ getMatchEvent, id }) => {
   const [state, setState] = useSetState({
-    activeTab: "All",
+    activeTab: 'All',
     eventData: {},
     userData: [],
     tabs: [],
@@ -29,6 +30,7 @@ const EventDetailsMain = ({ getMatchEvent, id }) => {
     loading: false,
     btnLoading: false,
     question: [],
+    pageLoading: false,
   });
 
   const router = useRouter();
@@ -50,14 +52,14 @@ const EventDetailsMain = ({ getMatchEvent, id }) => {
   };
 
   useEffect(() => {
-    dispatch({ type: "COUNT_CART_TOTALS" });
-    localStorage.setItem("hiStudy", JSON.stringify(cart));
+    dispatch({ type: 'COUNT_CART_TOTALS' });
+    localStorage.setItem('hiStudy', JSON.stringify(cart));
   }, [cart]);
 
   useEffect(() => {
-    import("venobox/dist/venobox.min.js").then((venobox) => {
+    import('venobox/dist/venobox.min.js').then((venobox) => {
       new venobox.default({
-        selector: ".popup-video",
+        selector: '.popup-video',
       });
     });
 
@@ -68,10 +70,10 @@ const EventDetailsMain = ({ getMatchEvent, id }) => {
       setHideOnScroll(isHide);
     };
 
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener('scroll', handleScroll);
 
     return () => {
-      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener('scroll', handleScroll);
     };
   }, []);
 
@@ -83,7 +85,7 @@ const EventDetailsMain = ({ getMatchEvent, id }) => {
   }, [id]);
 
   useEffect(() => {
-    const group = localStorage.getItem("group");
+    const group = localStorage.getItem('group');
     setState({
       group: group,
       // isAlumniContact:isAlumniContact == "true" ? true : false,
@@ -91,7 +93,7 @@ const EventDetailsMain = ({ getMatchEvent, id }) => {
     });
   }, [state.group]);
 
-  console.log("group", state.group);
+  console.log('group', state.group);
 
   useEffect(() => {
     if (isModalOpen) register_event();
@@ -99,42 +101,49 @@ const EventDetailsMain = ({ getMatchEvent, id }) => {
 
   const success = (msg) => {
     messageApi.open({
-      type: "success",
-      content: msg || "Successfully Registered",
+      type: 'success',
+      content: msg || 'Successfully Registered',
     });
   };
 
   const failure = (msg) => {
     messageApi.open({
-      type: "error",
+      type: 'error',
       content: msg,
     });
   };
 
   const GetEventDetails = async () => {
+    setState({ pageLoading: true });
     try {
       const res = await Models?.event?.GetEditEventsDatas(id);
-      console.log("✌️res--->", res);
+      console.log('✌️res--->', res);
 
       const tabs = [
-        "Email Attendees",
-        "Export Attendees",
-        ...(res?.is_admin ? ["Edit Event"] : []), // Only shown for admins
-        "Publish & Share",
+        'Email Attendees',
+        'Export Attendees',
+        ...(res?.is_admin ? ['Edit Event'] : []), // Only shown for admins
+        'Publish & Share',
       ];
-      setState({ eventData: res, tabs });
+      setState({
+        eventData: res,
+        tabs,
+        pageLoading: false,
+      });
     } catch (err) {
-      if (err?.code === "token_not_valid") {
-        localStorage.removeItem("token");
-        router.push("/login");
+      if (err?.code === 'token_not_valid') {
+        localStorage.removeItem('token');
+        router.push('/login');
       }
+       setState({ pageLoading: false });
     }
+   
   };
 
   const registered_details = async (page) => {
     try {
       const res = await Models?.event?.registered_details(id, page);
-      console.log("registered_details--->", res);
+      console.log('registered_details--->', res);
       setState({
         userData: res?.results?.registered_users,
         currentPage: page,
@@ -143,28 +152,28 @@ const EventDetailsMain = ({ getMatchEvent, id }) => {
         total: res?.count,
       });
     } catch (err) {
-      if (err?.code === "token_not_valid") {
-        localStorage.removeItem("token");
-        router.push("/login");
+      if (err?.code === 'token_not_valid') {
+        localStorage.removeItem('token');
+        router.push('/login');
       }
     }
   };
 
   const handleClickTab = (tab) => {
-    console.log("tab: ", tab);
+    console.log('tab: ', tab);
     setState({ activeTab: tab });
-    if (tab == "Edit Event") {
+    if (tab == 'Edit Event') {
       router.push(`/edit-event/${id}`);
     }
-    if (tab == "Email Attendees") {
+    if (tab == 'Email Attendees') {
       router.push(`/email-attendees/${id}`);
     }
 
-    if (tab == "Export Attendees") {
+    if (tab == 'Export Attendees') {
       handleDownloadExcel();
     }
-    if (tab == "Publish & Share") {
-      console.log("hello");
+    if (tab == 'Publish & Share') {
+      console.log('hello');
 
       router.push(`/publish-and-share/${id}`);
     }
@@ -173,8 +182,8 @@ const EventDetailsMain = ({ getMatchEvent, id }) => {
   const handleDownloadExcel = () => {
     const worksheet = XLSX.utils.json_to_sheet([state?.eventData]);
     const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, "Event Details");
-    XLSX.writeFile(workbook, "event_details.xlsx");
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Event Details');
+    XLSX.writeFile(workbook, 'event_details.xlsx');
   };
 
   // const handleClickBtn = async (type) => {
@@ -209,7 +218,7 @@ const EventDetailsMain = ({ getMatchEvent, id }) => {
     )}&location=${encodeURIComponent(state.eventData?.venue)}`;
 
     // Open Google Calendar URL in a new tab
-    window.open(googleCalendarUrl, "_blank");
+    window.open(googleCalendarUrl, '_blank');
   };
 
   const viewOnMap = () => {
@@ -221,13 +230,13 @@ const EventDetailsMain = ({ getMatchEvent, id }) => {
     )}`;
 
     // Open the Google Maps URL in a new tab
-    window.open(googleMapsUrl, "_blank");
+    window.open(googleMapsUrl, '_blank');
   };
 
   const handlePageChange = (number) => {
     registered_details(number);
     setState({ currentPage: number });
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
 
     return number;
   };
@@ -251,67 +260,69 @@ const EventDetailsMain = ({ getMatchEvent, id }) => {
         responses: state.question.map((q) => ({
           question_id: q.id,
           response:
-            responses[q.id] === "Others"
+            responses[q.id] === 'Others'
               ? otherInputs[q.id] || null
               : responses[q.id] || null,
         })),
       };
 
       await Models.masters.post_register_event(id, final);
-      success("Event Registered Successfully");
+      success('Event Registered Successfully');
 
       setState({ btnLoading: false });
       onCancel(); // close modal
     } catch (error) {
       console.log(error);
-      failure(error?.data?.error || error || "Something went wrong");
+      failure(error?.data?.error || error || 'Something went wrong');
       setState({ btnLoading: false });
     }
   };
-
+  if (state.pageLoading) {
+    return <Loader />; // Show loader while checking token
+  }
   return (
     <>
-      <div className="row g-5 event-details">
-        <div className="col-lg-8">
-          <div className="course-details-content">
-            <div className="rbt-feature-box rbt-shadow-box thuumbnail">
+      <div className='row g-5 event-details'>
+        <div className='col-lg-8'>
+          <div className='course-details-content'>
+            <div className='rbt-feature-box rbt-shadow-box thuumbnail'>
               <img
-                className="w-100"
+                className='w-100'
                 src={
                   state?.eventData?.event_wallpaper
                     ? state?.eventData?.event_wallpaper
-                    : "/images/event/grid-type-01.jpg"
+                    : '/images/event/grid-type-01.jpg'
                 }
                 width={800}
                 height={550}
                 priority
-                alt="Card image"
+                alt='Card image'
                 style={{
-                  minHeight: "400px",
-                  maxHeight: "520px",
-                  objectFit: "cover",
+                  minHeight: '400px',
+                  maxHeight: '520px',
+                  objectFit: 'cover',
                 }}
               />
             </div>
 
             {state?.eventData?.description && (
-              <div className="rbt-feature-box rbt-shadow-box mt--40">
-                <div className="row g-5">
-                  <div className="col-lg-12">
-                    <div className="section-title">
-                      <h5 className="title mb--20">
+              <div className='rbt-feature-box rbt-shadow-box mt--40'>
+                <div className='row g-5'>
+                  <div className='col-lg-12'>
+                    <div className='section-title'>
+                      <h5 className='title mb--20'>
                         {state?.eventData?.title}
                       </h5>
                     </div>
                     <p
-                      className="mb-2"
+                      className='mb-2'
                       dangerouslySetInnerHTML={{
                         __html: state?.eventData?.description,
                       }}
                     ></p>
                     {state?.eventData?.instructions && (
                       <p>
-                        <b>Event Instruction : {""}</b>
+                        <b>Event Instruction : {''}</b>
                         {state?.eventData?.instructions}
                       </p>
                     )}
@@ -321,12 +332,12 @@ const EventDetailsMain = ({ getMatchEvent, id }) => {
             )}
 
             {state.userData?.length > 0 && (
-              <div className="rbt-participants-area mt--40">
+              <div className='rbt-participants-area mt--40'>
                 <EventParticipants userData={state?.userData} />
 
                 {state.userData?.length > 0 && (
                   <div>
-                    <div className="mt-5">
+                    <div className='mt-5'>
                       <Pagination
                         activeNumber={handlePageChange}
                         totalPage={state.total}
@@ -339,97 +350,97 @@ const EventDetailsMain = ({ getMatchEvent, id }) => {
             )}
           </div>
         </div>
-        <div className="col-lg-4 mt_md--60 mt_sm--60">
-          <div className="course-sidebar rbt-gradient-border sticky-top rbt-shadow-box course-sidebar-top">
-            <div className="inner">
+        <div className='col-lg-4 mt_md--60 mt_sm--60'>
+          <div className='course-sidebar rbt-gradient-border sticky-top rbt-shadow-box course-sidebar-top'>
+            <div className='inner'>
               <div
                 className={`video-popup-with-text video-popup-wrapper text-center popup-video sidebar-video-hidden mb--15 ${
-                  hideOnScroll ? "d-none" : ""
+                  hideOnScroll ? 'd-none' : ''
                 }`}
               >
-                <div className="video-content">
+                <div className='video-content'>
                   <img
-                    className="w-100  rbt-radius"
+                    className='w-100  rbt-radius'
                     src={
                       state?.eventData?.event_wallpaper
                         ? state?.eventData?.event_wallpaper
-                        : "/images/course/course-01.jpg"
+                        : '/images/course/course-01.jpg'
                     }
                     width={355}
                     height={255}
-                    alt="Video Images"
+                    alt='Video Images'
                   />
                 </div>
               </div>
 
-              <div className="content ">
+              <div className='content '>
                 <div>
-                  <div className="add-to-card-button mb--15">
+                  <div className='add-to-card-button mb--15'>
                     <div
-                      className="rbt-btn btn-gradient icon-hover w-100 d-block text-center"
+                      className='rbt-btn btn-gradient icon-hover w-100 d-block text-center'
                       onClick={() => handleClickBtn()}
                     >
-                      <span className="btn-text">Apply Now</span>
-                      <span className="btn-icon">
-                        <i className="feather-arrow-right"></i>
+                      <span className='btn-text'>Apply Now</span>
+                      <span className='btn-icon'>
+                        <i className='feather-arrow-right'></i>
                       </span>
                     </div>
                   </div>
 
-                  {(state.group === "alumni" || state.group === "student") && (
-                    <div className="add-to-card-button mb--15">
+                  {(state.group === 'alumni' || state.group === 'student') && (
+                    <div className='add-to-card-button mb--15'>
                       <div
-                        className="rbt-btn btn-border  icon-hover w-100 d-block text-center"
+                        className='rbt-btn btn-border  icon-hover w-100 d-block text-center'
                         onClick={AddToCalendarButton}
                       >
-                        <span className="btn-text">Add to Calendar</span>
-                        <span className="btn-icon">
-                          <i className="feather-arrow-right"></i>
+                        <span className='btn-text'>Add to Calendar</span>
+                        <span className='btn-icon'>
+                          <i className='feather-arrow-right'></i>
                         </span>
                       </div>
                     </div>
                   )}
 
-                  {state.group !== "alumni" && state.group !== "student" && (
-                    <div className="event-actions mb--15">
+                  {state.group !== 'alumni' && state.group !== 'student' && (
+                    <div className='event-actions mb--15'>
                       <btn
-                        className="rbt-btn btn-gradient icon-hover event-btn"
-                        onClick={() => handleClickTab("Email Attendees")}
+                        className='rbt-btn btn-gradient icon-hover event-btn'
+                        onClick={() => handleClickTab('Email Attendees')}
                       >
-                        <span className="btn-text">Email Attendees</span>
-                        <span className="btn-icon">
-                          <i className="feather-mail"></i>
+                        <span className='btn-text'>Email Attendees</span>
+                        <span className='btn-icon'>
+                          <i className='feather-mail'></i>
                         </span>
                       </btn>
 
                       <btn
-                        className="rbt-btn btn-border icon-hover event-btn"
-                        onClick={() => handleClickTab("Edit Event")}
+                        className='rbt-btn btn-border icon-hover event-btn'
+                        onClick={() => handleClickTab('Edit Event')}
                       >
-                        <span className="btn-text">Edit Event</span>
-                        <span className="btn-icon">
-                          <i className="feather-edit"></i>
+                        <span className='btn-text'>Edit Event</span>
+                        <span className='btn-icon'>
+                          <i className='feather-edit'></i>
                         </span>
                       </btn>
 
                       <btn
-                        className="rbt-btn btn-border icon-hover event-btn"
-                        onClick={() => handleClickTab("Export Attendees")}
+                        className='rbt-btn btn-border icon-hover event-btn'
+                        onClick={() => handleClickTab('Export Attendees')}
                       >
-                        <span className="btn-text">Export Attendees</span>
-                        <span className="btn-icon">
-                          <i className="feather-download"></i>
+                        <span className='btn-text'>Export Attendees</span>
+                        <span className='btn-icon'>
+                          <i className='feather-download'></i>
                         </span>
                       </btn>
 
                       <btn
-                        className="rbt-btn btn-gradient icon-hover event-btn "
+                        className='rbt-btn btn-gradient icon-hover event-btn '
                         // href="#"
-                        onClick={() => handleClickTab("Publish & Share")}
+                        onClick={() => handleClickTab('Publish & Share')}
                       >
-                        <span className="btn-text">Publish & Share</span>
-                        <span className="btn-icon">
-                          <i className="feather-share-2"></i>
+                        <span className='btn-text'>Publish & Share</span>
+                        <span className='btn-icon'>
+                          <i className='feather-share-2'></i>
                         </span>
                       </btn>
                     </div>
@@ -438,27 +449,27 @@ const EventDetailsMain = ({ getMatchEvent, id }) => {
 
                 <div
                   className={`rbt-widget-details has-show-more ${
-                    !toggle ? "active" : ""
+                    !toggle ? 'active' : ''
                   }`}
                 >
-                  <ul className="has-show-more-inner-content rbt-course-details-list-wrapper">
+                  <ul className='has-show-more-inner-content rbt-course-details-list-wrapper'>
                     <li>
                       <span>Start date</span>
-                      <span className="rbt-feature-value rbt-badge-5">
+                      <span className='rbt-feature-value rbt-badge-5'>
                         {formattedDate(state?.eventData?.start_date)}
                       </span>
                     </li>
 
                     <li>
                       <span>Start Time</span>
-                      <span className="rbt-feature-value rbt-badge-5">
+                      <span className='rbt-feature-value rbt-badge-5'>
                         {convertTo12HourFormat(state?.eventData?.start_time)}
                       </span>
                     </li>
 
                     <li>
                       <span>Registration Close Date</span>
-                      <span className="rbt-feature-value rbt-badge-5">
+                      <span className='rbt-feature-value rbt-badge-5'>
                         {formattedDate(
                           state?.eventData?.registration_close_date
                         )}
@@ -467,21 +478,21 @@ const EventDetailsMain = ({ getMatchEvent, id }) => {
 
                     <li>
                       <span>Venue</span>
-                      <span className="rbt-feature-value rbt-badge-5">
+                      <span className='rbt-feature-value rbt-badge-5'>
                         {state?.eventData?.venue}
                       </span>
                     </li>
 
                     <li>
                       <span>Catergory</span>
-                      <span className="rbt-feature-value rbt-badge-5">
+                      <span className='rbt-feature-value rbt-badge-5'>
                         {state?.eventData?.category}
                       </span>
                     </li>
 
                     <li>
                       <span>Address</span>
-                      <span className="rbt-feature-value rbt-badge-5">
+                      <span className='rbt-feature-value rbt-badge-5'>
                         {state?.eventData?.address}
                       </span>
                     </li>
@@ -489,42 +500,42 @@ const EventDetailsMain = ({ getMatchEvent, id }) => {
 
                   {/* Show More / Show Less button */}
                   <div
-                    className={`rbt-show-more-btn ${!toggle ? "active" : ""}`}
+                    className={`rbt-show-more-btn ${!toggle ? 'active' : ''}`}
                     onClick={() => setToggle(!toggle)}
                   >
-                    {toggle ? "Show More" : "Show Less"}
+                    {toggle ? 'Show More' : 'Show Less'}
                   </div>
                 </div>
 
-                <div className="social-share-wrapper mt--30 text-center">
-                  <div className="rbt-post-share d-flex align-items-center justify-content-center">
-                    <ul className="social-icon social-default transparent-with-border justify-content-center">
+                <div className='social-share-wrapper mt--30 text-center'>
+                  <div className='rbt-post-share d-flex align-items-center justify-content-center'>
+                    <ul className='social-icon social-default transparent-with-border justify-content-center'>
                       <li>
-                        <Link href="#" title="View In Map" onClick={viewOnMap}>
-                          <i className="feather-map-pin"></i>
+                        <Link href='#' title='View In Map' onClick={viewOnMap}>
+                          <i className='feather-map-pin'></i>
                         </Link>
                       </li>
                       <li>
                         <Link
-                          href="#"
-                          title="Add to Calendar"
+                          href='#'
+                          title='Add to Calendar'
                           onClick={AddToCalendarButton}
                         >
-                          <i className="feather-calendar"></i>
+                          <i className='feather-calendar'></i>
                         </Link>
                       </li>
                       <li>
                         <Link
                           href={`${state?.eventData?.link}`}
-                          title="View Link"
+                          title='View Link'
                         >
-                          <i className="feather-link"></i>
+                          <i className='feather-link'></i>
                         </Link>
                       </li>
                     </ul>
                   </div>
-                  <hr className="mt--20" />
-                  <div className="contact-with-us text-center">
+                  <hr className='mt--20' />
+                  <div className='contact-with-us text-center'>
                     <p>Amet consectetur adipisicing elit</p>
                     {/* <p className="rbt-badge-2 mt--10 justify-content-center w-100">
                 <i className="feather-phone mr--5"></i> Call Us:
@@ -544,7 +555,7 @@ const EventDetailsMain = ({ getMatchEvent, id }) => {
         {contextHolder}
 
         <Modal
-          title={<div className="custom-modal-header">Apply Now</div>}
+          title={<div className='custom-modal-header'>Apply Now</div>}
           open={isModalOpen}
           onCancel={() => setIsModalOpen(false)}
           footer={false}
@@ -553,16 +564,16 @@ const EventDetailsMain = ({ getMatchEvent, id }) => {
         >
           <form onSubmit={(e) => e.preventDefault()}>
             <div
-              className="inner-box overflow-auto"
-              style={{ maxHeight: "60vh" }}
+              className='inner-box overflow-auto'
+              style={{ maxHeight: '60vh' }}
             >
               {state.question?.map((item, index) => (
                 <div
-                  className="mb-4"
+                  className='mb-4'
                   key={`${item?.id}-${index}`}
                   style={{
                     marginBottom:
-                      state.question?.length - 1 === index ? "5vh" : "1rem",
+                      state.question?.length - 1 === index ? '5vh' : '1rem',
                   }}
                 >
                   <QuestionForm
@@ -576,20 +587,20 @@ const EventDetailsMain = ({ getMatchEvent, id }) => {
               ))}
             </div>
 
-            <div className="d-flex justify-content-end mt-3 gap-2">
+            <div className='d-flex justify-content-end mt-3 gap-2'>
               <button
-                className="rbt-btn btn-gradient radius-round sm-btn"
-                type="button"
+                className='rbt-btn btn-gradient radius-round sm-btn'
+                type='button'
                 disabled={state.btnLoading}
                 onClick={getFinalResponses}
               >
-                {state.btnLoading ? "Submitting..." : "Submit"}
+                {state.btnLoading ? 'Submitting...' : 'Submit'}
               </button>
 
               <button
-                className="rbt-btn btn-gradient radius-round sm-btn"
-                type="button"
-                style={{ cursor: "pointer", borderRadius: "0" }}
+                className='rbt-btn btn-gradient radius-round sm-btn'
+                type='button'
+                style={{ cursor: 'pointer', borderRadius: '0' }}
                 onClick={() => setIsModalOpen(false)}
               >
                 Cancel

@@ -1,15 +1,20 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useEffect,useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import Loader from '../../Loader';
 
 import "venobox/dist/venobox.min.css";
 
 import GalleryData from "../../../../data/elements/gallery.json";
 
 const GalleryMain = () => {
+  const [state, setState] = useState({
+    pageLoading: true, // Start with loading true
+  });
   useEffect(() => {
+    setState({ pageLoading: true });
     import("venobox/dist/venobox.min.js").then((venobox) => {
       new venobox.default({
         selector: ".child-gallery-single",
@@ -17,9 +22,12 @@ const GalleryMain = () => {
         infinigall: true,
         spinner: "rotating-plane",
       });
+       setState({ pageLoading: false });
     });
   }, []);
-  
+  if (state.pageLoading) {
+    return <Loader />;
+  }
   return (
     <div className="container">
       <div className="row g-3 parent-gallery-container KITgallery">
