@@ -1052,18 +1052,7 @@ const AllTicketsMain = () => {
                       </tbody>
                     </table>
 
-                    {/* --- PAGINATION --- */}
-                    {departmentDatas?.length > 0 && (
-                      <div className="row">
-                        <div className="col-lg-12 mt-0">
-                          <Pagination
-                            activeNumber={handlePageChange}
-                            totalPage={state.total}
-                            currentPages={state.currentPage}
-                          />
-                        </div>
-                      </div>
-                    )}
+                    
                   </>
                 )}
               </>
@@ -1175,7 +1164,13 @@ const AllTicketsMain = () => {
                       </tbody>
                     </table>
 
-                    {/* --- PAGINATION --- */}
+                    
+                  </>
+                )}
+              </>
+            )}
+          </div>
+          {/* --- PAGINATION --- */}
                     {departmentDatas?.length > 0 && (
                       <div className="row">
                         <div className="col-lg-12 mt-0">
@@ -1187,11 +1182,6 @@ const AllTicketsMain = () => {
                         </div>
                       </div>
                     )}
-                  </>
-                )}
-              </>
-            )}
-          </div>
         </div>
       </div>
 

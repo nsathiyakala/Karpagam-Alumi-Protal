@@ -1,15 +1,16 @@
-import React, { useEffect, useState } from "react";
-import FormField from "@/commonComponents/FormFields";
+import React, { useEffect, useState } from 'react';
+import FormField from '@/commonComponents/FormFields';
 
-import { useRouter } from "next/navigation";
-import { setDropdownData, useSetState } from "@/utils/commonFunction.utils";
-import { message, Modal, Tooltip } from "antd";
-import { usePathname } from "next/navigation";
-import Link from "next/link";
-import axios from "axios";
-import { BaseURL } from "@/utils/BaseUrl";
-import Models from "@/imports/models.import";
-import Image from "next/image";
+import { useRouter } from 'next/navigation';
+import { setDropdownData, useSetState } from '@/utils/commonFunction.utils';
+import { message, Modal, Tooltip } from 'antd';
+import { usePathname } from 'next/navigation';
+import Link from 'next/link';
+import axios from 'axios';
+import { BaseURL } from '@/utils/BaseUrl';
+import Models from '@/imports/models.import';
+import Image from 'next/image';
+import Pagination from '@/commonComponents/Pagination';
 
 const DashboardMain = () => {
   const { confirm } = Modal;
@@ -24,13 +25,13 @@ const DashboardMain = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
-    business_name: "",
-    industry: "",
-    location: "",
+    business_name: '',
+    industry: '',
+    location: '',
   });
 
   const [departmentList, setDepartmentList] = useState([]);
-  const [token, setToken] = useState("");
+  const [token, setToken] = useState('');
   const [isAdmin, setIsAdmin] = useState(false);
   const [isAlumniManager, setIsAlumniManager] = useState(false);
   const [isAlumni, setIsAlumni] = useState(false);
@@ -48,22 +49,22 @@ const DashboardMain = () => {
   });
 
   useEffect(() => {
-    const Token = localStorage.getItem("token");
+    const Token = localStorage.getItem('token');
     setToken(Token);
     if (!Token) {
-      router.push("/login");
+      router.push('/login');
     }
 
-    const Admin = localStorage.getItem("isAdmin");
+    const Admin = localStorage.getItem('isAdmin');
     setIsAdmin(Admin);
 
-    const AlumniManager = localStorage.getItem("isAlumniManager");
+    const AlumniManager = localStorage.getItem('isAlumniManager');
     setIsAlumniManager(AlumniManager);
 
-    const Alumni = localStorage.getItem("isAlumni");
+    const Alumni = localStorage.getItem('isAlumni');
     setIsAlumni(Alumni);
 
-    const Faculty = localStorage.getItem("isFatulty");
+    const Faculty = localStorage.getItem('isFatulty');
     setIsFatulty(Faculty);
 
     // if (Admin !== "true" && AlumniManager !== "true") {
@@ -85,9 +86,9 @@ const DashboardMain = () => {
       MyBusinessDirectory();
     }
   }, [token]);
-  console.log("token", token);
+  console.log('token', token);
 
-  console.log("accessToken", token);
+  console.log('accessToken', token);
 
   const MyBusinessDirectory = () => {
     axios
@@ -100,15 +101,15 @@ const DashboardMain = () => {
         setMyBusinessDirCount(response.data.results);
       })
       .catch((error) => {
-        console.log("❌error --->", error);
-        if (error?.response?.data?.code === "token_not_valid") {
-          localStorage.removeItem("token");
-          router.push("/login");
+        console.log('❌error --->', error);
+        if (error?.response?.data?.code === 'token_not_valid') {
+          localStorage.removeItem('token');
+          router.push('/login');
         }
       });
   };
 
-  console.log("myBusinessDirCount", myBusinessDirCount);
+  console.log('myBusinessDirCount', myBusinessDirCount);
 
   const getJobsAdmin = () => {
     axios
@@ -120,13 +121,13 @@ const DashboardMain = () => {
       .then((response) => {
         setAdminDataLists(response.data?.results);
         setFilteredData(response.data?.results);
-        console.log("✌️response --->", response);
+        console.log('✌️response --->', response);
       })
       .catch((error) => {
-        console.log("❌error --->", error);
-        if (error?.response?.data?.code === "token_not_valid") {
-          localStorage.removeItem("token");
-          router.push("/login");
+        console.log('❌error --->', error);
+        if (error?.response?.data?.code === 'token_not_valid') {
+          localStorage.removeItem('token');
+          router.push('/login');
         }
       });
   };
@@ -135,15 +136,15 @@ const DashboardMain = () => {
     try {
       const res = await Models.job.industryList();
 
-      const dropdown = setDropdownData(res?.results, "title");
-      console.log("industry dd", dropdown);
+      const dropdown = setDropdownData(res?.results, 'title');
+      console.log('industry dd', dropdown);
 
       setDepartmentList(dropdown);
       setState({
         hasIndustryLoadMore: res?.next,
       });
     } catch (error) {
-      console.log("✌️error --->", error);
+      console.log('✌️error --->', error);
     }
   };
 
@@ -172,16 +173,16 @@ const DashboardMain = () => {
 
   const success = (successMsg) => {
     messageApi.open({
-      type: "success",
+      type: 'success',
       content:
-        successMsg || "Success! Check your email for further instructions.",
+        successMsg || 'Success! Check your email for further instructions.',
     });
   };
 
   const errorNotification = (error) => {
     messageApi.open({
-      type: "error",
-      content: error || "An error occurred. Please try again.",
+      type: 'error',
+      content: error || 'An error occurred. Please try again.',
     });
   };
 
@@ -228,7 +229,7 @@ const DashboardMain = () => {
 
   const handleSearchFilter = (e) => {
     const value = e.target.value.toLowerCase();
-    console.log("value", value);
+    console.log('value', value);
 
     if (token) {
       if (value) {
@@ -274,7 +275,7 @@ const DashboardMain = () => {
   const FilteredIndustryName = departmentList.filter(
     (ind) => ind.id == allUserFilterFinalDataList?.industry
   );
-  console.log("✌️FilteredIndustryName --->", FilteredIndustryName);
+  console.log('✌️FilteredIndustryName --->', FilteredIndustryName);
 
   const bodyData = () => {
     const body = {};
@@ -282,7 +283,7 @@ const DashboardMain = () => {
     if (formData.business_name) {
       body.business_name = formData.business_name;
     }
-    if (formData.industry) {
+    if (formData.industry && formData.industry.value) {
       body.industry = formData.industry.value;
     }
     if (formData.location) {
@@ -298,7 +299,7 @@ const DashboardMain = () => {
     console.log(body);
 
     e.preventDefault();
-    console.log("handleFiltersSubmit", formData);
+    console.log('handleFiltersSubmit', formData);
 
     axios
       .post(`${BaseURL}/filter_business_directory/`, body, {
@@ -307,7 +308,7 @@ const DashboardMain = () => {
         },
       })
       .then((response) => {
-        console.log("✌️response --->", response);
+        console.log('✌️response --->', response);
         setAdminDataLists(response.data?.results);
         setFilteredData(response.data?.results);
         setListOfPosts(response.data?.results);
@@ -320,15 +321,15 @@ const DashboardMain = () => {
         // });
       })
       .catch((error) => {
-        console.log("❌error --->", error);
+        console.log('❌error --->', error);
       });
   };
 
   const handleClearFilter = () => {
     const Body = {
-      business_name: "",
-      industry: "",
-      location: "",
+      business_name: '',
+      industry: '',
+      location: '',
     };
     axios
       .post(`${BaseURL}/filter_business_directory/`, Body, {
@@ -337,20 +338,20 @@ const DashboardMain = () => {
         },
       })
       .then((response) => {
-        console.log("✌️response --->", response);
+        console.log('✌️response --->', response);
         setAdminDataLists(response.data?.results);
         setFilteredData(response.data?.results);
         setListOfPosts(response.data?.results);
         setNormelUserFilter(response.data?.results);
         setAllUserFilterFinalDataList(Body);
         setFormData({
-          business_name: "",
-          industry: "",
-          location: "",
+          business_name: '',
+          industry: '',
+          location: '',
         });
       })
       .catch((error) => {
-        console.log("❌error --->", error);
+        console.log('❌error --->', error);
       });
   };
 
@@ -359,7 +360,7 @@ const DashboardMain = () => {
       if (state.hasIndustryLoadMore) {
         const res = await Models.job.industryList(state.currenIndustryPage + 1);
 
-        const IndustryOption = setDropdownData(res?.results, "title");
+        const IndustryOption = setDropdownData(res?.results, 'title');
 
         setDepartmentList([...departmentList, ...IndustryOption]);
         setState({
@@ -370,27 +371,27 @@ const DashboardMain = () => {
         setDepartmentList(departmentList);
       }
     } catch (error) {
-      console.log("error: ", error);
+      console.log('error: ', error);
     }
   };
 
-  console.log("departmentList", departmentList);
+  console.log('departmentList', departmentList);
 
   return (
-    <div className="rbt-dashboard-area section-pad">
-      <div className="container-fluid">
-        <div className="row justify-content-center">
-          <div className="col-11 col-xl-10">
-            <div className="container-fluid">
-              <div className="row">
-                <div className="col-lg-12">
-                  <div className="row mb-4">
-                    <div className="col-12">
-                      <div className="d-flex justify-content-between ">
+    <div className='rbt-dashboard-area section-pad'>
+      <div className='container-fluid'>
+        <div className='row justify-content-center'>
+          <div className='col-11 col-xl-10'>
+            <div className='container-fluid'>
+              <div className='row'>
+                <div className='col-lg-12'>
+                  <div className='row mb-4'>
+                    <div className='col-12'>
+                      <div className='d-flex justify-content-between '>
                         <h5>Filter</h5>
                         <Link
-                          className="rbt-btn btn-gradient radius-round sm-btn"
-                          href="/post-a-directory"
+                          className='rbt-btn btn-gradient radius-round sm-btn'
+                          href='/post-a-directory'
                         >
                           Add a Post
                         </Link>
@@ -398,52 +399,52 @@ const DashboardMain = () => {
                     </div>
                   </div>
 
-                  <div className="row g-5">
+                  <div className='row g-5'>
                     {/* --------------------sidebar start--------------------- */}
 
-                    <div className="col-lg-3 d-sidebar">
-                      <div className="rbt-default-sidebar sticky-top rbt-shadow-box rbt-gradient-border">
-                        <div className="inner">
-                          <div className="content-item-content">
-                            <div className="rbt-default-sidebar-wrapper">
-                              <nav className="mainmenu-nav">
-                                <ul className="dashboard-mainmenu rbt-default-sidebar-list">
-                                  <li className="nav-item" role="presentation">
+                    <div className='col-lg-3 d-sidebar'>
+                      <div className='rbt-default-sidebar sticky-top rbt-shadow-box rbt-gradient-border'>
+                        <div className='inner'>
+                          <div className='content-item-content'>
+                            <div className='rbt-default-sidebar-wrapper'>
+                              <nav className='mainmenu-nav'>
+                                <ul className='dashboard-mainmenu rbt-default-sidebar-list'>
+                                  <li className='nav-item' role='presentation'>
                                     <a
                                       className={`${
-                                        pathname === "#" ? "active" : ""
+                                        pathname === '#' ? 'active' : ''
                                       }`}
-                                      href="#"
+                                      href='#'
                                     >
                                       <FormField
-                                        type="text"
-                                        className="applicant-input"
+                                        type='text'
+                                        className='applicant-input'
                                         onChange={(e) => handleFilterChange(e)}
-                                        name="business_name"
+                                        name='business_name'
                                         value={formData.business_name}
-                                        placeholder="Business Name"
+                                        placeholder='Business Name'
                                       />
                                     </a>
                                   </li>
 
-                                  <li className="nav-item" role="presentation">
+                                  <li className='nav-item' role='presentation'>
                                     <a
                                       className={`w-100 ${
-                                        pathname === "#" ? "active" : ""
+                                        pathname === '#' ? 'active' : ''
                                       }`}
-                                      href="#"
+                                      href='#'
                                     >
                                       <FormField
-                                        type="loadMoreSelect"
-                                        className="member-dd"
+                                        type='loadMoreSelect'
+                                        className='member-dd'
                                         onChange={(e) => {
                                           setFormData({
                                             ...formData,
                                             industry: e,
                                           });
                                         }}
-                                        name="industry"
-                                        placeholder={"Industry"}
+                                        name='industry'
+                                        placeholder={'Industry'}
                                         value={formData.industry}
                                         options={departmentList}
                                         loadMore={() => industryListLoadMore()}
@@ -451,19 +452,19 @@ const DashboardMain = () => {
                                     </a>
                                   </li>
 
-                                  <li className="nav-item" role="presentation">
+                                  <li className='nav-item' role='presentation'>
                                     <a
                                       className={`w-100 ${
-                                        pathname === "#" ? "active" : ""
+                                        pathname === '#' ? 'active' : ''
                                       }`}
-                                      href="#"
+                                      href='#'
                                     >
                                       <FormField
-                                        className="applicant-input"
-                                        type="text"
+                                        className='applicant-input'
+                                        type='text'
                                         onChange={(e) => handleFilterChange(e)}
-                                        name="location"
-                                        placeholder="Address"
+                                        name='location'
+                                        placeholder='Address'
                                         value={formData.location}
                                       />
                                     </a>
@@ -472,19 +473,19 @@ const DashboardMain = () => {
                               </nav>
 
                               <div
-                                className=" d-flex flex-wrap mt-5"
-                                style={{ columnGap: "10px", rowGap: "8px" }}
+                                className=' d-flex flex-wrap mt-5'
+                                style={{ columnGap: '10px', rowGap: '8px' }}
                               >
                                 <Link
-                                  className="rbt-btn btn-gradient radius-round sm-btn"
-                                  href="#"
+                                  className='rbt-btn btn-gradient radius-round sm-btn'
+                                  href='#'
                                   onClick={handleFiltersSubmit}
                                 >
                                   Filter
                                 </Link>
                                 <Link
-                                  className="rbt-btn btn-border-gradient radius-round sm-btn"
-                                  href="#"
+                                  className='rbt-btn btn-border-gradient radius-round sm-btn'
+                                  href='#'
                                   onClick={handleClearFilter}
                                 >
                                   Clear all
@@ -500,91 +501,89 @@ const DashboardMain = () => {
 
                     {/* --------------------table start--------------------- */}
 
-                    <div className="col-lg-9">
-                      
-
-                     
-
+                    <div className='col-lg-9'>
                       {/* <div className="rbt-dashboard-content bg-color-white rbt-shadow-box "> */}
-                        {/* <div className="content"> */}
-                          {/* <div className="section-title">
+                      {/* <div className="content"> */}
+                      {/* <div className="section-title">
                             <h4 className="rbt-title-style-3">
                               Business Directory List
                             </h4>
                           </div> */}
 
-                          <div className="rbt-dashboard-table table-responsive mobile-table-750">
-                            <div className="row g-5 m-0">
-                              {currentDataForAdmin.map((item, index) => (
-                                <div className="col-lg-6 col-12 mt-0 mb-5" key={index}>
-                                  <div
-                                    className="rbt-card card-list-2 event-list-card variation-01 rbt-hover relative"
-                                    style={{ position: "relative" }}
+                      <div className='rbt-dashboard-table table-responsive mobile-table-750'>
+                        <div className='row g-5 m-0'>
+                          {currentDataForAdmin.map((item, index) => (
+                            <div
+                              className='col-lg-6 col-12 mt-0 mb-5'
+                              key={index}
+                            >
+                              <div
+                                className='rbt-card card-list-2 event-list-card variation-01 rbt-hover relative'
+                                style={{ position: 'relative' }}
+                              >
+                                {/* Edit Icon in Top Right */}
+                                <div
+                                  className='rbt-button-group'
+                                  style={{
+                                    position: 'absolute',
+                                    top: '15px',
+                                    right: '15px',
+                                    zIndex: 10,
+                                  }}
+                                >
+                                  <a
+                                    className='rbt-btn btn-xs bg-primary-opacity radius-round'
+                                    href={`/edit-a-directory/${item.id}/`}
+                                    title='Edit'
                                   >
-                                    {/* Edit Icon in Top Right */}
-                                    <div
-                                      className="rbt-button-group"
-                                      style={{
-                                        position: "absolute",
-                                        top: "15px",
-                                        right: "15px",
-                                        zIndex: 10,
-                                      }}
-                                    >
-                                      <a
-                                        className="rbt-btn btn-xs bg-primary-opacity radius-round"
-                                        href={`/edit-a-directory/${item.id}/`}
-                                        title="Edit"
-                                      >
-                                        <i className="feather-edit pl--0" />
-                                      </a>
-                                    </div>
-
-                                    <div className="rbt-card-img">
-                                      <Link href={`/event-details/${item.id}`}>
-                                        <Image
-                                          src="/images/event/grid-type-01.jpg"
-                                          width={355}
-                                          height={240}
-                                          priority
-                                          alt="Card image"
-                                        />
-                                      </Link>
-                                    </div>
-
-                                    <div className="rbt-card-body">
-                                      <ul className="rbt-meta">
-                                        <li>
-                                          <i className="feather-map-pin"></i>
-                                          {item?.location}
-                                        </li>
-                                      </ul>
-                                      <h4 className="rbt-card-title">
-                                        <Link href={`#`}>
-                                          {item.business_name}
-                                        </Link>
-                                      </h4>
-                                      <p
-                                        className="text-gray mt--dec-40"
-                                        style={{ fontSize: "16px" }}
-                                      >
-                                        <Link href={"#"}>
-                                          {item.industry_type}
-                                        </Link>
-                                      </p>
-                                    </div>
-                                  </div>
+                                    <i className='feather-edit pl--0' />
+                                  </a>
                                 </div>
-                              ))}
-                            
 
-                         
-                        
-                              
+                                <div className='rbt-card-img'>
+                                  <Link href={`/event-details/${item.id}`}>
+                                    <Image
+                                      src='/images/event/grid-type-01.jpg'
+                                      width={355}
+                                      height={240}
+                                      priority
+                                      alt='Card image'
+                                    />
+                                  </Link>
+                                </div>
+
+                                <div className='rbt-card-body'>
+                                  <ul className='rbt-meta'>
+                                    <li>
+                                      <i className='feather-map-pin'></i>
+                                      {item?.location}
+                                    </li>
+                                  </ul>
+                                  <h4 className='rbt-card-title'>
+                                    <Link href={`#`}>{item.business_name}</Link>
+                                  </h4>
+                                  <p
+                                    className='text-gray mt--dec-40'
+                                    style={{ fontSize: '16px' }}
+                                  >
+                                    <Link href={'#'}>{item.industry_type}</Link>
+                                  </p>
+                                </div>
+                              </div>
                             </div>
-                            
-                          </div>
-                        {/* </div> */}
+                          ))}
+                        </div>
+                      </div>
+                      {currentDataForAdmin.length > 0 && (
+                        <div className='d-flex justify-content-center mt-4'>
+                          <Pagination
+                            activeNumber={handlePageChange}
+                            totalPage={totalPagesForAdmin}
+                            currentPages={currentPage}
+                          />
+                        </div>
+                      )}
+                      {/* </div> */}
                       {/* </div> */}
                     </div>
 

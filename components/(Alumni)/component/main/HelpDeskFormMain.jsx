@@ -35,8 +35,8 @@ const HelpDeskFormMain = () => {
   const [categoryTicket, setCategoryTicket] = useState([]);
   const [token, setToken] = useState('');
   const [state, setState] = useSetState({
-        pageLoading: false,
-    });
+    pageLoading: false,
+  });
 
   useEffect(() => {
     const Token = localStorage.getItem('token');
@@ -46,7 +46,7 @@ const HelpDeskFormMain = () => {
     }
 
     const Alumni = localStorage.getItem('isAlumni');
-    console.log('✌️Alumni --->', Alumni);
+    console.log('Alumni --->', Alumni);
 
     if (Alumni !== 'true') {
       router.push('/');

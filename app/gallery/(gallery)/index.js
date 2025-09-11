@@ -14,6 +14,7 @@ import GalleryMain from "@/components/(Alumni)/component/main/GalleryMain";
 import KITFooter from "@/components/Footer/KITFooter";
 import GalleryLoginMain from "@/components/(Alumni)/component/main/GalleryLoginMain";
 import { useEffect, useState } from "react";
+import Pagination from "@/commonComponents/Pagination";
 
 const GalleryPage = () => {
    const [token, setToken] = useState("");

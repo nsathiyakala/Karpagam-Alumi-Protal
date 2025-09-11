@@ -1,7 +1,7 @@
-import Link from "next/link";
-import { useEffect, useState } from "react";
+import Link from 'next/link';
+import { useEffect, useState } from 'react';
 
-const Pagination = ( props ) => {
+const Pagination = (props) => {
   const { activeNumber, totalPage, currentPages } = props;
   const totalPages = Math.ceil(totalPage / 10);
   const [currentPage, setCurrentPage] = useState(1);
@@ -43,16 +43,16 @@ const Pagination = ( props ) => {
       for (let i = 1; i <= Math.min(5, totalPages); i++) {
         pageNumbers.push(i);
       }
-      if (totalPages > 5) pageNumbers.push("...", totalPages);
+      if (totalPages > 5) pageNumbers.push('...', totalPages);
     } else if (currentPage >= totalPages - 3) {
       // Show '1 ... last 5 pages'
-      pageNumbers.push(1, "...");
+      pageNumbers.push(1, '...');
       for (let i = totalPages - 4; i <= totalPages; i++) {
         pageNumbers.push(i);
       }
     } else {
       // Show '1 ... currentPage-2 currentPage currentPage+2 ... totalPages'
-      pageNumbers.push(1, "...");
+      pageNumbers.push(1, '...');
       for (
         let i = currentPage - pageBuffer;
         i <= currentPage + pageBuffer;
@@ -60,23 +60,22 @@ const Pagination = ( props ) => {
       ) {
         pageNumbers.push(i);
       }
-      pageNumbers.push("...", totalPages);
+      pageNumbers.push('...', totalPages);
     }
 
     return pageNumbers;
   };
 
   return (
-    <div id="pagination" className="rbt-elements-area mt--50">
-      <div className="wrapper">
-        <div className="row g-5">
-          <div className="col-lg-12">
+    <div id='pagination' className='rbt-elements-area mt--50'>
+      <div className='wrapper'>
+        <div className='row g-5'>
+          <div className='col-lg-12'>
             <nav>
-              <ul className="rbt-pagination justify-content-center">
-                <li onClick={handlePrevClick} 
-                disabled={currentPage === 1}>
-                  <Link href="#" aria-label="Previous">
-                    <i className="feather-chevron-left"></i>
+              <ul className='rbt-pagination justify-content-center'>
+                <li onClick={handlePrevClick} disabled={currentPage === 1}>
+                  <Link href='#' aria-label='Previous'>
+                    <i className='feather-chevron-left'></i>
                   </Link>
                 </li>
                 {renderPageNumbers().map((pageNumber, index) => (
@@ -84,14 +83,14 @@ const Pagination = ( props ) => {
                     key={index}
                     className={` ${pageNumber === currentPage ? 'active' : ''}`}
                     onClick={() =>
-                      typeof pageNumber === "number" &&
+                      typeof pageNumber === 'number' &&
                       handlePageClick(pageNumber)
                     }
                     disabled={
-                      pageNumber === "..." || pageNumber === currentPage
+                      pageNumber === '...' || pageNumber === currentPage
                     }
                   >
-                    <Link href="#">{pageNumber}</Link>
+                    <Link href='#'>{pageNumber}</Link>
                   </li>
                 ))}
 
@@ -99,8 +98,8 @@ const Pagination = ( props ) => {
                   onClick={handleNextClick}
                   disabled={currentPage === totalPages}
                 >
-                  <Link href="#" aria-label="Next">
-                    <i className="feather-chevron-right"></i>
+                  <Link href='#' aria-label='Next'>
+                    <i className='feather-chevron-right'></i>
                   </Link>
                 </li>
               </ul>
