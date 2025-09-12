@@ -16,6 +16,7 @@ import GalleryLoginMain from "@/components/(Alumni)/component/main/GalleryLoginM
 import { useEffect, useState } from "react";
 import AlbumMain from "@/components/(Alumni)/component/main/AlbumMain";
 
+
 const Page = () => {
    const [token, setToken] = useState("");
     const [isAdmin, setIsAdmin] = useState(false);

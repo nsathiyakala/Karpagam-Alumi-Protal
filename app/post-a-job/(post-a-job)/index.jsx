@@ -16,6 +16,7 @@ import Form from "@/commonComponents/Form";
 import PostJobForm from "@/components/(Alumni)/component/JobBoard/PostJobForm";
 
 
+
 const PostJob = () => {
   const [token, setToken] = useState("");
   const [isAdmin, setIsAdmin] = useState(false);

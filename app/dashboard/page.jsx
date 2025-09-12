@@ -2,7 +2,7 @@ import Dashboard from "./(dashboard)";
 import BackToTop from "@/app/backToTop";
 
 export const metadata = {
-  title: "Histudy - Online Courses & Education NEXTJS14 Template",
+  title: "Karpagam Institute of Technology - Dashboard",
   description: "Online Courses & Education NEXTJS14 Template",
 };
 

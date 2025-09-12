@@ -744,7 +744,7 @@ const MyProfileExperienceMain = () => {
               type='button'
               onClick={() => handleCancel()}
             >
-              cancel
+              Cancel
             </button>
 
             <button

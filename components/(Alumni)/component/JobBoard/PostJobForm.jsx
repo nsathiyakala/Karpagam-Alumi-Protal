@@ -15,6 +15,7 @@ import FormField from "@/commonComponents/FormFields";
 import { jobTypeOption, YearOfExperience } from "@/utils/constant.utils";
 import axios from "axios";
 import Models from "@/imports/models.import";
+import Loader from "@/components/(Alumni)/Loader";
 
 const PostJobForm = () => {
   const router = useRouter();
