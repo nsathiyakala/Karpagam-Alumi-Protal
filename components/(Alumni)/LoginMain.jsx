@@ -1,4 +1,4 @@
-import { validateForm } from "@/utils/commonFunction.utils";
+import { objIsEmpty, validateForm } from "@/utils/commonFunction.utils";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useState, useEffect } from "react";
@@ -101,7 +101,7 @@ const LoginMain = () => {
         console.log("✌️modules --->", modules);
 
         // Ensure modules exists before checking individual module status
-        if (modules) {
+        if (!objIsEmpty(modules)) {
           if (modules.module1 === false) {
             router?.push("/profile-photograph");
           } else if (modules.module2 === false) {
@@ -122,6 +122,7 @@ const LoginMain = () => {
             router?.push("/home");
           }
         } else {
+          router?.push("/home");
           console.error("Modules data is missing.");
         }
       } else if (res?.groups?.Faculty === true) {

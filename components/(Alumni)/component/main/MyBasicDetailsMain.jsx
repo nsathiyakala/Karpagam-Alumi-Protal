@@ -1,16 +1,16 @@
-import Link from 'next/link';
-import React, { useEffect, useState } from 'react';
-import AccountInfo from '../../../../data/myAccount.json';
-import MyAccount from '../../../My-Account/MyAccount';
-import FormField from '@/commonComponents/FormFields';
-import { useRouter } from 'next/navigation';
-import { useSetState, validateForm } from '@/utils/commonFunction.utils';
-import { message } from 'antd';
-import { BloodGroupChooice } from '@/utils/constant.utils';
-import Models from '@/imports/models.import';
-import axios from 'axios';
-import { BaseURL } from '@/utils/BaseUrl';
-import Loader from '../../Loader';
+import Link from "next/link";
+import React, { useEffect, useState } from "react";
+import AccountInfo from "../../../../data/myAccount.json";
+import MyAccount from "../../../My-Account/MyAccount";
+import FormField from "@/commonComponents/FormFields";
+import { useRouter } from "next/navigation";
+import { useSetState, validateForm } from "@/utils/commonFunction.utils";
+import { message } from "antd";
+import { BloodGroupChooice } from "@/utils/constant.utils";
+import Models from "@/imports/models.import";
+import axios from "axios";
+import { BaseURL } from "@/utils/BaseUrl";
+import Loader from "../../Loader";
 
 const MyBasicDetailsMain = () => {
   const router = useRouter();
@@ -24,16 +24,16 @@ const MyBasicDetailsMain = () => {
     key: 1,
   });
   const [formData, setFormData] = useState({
-    salutation: '',
-    dob: '',
-    gender: '',
-    blood_group: '',
-    mobile_no: '',
-    batch: '',
-    course: '',
-    about_me: '',
+    salutation: "",
+    dob: "",
+    gender: "",
+    blood_group: "",
+    mobile_no: "",
+    batch: "",
+    course: "",
+    about_me: "",
   });
-  const [memberId, setMemberId] = useState('');
+  const [memberId, setMemberId] = useState("");
   const [course, setCourse] = useState([]);
   const [salutation, setSalutation] = useState([]);
   const [batch, setBatch] = useState([]);
@@ -44,6 +44,7 @@ const MyBasicDetailsMain = () => {
     currenCoursePage: 1,
     hasCourseLoadMore: null,
     pageLoading: false,
+    btnLoading:false,
   });
 
   useEffect(() => {
@@ -53,12 +54,12 @@ const MyBasicDetailsMain = () => {
   }, []);
 
   useEffect(() => {
-    const MEMBERID = localStorage.getItem('member_id');
+    const MEMBERID = localStorage.getItem("member_id");
     setMemberId(MEMBERID);
 
-    const Admin = localStorage.getItem('isAdmin');
-    console.log('✌️Admin --->', Admin);
-    Admin == true || (Admin == 'true' && router.push('/users'));
+    const Admin = localStorage.getItem("isAdmin");
+    console.log("✌️Admin --->", Admin);
+    Admin == true || (Admin == "true" && router.push("/users"));
   }, []);
 
   useEffect(() => {
@@ -78,7 +79,7 @@ const MyBasicDetailsMain = () => {
       setState({ pageLoading: false });
       setSalutation(SalutationOption);
     } catch (error) {
-      console.log('✌️error --->', error);
+      console.log("✌️error --->", error);
       setState({ pageLoading: false });
     }
   };
@@ -94,7 +95,7 @@ const MyBasicDetailsMain = () => {
       setCourse(CourseOption);
       setState({ hasCourseLoadMore: res?.next, pageLoading: false });
     } catch (error) {
-      console.log('✌️error --->', error);
+      console.log("✌️error --->", error);
       setState({ pageLoading: false });
     }
   };
@@ -110,7 +111,7 @@ const MyBasicDetailsMain = () => {
       setBatch(BatchOption);
       setState({ hasBatchLoadMore: res?.next, pageLoading: false });
     } catch (error) {
-      console.log('✌️error --->', error);
+      console.log("✌️error --->", error);
       setState({ pageLoading: false });
     }
   };
@@ -121,25 +122,25 @@ const MyBasicDetailsMain = () => {
       const response = await Models.member.memberData(memberId);
       const res = response?.member_data;
       setFormData({
-        salutation: res.salutation || '',
-        dob: res.dob || '',
-        gender: res.gender || '',
-        blood_group: res.blood_group || '',
-        mobile_no: res.mobile_no || '',
+        salutation: res.salutation || "",
+        dob: res.dob || "",
+        gender: res.gender || "",
+        blood_group: res.blood_group || "",
+        mobile_no: res.mobile_no || "",
         batch:
-          { value: res.batch_detail.id, label: res.batch_detail.title } || '',
+          { value: res.batch_detail.id, label: res.batch_detail.title } || "",
         course:
-          { value: res.course_detail.id, label: res.course_detail.title } || '',
-        about_me: res.about_me || '',
+          { value: res.course_detail.id, label: res.course_detail.title } || "",
+        about_me: res.about_me || "",
       });
       setState({ pageLoading: false });
     } catch (error) {
-      console.log('✌️error --->', error);
+      console.log("✌️error --->", error);
       setState({ pageLoading: false });
     }
   };
 
-  console.log('formdata', formData);
+  console.log("formdata", formData);
 
   const handleToggle = (key) => {
     if (isActive.key === key) {
@@ -169,18 +170,20 @@ const MyBasicDetailsMain = () => {
 
   const success = (success) => {
     messageApi.open({
-      type: 'success',
-      content: success || 'Successfully Registered',
+      type: "success",
+      content: success || "Successfully Registered",
     });
   };
   const errorNotification = (error) => {
     messageApi.open({
-      type: 'error',
-      content: error || 'An error occurred. Please try again.',
+      type: "error",
+      content: error || "An error occurred. Please try again.",
     });
   };
   const handleSubmit = (e) => {
+    
     e.preventDefault();
+    
 
     const validationRules = {
       salutation: { required: true },
@@ -205,31 +208,35 @@ const MyBasicDetailsMain = () => {
       course: formData.course.value,
       about_me: formData.about_me,
     };
-    console.log('body:', body);
+    console.log("body:", body);
+
+    setState({btnLoading:true})
 
     axios
       .post(`${BaseURL}/member_data/${memberId}/`, body, {
         headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`,
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       })
       .then((res) => {
         success(res?.data?.message);
-        console.log('response:', res.data);
+        console.log("response:", res.data);
         setFormData({
-          salutation: '',
-          dob: '',
-          gender: '',
-          blood_group: '',
-          mobile_no: '',
-          batch: '',
-          course: '',
-          about_me: '',
+          salutation: "",
+          dob: "",
+          gender: "",
+          blood_group: "",
+          mobile_no: "",
+          batch: "",
+          course: "",
+          about_me: "",
         });
+        setState({btnLoading:false})
       })
       .catch((error) => {
         errorNotification(error?.response?.data?.error);
-        console.log('error:', error?.response?.data?.error);
+        console.log("error:", error?.response?.data?.error);
+        setState({btnLoading:false})
       });
   };
 
@@ -255,7 +262,7 @@ const MyBasicDetailsMain = () => {
         setBatch(batch);
       }
     } catch (error) {
-      console.log('error: ', error);
+      console.log("error: ", error);
     }
   };
 
@@ -276,68 +283,68 @@ const MyBasicDetailsMain = () => {
         setCourse(course);
       }
     } catch (error) {
-      console.log('error: ', error);
+      console.log("error: ", error);
     }
   };
 
   return (
-    <div className='my-account-section bg-color-white section-pad'>
+    <div className="my-account-section bg-color-white section-pad">
       {state.pageLoading ? (
         <Loader /> // 👈 show loader
       ) : (
         <>
           {contextHolder}
 
-          <div className='container'>
-            <div className='row'>
-              <div className='col-12'>
-                <div className='row g-5'>
-                  <div className='col-lg-3 col-12'>
+          <div className="container">
+            <div className="row">
+              <div className="col-12">
+                <div className="row g-5">
+                  <div className="col-lg-3 col-12">
                     <div
-                      className='rbt-my-account-tab-button nav'
-                      role='tablist'
+                      className="rbt-my-account-tab-button nav"
+                      role="tablist"
                     >
-                      <Link href='edit-basic-profile' className='active'>
+                      <Link href="edit-basic-profile" className="active">
                         Basic Details
                       </Link>
-                      <Link href='edit-profile-picture'>Profile Picture</Link>
-                      <Link href='edit-profile-education'>Education</Link>
-                      <Link href='edit-profile-skills'>Skills</Link>
+                      <Link href="edit-profile-picture">Profile Picture</Link>
+                      <Link href="edit-profile-education">Education</Link>
+                      <Link href="edit-profile-skills">Skills</Link>
 
-                      <Link href='edit-profile-experience'>Experience</Link>
-                      <Link href='edit-profile-contact'>Contact</Link>
-                      <Link href='edit-milestone'>Milestone</Link>
+                      <Link href="edit-profile-experience">Experience</Link>
+                      <Link href="edit-profile-contact">Contact</Link>
+                      <Link href="edit-milestone">Milestone</Link>
                     </div>
                   </div>
-                  <div className='col-lg-9 col-12'>
-                    <div className='rbt-video-area bg-color-white overflow-hidden event-form rbt-shadow-box'>
-                      <div className='container'>
-                        <div className='row row--15 gy-5'>
-                          <div className='section-title'>
-                            <h4 class='rbt-title-style-3 mb-0'>
+                  <div className="col-lg-9 col-12">
+                    <div className="rbt-video-area bg-color-white overflow-hidden event-form rbt-shadow-box">
+                      <div className="container">
+                        <div className="row row--15 gy-5">
+                          <div className="section-title">
+                            <h4 class="rbt-title-style-3 mb-0">
                               Basic Details
                               <div
-                                className='text-gray mt-2'
-                                style={{ fontSize: '14px' }}
+                                className="text-gray mt-2"
+                                style={{ fontSize: "14px" }}
                               >
                                 Please update profile details here
                               </div>
                             </h4>
                           </div>
-                          <div className='form-wrapper'>
-                            <div className=' contact-form-style-1 max-width-auto py-0 px-3'>
+                          <div className="form-wrapper">
+                            <div className=" contact-form-style-1 max-width-auto py-0 px-3">
                               <form
-                                id='contact-form'
-                                className='rainbow-dynamic-form max-width-auto'
+                                id="contact-form"
+                                className="rainbow-dynamic-form max-width-auto"
                                 onSubmit={(e) => handleSubmit(e)}
                               >
-                                <div className='form-grid'>
+                                <div className="form-grid">
                                   {/* Left Column */}
-                                  <div className=''>
+                                  <div className="">
                                     <FormField
-                                      label='Salutation'
-                                      type='select'
-                                      name='salutation'
+                                      label="Salutation"
+                                      type="select"
+                                      name="salutation"
                                       value={formData.salutation}
                                       onChange={handleChange}
                                       error={errMsg.salutation}
@@ -345,28 +352,28 @@ const MyBasicDetailsMain = () => {
                                       options={salutation}
                                       required={true}
                                     />
-                                    <span className='focus-border'></span>
+                                    <span className="focus-border"></span>
                                   </div>
 
-                                  <div className=''>
+                                  <div className="">
                                     <FormField
-                                      label='Date of Birth'
-                                      type='date'
-                                      name='dob'
+                                      label="Date of Birth"
+                                      type="date"
+                                      name="dob"
                                       value={formData.dob}
                                       onChange={handleChange}
                                       error={errMsg.dob}
                                       // className="applicant-input"
                                       required={false}
                                     />
-                                    <span className='focus-border'></span>
+                                    <span className="focus-border"></span>
                                   </div>
 
-                                  <div className=''>
+                                  <div className="">
                                     <FormField
-                                      label='Blood Group'
-                                      type='select'
-                                      name='blood_group'
+                                      label="Blood Group"
+                                      type="select"
+                                      name="blood_group"
                                       value={formData.blood_group}
                                       onChange={handleChange}
                                       error={errMsg.blood_group}
@@ -374,28 +381,28 @@ const MyBasicDetailsMain = () => {
                                       required={false}
                                       options={BloodGroupOption}
                                     />
-                                    <span className='focus-border'></span>
+                                    <span className="focus-border"></span>
                                   </div>
 
-                                  <div className=''>
+                                  <div className="">
                                     <FormField
-                                      label='Mobile Number'
-                                      type='tel'
-                                      name='mobile_no'
+                                      label="Mobile Number"
+                                      type="tel"
+                                      name="mobile_no"
                                       value={formData.mobile_no}
                                       onChange={handleChange}
                                       error={errMsg.mobile_no}
                                       // className="applicant-input"
                                       required={false}
                                     />
-                                    <span className='focus-border'></span>
+                                    <span className="focus-border"></span>
                                   </div>
 
-                                  <div className=''>
+                                  <div className="">
                                     <FormField
-                                      label='Batch'
-                                      type='loadMoreSelect'
-                                      name='batch'
+                                      label="Batch"
+                                      type="loadMoreSelect"
+                                      name="batch"
                                       value={formData.batch}
                                       onChange={(value) =>
                                         setFormData({
@@ -409,14 +416,14 @@ const MyBasicDetailsMain = () => {
                                       required={false}
                                       loadMore={() => batchListLoadMore()}
                                     />
-                                    <span className='focus-border'></span>
+                                    <span className="focus-border"></span>
                                   </div>
 
-                                  <div className=''>
+                                  <div className="">
                                     <FormField
-                                      label='Course'
-                                      type='loadMoreSelect'
-                                      name='course'
+                                      label="Course"
+                                      type="loadMoreSelect"
+                                      name="course"
                                       value={formData.course}
                                       onChange={(value) =>
                                         setFormData({
@@ -429,68 +436,75 @@ const MyBasicDetailsMain = () => {
                                       required={false}
                                       loadMore={() => courseListLoadMore()}
                                     />
-                                    <span className='focus-border'></span>
+                                    <span className="focus-border"></span>
                                   </div>
 
                                   {/* Submit */}
                                 </div>
 
-                                <div className='w-100 mt-4'>
+                                <div className="w-100 mt-4">
                                   <FormField
-                                    label='Gender'
-                                    type='radio'
-                                    name='gender' // Changed from "department" to "gender" to match the label
+                                    label="Gender"
+                                    type="radio"
+                                    name="gender" // Changed from "department" to "gender" to match the label
                                     value={formData.gender} // Assuming you have a gender field in your formData
                                     onChange={handleChange}
                                     error={errMsg.gender} // Assuming you have a gender field in your errMsg
                                     options={[
                                       // Add this options prop
-                                      { value: 'M', label: 'Male' },
-                                      { value: 'F', label: 'Female' },
-                                      { value: 'O', label: 'Others' },
+                                      { value: "M", label: "Male" },
+                                      { value: "F", label: "Female" },
+                                      { value: "O", label: "Others" },
                                     ]}
                                     required={true}
                                   />
-                                  <span className='focus-border'></span>
+                                  <span className="focus-border"></span>
                                 </div>
 
-                                <div className='w-100 mt-4'>
+                                <div className="w-100 mt-4">
                                   <FormField
-                                    label='About Me'
-                                    type='textarea'
-                                    name='about_me'
+                                    label="About Me"
+                                    type="textarea"
+                                    name="about_me"
                                     value={formData.about_me}
                                     onChange={handleChange}
                                     error={errMsg.about_me}
                                     // className="applicant-input"
                                     required={false}
                                     style={{
-                                      height: '150px',
+                                      height: "150px",
                                     }}
 
                                     // options={roleOption}
                                   />
-                                  <span className='focus-border'></span>
+                                  <span className="focus-border"></span>
                                 </div>
 
-                                <div className='form-submit-group'>
+                                <div className="form-submit-group">
                                   <button
-                                    name='submit'
-                                    type='submit'
-                                    id='submit'
-                                    className='rbt-btn btn-md btn-gradient hover-icon-reverse w-100'
+                                    name="submit"
+                                    type="submit"
+                                    id="submit"
+                                    disabled={state.btnLoading}
+                                    className={`rbt-btn btn-md btn-gradient hover-icon-reverse w-100 ${
+                                      state.btnLoading ? "loading" : ""
+                                    }`}
                                   >
-                                    <span className='icon-reverse-wrapper'>
-                                      <span className='btn-text'>
-                                        Update Profile
+                                    {state.btnLoading ? (
+                                      <span className="btn-loader"></span>
+                                    ) : (
+                                      <span className="icon-reverse-wrapper">
+                                        <span className="btn-text">
+                                          Update Profile
+                                        </span>
+                                        <span className="btn-icon">
+                                          <i className="feather-arrow-right"></i>
+                                        </span>
+                                        <span className="btn-icon">
+                                          <i className="feather-arrow-right"></i>
+                                        </span>
                                       </span>
-                                      <span className='btn-icon'>
-                                        <i className='feather-arrow-right'></i>
-                                      </span>
-                                      <span className='btn-icon'>
-                                        <i className='feather-arrow-right'></i>
-                                      </span>
-                                    </span>
+                                    )}
                                   </button>
                                 </div>
                               </form>
