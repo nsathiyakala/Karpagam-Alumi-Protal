@@ -9,28 +9,34 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
-const AdminDepartmentMain = () => {
+const AdminIndustryMain = () => {
   const { confirm } = Modal;
-
   const router = useRouter();
 
-  const [messageApi, contextHolder] = message.useMessage();
-
   const [formData, setFormData] = useState({
-    short_name: "",
-    full_name: "",
+    title: "",
+    description: "",
+    website: "",
+    // end_year: "",
   });
   const [errMsg, setErrMsg] = useState({});
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
+
+  const [departmentDatas, setDepartmentDatas] = useState([]);
+  const [messageApi, contextHolder] = message.useMessage();
   const [loading, setLoading] = useState(false);
+
+  const itemsPerPage = 10;
+  const [currentPage, setCurrentPage] = useState(1);
+
   const [token, setToken] = useState("");
   const [isAdmin, setIsAdmin] = useState(false);
   const [isAlumniManager, setIsAlumniManager] = useState(false);
 
   const [state, setState] = useSetState({
     currentPage: 1,
-    deparmentList: [],
+    industryList: [],
   });
 
   useEffect(() => {
@@ -53,17 +59,16 @@ const AdminDepartmentMain = () => {
 
   useEffect(() => {
     if (token && (isAdmin || isAlumniManager)) {
-      GetDepartment(1);
+      GetIndustry(1);
     }
   }, [token, isAdmin, isAlumniManager]);
 
-  const GetDepartment = async (page) => {
+  const GetIndustry = async (page) => {
     try {
       setLoading(true);
-
-      const res = await Models.masters.departmentList(page);
+      const res = await Models.masters.industryList(page);
       setState({
-        deparmentList: res?.results,
+        industryList: res?.results,
         currentPage: page,
         next: res?.next,
         previous: res?.previous,
@@ -108,18 +113,20 @@ const AdminDepartmentMain = () => {
     e.preventDefault();
 
     const validationRules = {
-      short_name: { required: true },
-      full_name: { required: true },
+      title: { required: true },
+      description: { required: true },
+      website: { required: true },
+      // end_year: { required: true },
     };
     const isValid = validateForm(formData, validationRules, setErrMsg);
     if (!isValid) return;
 
     if (isEditing) {
-      console.log("Updating department:", formData);
+      console.log("Updating Batch:", formData);
       // Perform update logic here
 
       axios
-        .post(`${BaseURL}/update_department/${formData.id}/`, formData, {
+        .post(`${BaseURL}/update_industry/${formData.id}/`, formData, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -128,7 +135,7 @@ const AdminDepartmentMain = () => {
           console.log("✌️response --->", response);
           success(response.data.message);
           setLoading(true);
-          GetDepartment(state.currentPage);
+          GetIndustry(state.currentPage);
           setLoading(false);
         })
         .catch((error) => {
@@ -137,11 +144,11 @@ const AdminDepartmentMain = () => {
           setLoading(false);
         });
     } else {
-      console.log("Creating department:", formData);
+      console.log("Creating Industry:", formData);
       // Perform create logic here
 
       axios
-        .post(`${BaseURL}/create_department/`, formData, {
+        .post(`${BaseURL}/create_industry/`, formData, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -150,7 +157,7 @@ const AdminDepartmentMain = () => {
           console.log("✌️response --->", response);
           success(response.data.message);
           setLoading(true);
-          GetDepartment(1);
+          GetIndustry(1);
           setLoading(false);
         })
         .catch((error) => {
@@ -164,8 +171,10 @@ const AdminDepartmentMain = () => {
 
     // Reset form
     setFormData({
-      short_name: "",
-      full_name: "",
+      title: "",
+      description: "",
+      website: "",
+      // end_year: "",
     });
     setIsEditing(false); // Reset to create mode
   };
@@ -174,71 +183,29 @@ const AdminDepartmentMain = () => {
   const editDepartment = (department) => () => {
     console.log("✌️department --->", department);
     setFormData({
-      id: department.department_id,
-      short_name: department.short_name,
-      full_name: department.full_name,
+      id: department.id,
+      title: department.title,
+      description: department.description,
+      website: department.website,
+      // end_year: department.end_year,
     });
     setIsEditing(true);
     setIsModalOpen(true);
   };
 
-  const showDeleteConfirm = (department) => {
-    confirm({
-      title: department.is_active
-        ? "Are you sure you want to InActive this department?"
-        : "Are you sure you want to Active this department?",
-
-      okText: department.is_active ? "InActive" : "Active",
-      okType: "danger",
-      cancelText: "Cancel",
-      onOk() {
-        axios
-          .put(
-            `${BaseURL}/decativate_department/${department.department_id}/`,
-            {
-              is_active: !department.is_active,
-            },
-            {
-              headers: {
-                Authorization: `Bearer ${token}`,
-              },
-            }
-          )
-          .then((response) => {
-            console.log("✌️response --->", response);
-            message.success(response.data.message || "Operation successful!");
-            setLoading(true);
-            GetDepartment(state.currentPage); // Refresh the department list
-            setLoading(false);
-          })
-          .catch((error) => {
-            console.log("❌error --->", error);
-            message.error(
-              error.response?.data?.error ||
-                "An error occurred. Please try again."
-            );
-            setLoading(false);
-          });
-      },
-      onCancel() {
-        console.log("Cancel");
-      },
-    });
-
-    console.log("Deleting department:", department);
-  };
-
   const showModal = () => {
     setFormData({
-      short_name: "",
-      full_name: "",
+      title: "",
+      description: "",
+      website: "",
+      // end_year: "",
     });
     setIsEditing(false);
     setIsModalOpen(true);
   };
 
   const handlePageChange = (number) => {
-    GetDepartment(number);
+    GetIndustry(number);
     setState({ currentPage: number });
     window.scrollTo({ top: 0, behavior: "smooth" });
 
@@ -252,7 +219,7 @@ const AdminDepartmentMain = () => {
         <div className="content">
           <div className="d-flex justify-content-between py-4 mb-4 ">
             <div className="section-title">
-              <h4 className="mb-0 font-20 text-dark">Department </h4>
+              <h4 className="mb-0 font-20 text-dark">Industry </h4>
             </div>
             <div className="rbt-button-group justify-content-end">
               <div
@@ -276,24 +243,32 @@ const AdminDepartmentMain = () => {
               >
                 <Spin size="large" />
               </div>
-            ) : state.deparmentList?.length > 0 ? (
+            ) : state.industryList?.length > 0 ? (
               <>
                 <table className="rbt-table table table-borderless">
                   <thead>
                     <tr>
-                      <th>Department Name</th>
+                      <th>Industry Name</th>
+                      <th>Description</th>
+                      <th>Website</th>
                       <th>Actions</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {state.deparmentList?.map((item, index) => (
-                      <tr
-                        key={index}
-                        style={{ opacity: item?.is_active ? 1 : 0.5 }}
-                      >
+                    {state.industryList?.map((item, index) => (
+                      <tr key={index}>
+                        <th>
+                          <p className="b3 mb--5">{item.title}</p>
+                        </th>
+                        <th>
+                          <p className="b3 mb--5">{item.description}</p>
+                        </th>
+
                         <th>
                           <p className="b3 mb--5">
-                            {item.full_name} ({item.short_name})
+                            <Link href={item.website} target="_blank">
+                              {item.website}
+                            </Link>
                           </p>
                         </th>
 
@@ -307,32 +282,13 @@ const AdminDepartmentMain = () => {
                             >
                               <i className="feather-edit pl--0"></i>
                             </div>
-                            {item?.is_active ? (
-                              <div
-                                className="rbt-btn btn-xs bg-color-danger-opacity radius-round color-danger"
-                                href="#"
-                                title="Active"
-                                onClick={() => showDeleteConfirm(item)}
-                              >
-                                <i className="feather-check-circle pl--0"></i>
-                              </div>
-                            ) : (
-                              <div
-                                className="rbt-btn btn-xs bg-color-danger-opacity radius-round color-danger"
-                                href="#"
-                                title="InActive"
-                                onClick={() => showDeleteConfirm(item)}
-                              >
-                                <i className="feather-x-circle pl--0"></i>
-                              </div>
-                            )}
                           </div>
                         </td>
                       </tr>
                     ))}
                   </tbody>
                 </table>
-                {state.deparmentList?.length > 9 && (
+                {state.industryList?.length > 9 && (
                   <div>
                     <div
                       className="mb-20 "
@@ -366,7 +322,7 @@ const AdminDepartmentMain = () => {
         </div>
       </div>
       <Modal
-        title={isEditing ? "Edit Department" : "Create Department"}
+        title={isEditing ? "Edit Industry" : "Create Industry"}
         open={isModalOpen}
         onCancel={() => setIsModalOpen(false)}
         footer={false}
@@ -375,11 +331,23 @@ const AdminDepartmentMain = () => {
           <div className="mt-3">
             <FormField
               type="text"
-              name="short_name"
-              label="Department Short Name"
+              name="title"
+              label="Industry Name"
               onChange={handleChange}
-              value={formData.short_name}
-              error={errMsg.short_name}
+              value={formData.title}
+              error={errMsg.title}
+              required={true}
+            />
+          </div>
+
+          <div className="mt-3">
+            <FormField
+              type="textarea"
+              name="description"
+              label="Description"
+              onChange={handleChange}
+              value={formData.description}
+              error={errMsg.description}
               required={true}
             />
           </div>
@@ -387,11 +355,11 @@ const AdminDepartmentMain = () => {
           <div className="mt-3">
             <FormField
               type="text"
-              name="full_name"
-              label="Department Full Name"
+              name="website"
+              label="Website (URL)"
               onChange={handleChange}
-              value={formData.full_name}
-              error={errMsg.full_name}
+              value={formData.website}
+              error={errMsg.website}
               required={true}
             />
           </div>
@@ -410,4 +378,4 @@ const AdminDepartmentMain = () => {
   );
 };
 
-export default AdminDepartmentMain;
+export default AdminIndustryMain;

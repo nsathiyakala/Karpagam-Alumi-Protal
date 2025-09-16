@@ -1,6 +1,5 @@
 import BackToTop from "@/app/backToTop";
-
-import Institution from "./(industry)";
+import Industry from "./(industry)";
 
 
 export const metadata = {
@@ -8,13 +7,13 @@ export const metadata = {
   description: "Online Courses & Education NEXTJS14 Template",
 };
 
-const InstitutionPage = () => {
+const IndustryPage = () => {
   return (
     <>
-      <Institution />
+      <Industry />
       <BackToTop />
     </>
   );
 };
 
-export default InstitutionPage;
+export default IndustryPage;
