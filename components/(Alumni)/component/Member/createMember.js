@@ -176,6 +176,7 @@ const CreateMemberForm = () => {
         createFaculty();
       } else {
         createMember();
+        console.log("hello");
       }
     } else {
       createMultipleMember();
@@ -219,6 +220,7 @@ const CreateMemberForm = () => {
   };
 
   const createMember = async () => {
+    console.log("hello from createMember");
     try {
       let validationRules = {
         salutation: { required: true },
@@ -232,10 +234,15 @@ const CreateMemberForm = () => {
         register: { required: true },
         dob: { required: true },
       };
+
       const isValid = validateForm(formData, validationRules, setErrMsg);
-      if (!isValid) {
+      console.log("isValid result:", isValid);
+
+      if (isValid) {
+        console.log("form validation failed ❌");
         return;
       }
+
       let body = {
         group_name: formData.member_type,
         salutation_id: formData.salutation,
@@ -248,7 +255,11 @@ const CreateMemberForm = () => {
         batch_id: formData.batch?.value,
         register_no: formData.register,
       };
+
+      console.log("request body ✅:", body);
+
       const res = await Models.member.create_single_member(body);
+
       router.push("/users");
       message.success(res?.message);
     } catch (error) {

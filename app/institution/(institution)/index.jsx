@@ -15,6 +15,7 @@ import KITFooter from "@/components/Footer/KITFooter";
 import MasterDataSidebar from "@/components/(Alumni)/component/KITMaster/MasterDataSidebar";
 import AdminMain from "@/components/(Alumni)/component/KITMaster/AdminMain";
 import QuizAttempts from "@/components/Student/QuizAttempts";
+import AdminInstitutiontMain from "@/components/(Alumni)/component/main/AdminInstitutiontMain";
 
 
 const Institution = () => {
@@ -22,27 +23,32 @@ const Institution = () => {
     <>
       <Provider store={Store}>
         <Context>
-        <MobileMenu />
-        <KITHeader headerSticky="rbt-sticky" headerType="" />
-          
+          <MobileMenu />
+          <KITHeader headerSticky="rbt-sticky" headerType="" />
 
           <div className="rbt-page-banner-wrapper">
             <div className="rbt-banner-image" />
           </div>
           <div className="rbt-dashboard-area rbt-section-overlayping-top rbt-section-gapBottom">
-            <div className="container">
-              <div className="row">
-                <div className="col-lg-12">
-                  {/* <InstructorDashboardHeader /> */}
+            <div className="container-flyuid">
+              <div className="row justify-content-center">
+                <div className="col-11 col-xl-10 con-wid">
+                  <div className="container-fuild">
+                    <div className="row">
+                      <div className="col-lg-12">
+                        {/* <InstructorDashboardHeader /> */}
 
-                  <div className="row g-5">
-                    <div className="col-lg-3">
-                      <MasterDataSidebar />
-                    </div>
+                        <div className="row g-5">
+                          <div className="col-lg-3">
+                            <MasterDataSidebar />
+                          </div>
 
-                    <div className="col-lg-9">
-                      {/* <AdminMain /> */}
-                      <QuizAttempts />
+                          <div className="col-lg-9">
+                            {/* <AdminMain /> */}
+                            <AdminInstitutiontMain/>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>

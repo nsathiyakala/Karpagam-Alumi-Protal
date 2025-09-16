@@ -81,52 +81,59 @@ const BatchTable = (props) => {
             </div>
           </div>
           <div className="rbt-dashboard-table table-responsive mobile-table-750 mt--30">
-            <table className="rbt-table table table-borderless">
-              <thead>
-                <tr>
-                  {tableHead?.map((item) => (
-                    <th>{item}</th>
-                  ))}
+            {loading ? (
+              <div
+                className="text-center pt-10 d-flex justify-content-center align-items-center"
+                style={{
+                  height: "500px",
+                  maxWidth: "100%",
+                }}
+              >
+                <Spin size="large" />
+              </div>
+            ) : tableData?.length > 0 ? (
+              <table className="rbt-table table table-borderless">
+                <thead>
+                  <tr>
+                    {tableHead?.map((item, index) => (
+                      <th key={index}>{item}</th>
+                    ))}
+                  </tr>
+                </thead>
 
-                  <th></th>
-                </tr>
-              </thead>
-              {loading ? (
-                <div className="text-center pt-10 ">
-                  <Spin size="large" />
-                </div>
-              ) : (
                 <tbody>
                   {tableData?.map((item) => (
-                    <tr
-                    key={item.batch_id}
-                  >
-                    <td style={{ width: "30%" }}>{item.title}</td>
-                    <td style={{ width: "25%" }}>
-                      {item.start_year}
-                    </td>
-                    <td style={{ width: "25%" }}>
-                      {item.end_year}
-                    </td>
-                    <td style={{ width: "20%" }}>
-                      
-                      <Tooltip title="Edit Batch">
-                        <EditOutlined
-                          onClick={()=>updateUser(item)}
-                          style={{ fontSize: "22px" }}
-                        />
-                      </Tooltip>
-                      {/* )} */}
-                     
-                    </td>
-                  </tr>
+                    <tr key={item.batch_id}>
+                      <td style={{ width: "30%" }}>{item.title}</td>
+                      <td style={{ width: "25%" }}>{item.start_year}</td>
+                      <td style={{ width: "25%" }}>{item.end_year}</td>
+                      <td style={{ width: "20%" }}>
+                        <Tooltip title="Edit Batch">
+                          <EditOutlined
+                            onClick={() => updateUser(item)}
+                            style={{ fontSize: "22px" }}
+                          />
+                        </Tooltip>
+                        {/* )} */}
+                      </td>
+                    </tr>
                   ))}
                 </tbody>
-              )}
-            </table>
+              </table>
+            ) : (
+              <div
+                className="text-center pt-10 d-flex justify-content-center align-items-center"
+                style={{
+                  height: "500px",
+                  maxWidth: "100%",
+                }}
+              >
+                No Data Found
+              </div>
+            )}
           </div>
         </div>
-        {tableData?.length > 0 && (
+        {tableData?.length > 9 && (
           <div>
             <div
               className="mb-20 "

@@ -148,37 +148,45 @@ const Salutation = () => {
             <div className="rbt-banner-image" />
           </div>
           <div className="rbt-dashboard-area rbt-section-overlayping-top rbt-section-gapBottom">
-            <div className="container">
-              <div className="row">
-                <div className="col-lg-12">
-                  {/* <InstructorDashboardHeader /> */}
+            <div className="container-fuild">
+              <div className="row justify-content-center">
+                <div className="col-11 col-xl-10 con-wid">
+                  <div className="container-fuild">
+                    <div className="row">
+                      <div className="col-lg-12">
+                        {/* <InstructorDashboardHeader /> */}
 
-                  <div className="row g-5">
-                    <div className="col-lg-3">
-                      <MasterDataSidebar />
-                    </div>
+                        <div className="row g-5">
+                          <div className="col-lg-3">
+                            <MasterDataSidebar />
+                          </div>
 
-                    <div className="col-lg-9">
-                      {/* <AdminMain /> */}
-                      <SalutationTable
-                        heading="Salutation"
-                        tableHead={[
-                          "Salutation Name",
-                          "description",
-                          "Actions",
-                        ]}
-                        subtitile_1
-                        tableData={state.approvalList}
-                        loading={state.loading || state.btnLoading}
-                        total={state.total}
-                        currentPage={state.currentPage}
-                        updateUser={(item) => update(item)}
-                        handlePageChange={(number) => {
-                          setState({ currentPage: number });
-                          getData(number);
-                        }}
-                        subtitile_1_onPress={() => setState({ isOpen: true })}
-                      />
+                          <div className="col-lg-9">
+                            {/* <AdminMain /> */}
+                            <SalutationTable
+                              heading="Salutation"
+                              tableHead={[
+                                "Salutation Name",
+                                "description",
+                                "Actions",
+                              ]}
+                              subtitile_1
+                              tableData={state.approvalList}
+                              loading={state.loading || state.btnLoading}
+                              total={state.total}
+                              currentPage={state.currentPage}
+                              updateUser={(item) => update(item)}
+                              handlePageChange={(number) => {
+                                setState({ currentPage: number });
+                                getData(number);
+                              }}
+                              subtitile_1_onPress={() =>
+                                setState({ isOpen: true })
+                              }
+                            />
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>

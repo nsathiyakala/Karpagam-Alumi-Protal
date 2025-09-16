@@ -30,15 +30,22 @@ const Course = () => {
     btnLoading: false,
     loading: false,
     editId: null,
+    departmentList: [],
+    currenDepartmentPage: 1,
+    hasDepartmentLoadMore: null,
   });
 
   const [formData, setFormData] = useState({
-    department_id: "",
+    department: "",
     graduate: "",
     title: "",
   });
 
+  console.log("formData", formData);
+  
+
   const [errMsg, setErrMsg] = useState({});
+  const [getDepartment, setGetDepartment] = useState([]);
 
   useEffect(() => {
     GetCourse(1);
@@ -64,18 +71,21 @@ const Course = () => {
 
   const getDepartments = async () => {
     try {
+      setState({ loading: true });
       const res = await Models.masters.department();
 
-      const DepartmentOption = res?.results?.map((cou) => ({
-        value: cou.department_id,
-        label: cou.full_name,
+      const dropdown = res?.results?.map((item) => ({
+        value: item?.department_id,
+        label: item?.short_name,
       }));
       setState({
+        departmentList: dropdown,
+        loading: false,
         hasDepartmentLoadMore: res?.next,
-        departmentList: DepartmentOption,
       });
-    } catch (error) {
-      console.log("✌️error --->", error);
+    } catch (e) {
+      setState({ loading: false });
+      console.log(e);
     }
   };
 
@@ -85,16 +95,20 @@ const Course = () => {
         const res = await Models.masters.department(
           state.currenDepartmentPage + 1
         );
-        const DepartmentOption = res?.results?.map((bat) => ({
-          value: bat.department_id,
-          label: bat.full_name,
+        const DepartmentOption = res?.results?.map((deparment) => ({
+          value: deparment.department_id,
+          label: deparment.short_name,
         }));
+
         setState({
-          currenDepartmentPage: state.currenDepartmentPage + 1,
-          hasDepartmentLoadMore: res.next,
-          departmentList: [...state.departmentList, ...DepartmentOption],
+          deparmentList: [...state.deparmentList, ...DepartmentOption],
+          currenDeparmentPage: state.currenDeparmentPage + 1,
+          hasDeparmentLoadMore: res.next,
         });
       } else {
+        setState({
+          deparmentList: state.deparmentList,
+        });
       }
     } catch (error) {
       console.log("error: ", error);
@@ -103,8 +117,8 @@ const Course = () => {
 
   const update = (approval) => {
     setFormData({
-      department_id: {
-        value: approval?.department_id,
+      department: {
+        value: approval?.department,
         label: approval?.department,
       },
       graduate: approval?.graduate,
@@ -118,7 +132,7 @@ const Course = () => {
       e.preventDefault();
 
       const validationRules = {
-        department_id: { required: true },
+        department: { required: true },
         graduate: { required: true },
         title: { required: true },
       };
@@ -127,14 +141,14 @@ const Course = () => {
       const body = {
         title: formData.title,
         graduate: formData.graduate,
-        department_id: formData.department_id.value,
+        department_id: formData.department.value,
       };
       const res = await Models.masters.create_course(body);
       message.success(res?.message);
       setState({ isOpen: false, editId: null });
       GetCourse(1);
       setFormData({
-        department_id: "",
+        department: "",
         title: "",
         graduate: "",
       });
@@ -149,7 +163,7 @@ const Course = () => {
       e.preventDefault();
 
       const validationRules = {
-        department_id: { required: true },
+        department: { required: true },
         graduate: { required: true },
         title: { required: true },
       };
@@ -159,7 +173,7 @@ const Course = () => {
       const body = {
         title: formData.title,
         graduate: formData.graduate,
-        department_id: formData.department_id.value,
+        department_id: formData.department.value,
       };
 
       const res = await Models.masters.update_course(state.editId, body);
@@ -167,7 +181,7 @@ const Course = () => {
       setState({ isOpen: false, editId: null });
       GetCourse(1);
       setFormData({
-        department_id: "",
+        department: "",
         title: "",
         graduate: "",
       });
@@ -231,35 +245,45 @@ const Course = () => {
             <div className="rbt-banner-image" />
           </div>
           <div className="rbt-dashboard-area rbt-section-overlayping-top rbt-section-gapBottom">
-            <div className="container">
-              <div className="row">
-                <div className="col-lg-12">
-                  <div className="row g-5">
-                    <div className="col-lg-3">
-                      <MasterDataSidebar />
-                    </div>
+            <div className="container-fluid">
+              <div className="row justify-content-center">
+                <div className="col-11 col-xl-10 con-wid">
+                  <div className="container-fuild">
+                    <div className="row">
+                      <div className="col-lg-12">
+                        <div className="row g-5">
+                          <div className="col-lg-3">
+                            <MasterDataSidebar />
+                          </div>
 
-                    <div className="col-lg-9">
-                      <CourseTable
-                        heading="Course"
-                        tableHead={[
-                          "Course Name",
-                          "Graduate",
-                          "Department",
-                          "Actions",
-                        ]}
-                        subtitile_1
-                        tableData={state.courseList}
-                        loading={state.loading || state.btnLoading}
-                        total={state.total}
-                        currentPage={state.currentPage}
-                        updateUser={(item) => update(item)}
-                        handlePageChange={(number) => {
-                          setState({ currentPage: number });
-                          GetCourse(number);
-                        }}
-                        subtitile_1_onPress={() => setState({ isOpen: true })}
-                      />
+                          <div className="col-lg-9">
+                            <CourseTable
+                              heading="Course"
+                              tableHead={[
+                                "Course Name",
+                                "Graduate",
+                                "Department",
+                                "Actions",
+                              ]}
+                              subtitile_1
+                              tableData={state.courseList}
+                              loading={state.loading || state.btnLoading}
+                              total={state.total}
+                              currentPage={state.currentPage}
+                              updateUser={(item) => update(item)}
+                              handlePageChange={(number) => {
+                                setState({ currentPage: number });
+                                GetCourse(number);
+                              }}
+                              subtitile_1_onPress={() =>
+                                setState({ isOpen: true ,
+                                  editId:null
+                                })
+                              }
+                            />
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -293,7 +317,7 @@ const Course = () => {
 
                 <div className="mt-3">
                   <FormField
-                    type="number"
+                    type="text"
                     name="graduate"
                     label="Graduate"
                     required
@@ -308,11 +332,11 @@ const Course = () => {
                     label="Department"
                     type="loadMoreSelect"
                     name="department"
-                    value={formData.department_id}
+                    value={formData.department.name}
                     onChange={(e) =>
-                      setFormData({ ...formData, department_id: e })
+                      setFormData({ ...formData, department: e })
                     }
-                    error={errMsg?.department_id}
+                    error={errMsg.department}
                     options={state.departmentList}
                     required={true}
                     loadMore={() => departmentListLoadMore()}

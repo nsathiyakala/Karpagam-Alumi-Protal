@@ -189,35 +189,48 @@ const Users = () => {
             <div className="rbt-banner-image" />
           </div>
           <div className="rbt-dashboard-area rbt-section-overlayping-top rbt-section-gapBottom">
-            <div className="container">
-              <div className="row">
-                <div className="col-lg-12">
-                  <div className="row g-5">
-                    <div className="col-lg-3">
-                      <MasterDataSidebar />
-                    </div>
+            <div className="container-fluid">
+              <div className="row justify-content-center">
+                <div className="col-11 col-xl-10 con-wid">
+                  <div className="container-fluid">
+                    
+                    <div className="row">
+                      <div className="col-lg-12">
+                        <div className="row g-5">
+                          <div className="col-lg-3 d-sidebar">
+                            <MasterDataSidebar />
+                          </div>
 
-                    <div className="col-lg-9">
-                      <UserTable
-                        heading="Users"
-                        tableHead={["User Name", "Roles", "Actions"]}
-                        tableData={state.userList}
-                        updateStatus={(item) => updateStatus(item)}
-                        updateUser={(item) => updateUser(item)}
-                        loading={state.loading || state.btnLoading}
-                        total={state.total}
-                        currentPage={state.currentPage}
-                        handlePageChange={(number) => {
-                          setState({ currentPage: number });
-                          userList(number);
-                        }}
-                        subtitile_1={true}
-                        subtitile_2={true}
-                        subtitile_1_onPress={() =>
-                          setState({ isOpen1: true, email: "", password: "" })
-                        }
-                        subtitile_2_onPress={() => router.push("/create-member")}
-                      />
+                          <div className="col-lg-9">
+                            <UserTable
+                              heading="Users"
+                              tableHead={["User Name", "Roles", "Actions"]}
+                              tableData={state.userList}
+                              updateStatus={(item) => updateStatus(item)}
+                              updateUser={(item) => updateUser(item)}
+                              loading={state.loading || state.btnLoading}
+                              total={state.total}
+                              currentPage={state.currentPage}
+                              handlePageChange={(number) => {
+                                setState({ currentPage: number });
+                                userList(number);
+                              }}
+                              subtitile_1={true}
+                              subtitile_2={true}
+                              subtitile_1_onPress={() =>
+                                setState({
+                                  isOpen1: true,
+                                  email: "",
+                                  password: "",
+                                })
+                              }
+                              subtitile_2_onPress={() =>
+                                router.push("/create-member")
+                              }
+                            />
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -225,12 +238,12 @@ const Users = () => {
             </div>
 
             <Modal
-              title="Edit User"
+              title={<div className="custom-modal-header">Edit User</div>}
               open={state.isOpen}
               onCancel={() => setState({ isOpen: false })}
               footer={false}
             >
-              <form onSubmit={updateRole}>
+              <form className="applicants-form" onSubmit={updateRole}>
                 <Select
                   mode="multiple"
                   name="group_ids"
@@ -253,13 +266,13 @@ const Users = () => {
             </Modal>
 
             <Modal
-              title="Create User"
+              title= {<div className="custom-modal-header">Create User</div>}
               open={state.isOpen1}
               onCancel={() => setState({ isOpen1: false })}
               footer={false}
             >
-              <form onSubmit={createUser}>
-                <div className="form-group">
+              <form className="applicants-form" onSubmit={createUser}>
+                <div style={{ marginTop: "15px" }}>
                   <FormField
                     type="text"
                     name="email"
@@ -272,12 +285,12 @@ const Users = () => {
                   <span className="focus-border"></span>
                 </div>
 
-                <div className="form-group">
+                <div style={{ marginTop: "15px" }}>
                   <FormField
                     type="password"
                     name="password"
                     placeholder="Password"
-                    className="applicant-input mb_10"
+                    
                     required
                     value={state.password}
                     onChange={handleChange}

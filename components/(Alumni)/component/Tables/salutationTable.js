@@ -75,21 +75,26 @@ const SalutationTable = (props) => {
             </div>
           </div>
           <div className="rbt-dashboard-table table-responsive mobile-table-750 mt--30">
-            <table className="rbt-table table table-borderless">
-              <thead>
-                <tr>
-                  {tableHead?.map((item) => (
-                    <th>{item}</th>
-                  ))}
+            {loading ? (
+              <div
+                className="text-center pt-10 d-flex justify-content-center align-items-center"
+                style={{
+                  height: "500px",
+                  maxWidth: "100%",
+                }}
+              >
+                <Spin size="large" />
+              </div>
+            ) : (
+              <table className="rbt-table table table-borderless">
+                <thead>
+                  <tr>
+                    {tableHead?.map((item, index) => (
+                      <th key={index}>{item}</th>
+                    ))}
+                  </tr>
+                </thead>
 
-                  <th></th>
-                </tr>
-              </thead>
-              {loading ? (
-                <div className="text-center pt-10 ">
-                  <Spin size="large" />
-                </div>
-              ) : (
                 <tbody>
                   {tableData?.map((item) => (
                     <tr key={item.salutation_id}>
@@ -107,8 +112,8 @@ const SalutationTable = (props) => {
                     </tr>
                   ))}
                 </tbody>
-              )}
-            </table>
+              </table>
+            )}
           </div>
         </div>
         {/* {tableData?.length > 0 && (
