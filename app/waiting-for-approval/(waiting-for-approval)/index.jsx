@@ -92,39 +92,45 @@ const WaitingForApproval = () => {
             <div className="rbt-banner-image" />
           </div>
           <div className="rbt-dashboard-area rbt-section-overlayping-top rbt-section-gapBottom">
-            <div className="container">
-              <div className="row">
-                <div className="col-lg-12">
-                  {/* <InstructorDashboardHeader /> */}
+            <div className="container-fluid">
+              <div className="row justify-content-center">
+                <div className="col-11 col-xl-10 con-wid">
+                  <div className="container-fuild">
+                    <div className="row">
+                      <div className="col-lg-12">
+                        {/* <InstructorDashboardHeader /> */}
 
-                  <div className="row g-5">
-                    <div className="col-lg-3">
-                      <MasterDataSidebar />
-                    </div>
+                        <div className="row g-5">
+                          <div className="col-lg-3 d-sidebar">
+                            <MasterDataSidebar />
+                          </div>
 
-                    <div className="col-lg-9">
-                      {/* <AdminMain /> */}
-                      <CommonTable
-                        heading="Waiting For Approval"
-                        tableHead={[
-                          "Profile Pic",
-                          "Mobile No",
-                          "Email",
-                          "Course",
-                          "Batch",
-                          "File",
-                          "Actions",
-                        ]}
-                        tableData={state.approvalList}
-                        updateStatus={(item) => updateStatus(item)}
-                        loading={state.loading || state.btnLoading}
-                        total={state.total}
-                        currentPage={state.currentPage}
-                        handlePageChange={(number) => {
-                          setState({ currentPage: number });
-                          getData(number);
-                        }}
-                      />
+                          <div className="col-lg-9">
+                            {/* <AdminMain /> */}
+                            <CommonTable
+                              heading="Waiting For Approval"
+                              tableHead={[
+                                "Profile Pic",
+                                "Mobile No",
+                                "Email",
+                                "Course",
+                                "Batch",
+                                "File",
+                                "",
+                              ]}
+                              tableData={state.approvalList}
+                              updateStatus={(item) => updateStatus(item)}
+                              loading={state.loading || state.btnLoading}
+                              total={state.total}
+                              currentPage={state.currentPage}
+                              handlePageChange={(number) => {
+                                setState({ currentPage: number });
+                                getData(number);
+                              }}
+                            />
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>

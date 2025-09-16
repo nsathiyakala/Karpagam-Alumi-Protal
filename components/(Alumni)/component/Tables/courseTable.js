@@ -46,7 +46,7 @@ const CourseTable = (props) => {
                 <a
                   className="rbt-btn btn-xs bg-secondary-opacity radius-round"
                   href="#"
-                  title="Edit Album"
+                  title="Create Album"
                   onClick={() => subtitile_1_onPress()}
                 >
                   <i
@@ -81,21 +81,28 @@ const CourseTable = (props) => {
             </div>
           </div>
           <div className="rbt-dashboard-table table-responsive mobile-table-750 mt--30">
-            <table className="rbt-table table table-borderless">
-              <thead>
-                <tr>
-                  {tableHead?.map((item) => (
-                    <th>{item}</th>
-                  ))}
+            {loading ? (
+              <div
+                className="text-center pt-10 d-flex justify-content-center align-items-center"
+                style={{
+                  height: "500px",
+                  maxWidth: "100%",
+                }}
+              >
+                <Spin size="large" />
+              </div>
+            ) : (
+              <table className="rbt-table table table-borderless">
+                <thead>
+                  <tr>
+                    {tableHead?.map((item, index) => (
+                      <th key={index}>{item}</th>
+                    ))}
 
-                  <th></th>
-                </tr>
-              </thead>
-              {loading ? (
-                <div className="text-center pt-10 ">
-                  <Spin size="large" />
-                </div>
-              ) : (
+                    
+                  </tr>
+                </thead>
+
                 <tbody>
                   {tableData?.map((item) => (
                     <tr
@@ -115,13 +122,12 @@ const CourseTable = (props) => {
                             />
                           </Tooltip>
                         )}
-
                       </td>
                     </tr>
                   ))}
                 </tbody>
-              )}
-            </table>
+              </table>
+            )}
           </div>
         </div>
         {tableData?.length > 0 && (

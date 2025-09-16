@@ -48,7 +48,10 @@ const UserTable = (props) => {
                   title="Edit Album"
                   onClick={() => subtitile_1_onPress()}
                 >
-                  <i className="feather-user pl--0" onClick={() => subtitile_1_onPress()}/>
+                  <i
+                    className="feather-user pl--0"
+                    onClick={() => subtitile_1_onPress()}
+                  />
                 </a>
               )}
               {subtitile_2 && (
@@ -57,9 +60,11 @@ const UserTable = (props) => {
                   href="#"
                   title="Delete Album"
                   onClick={() => subtitile_2_onPress()}
-
                 >
-                  <i className="feather-users pl--0"  onClick={() => subtitile_2_onPress()}  />
+                  <i
+                    className="feather-users pl--0"
+                    onClick={() => subtitile_2_onPress()}
+                  />
                 </a>
               )}
               {subtitile_3 && (
@@ -75,24 +80,28 @@ const UserTable = (props) => {
             </div>
           </div>
           <div className="rbt-dashboard-table table-responsive mobile-table-750 mt--30">
-            <table className="rbt-table table table-borderless">
-              <thead>
-                <tr>
-                  {tableHead?.map((item) => (
-                    <th>{item}</th>
-                  ))}
-                  {/* <th>Qus</th>
-                  <th>TM</th>
-                  <th>CA</th>
-                  <th>Result</th> */}
-                  <th></th>
-                </tr>
-              </thead>
-              {loading ? (
-                <div className="text-center pt-10 ">
-                  <Spin size="large" />
-                </div>
-              ) : (
+            {loading ? (
+              <div
+                className="text-center pt-10 d-flex justify-content-center align-items-center"
+                style={{
+                  height: "500px",
+                  maxWidth: "100%",
+                }}
+              >
+                <Spin size="large" />
+              </div>
+            ) : tableData?.length > 0 ? (
+              <table className="rbt-table table table-borderless">
+                <thead>
+                  <tr >
+                    {tableHead?.map((item, index) => (
+                      <th key={index}>{item}</th>
+                    ))}
+                    
+                    
+                  </tr>
+                </thead>
+
                 <tbody>
                   {tableData?.map((item) => (
                     <tr
@@ -141,11 +150,21 @@ const UserTable = (props) => {
                     </tr>
                   ))}
                 </tbody>
-              )}
-            </table>
+              </table>
+            ) : (
+              <div
+                className="text-center pt-10 d-flex justify-content-center align-items-center"
+                style={{
+                  height: "500px",
+                  maxWidth: "100%",
+                }}
+              >
+                No Data Found
+              </div>
+            )}
           </div>
         </div>
-        {tableData?.length > 0 && (
+        {tableData?.length > 9 ? (
           <div>
             <div
               className="mb-20 "
@@ -161,6 +180,16 @@ const UserTable = (props) => {
                 currentPages={currentPage}
               />
             </div>
+          </div>
+        ) : (
+          <div
+            className="text-center pt-10 d-flex justify-content-center align-items-center"
+            style={{
+              height: "500px",
+              maxWidth: "100%",
+            }}
+          >
+            No Data Found
           </div>
         )}
       </div>
