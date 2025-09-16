@@ -196,39 +196,49 @@ const Course = () => {
             <div className="rbt-banner-image" />
           </div>
           <div className="rbt-dashboard-area rbt-section-overlayping-top rbt-section-gapBottom">
-            <div className="container">
-              <div className="row">
-                <div className="col-lg-12">
-                  <div className="row g-5">
-                    <div className="col-lg-3">
-                      <MasterDataSidebar />
-                    </div>
+            <div className="container-fluid">
+              <div className="row justify-content-center">
+                <div className="col-11 col-xl-10 con-wid">
+                  <div className="container-fuild">
+                    <div className="row">
+                      
+                      <div className="col-lg-12">
+                        <div className="row g-5">
+                          <div className="col-lg-3">
+                            <MasterDataSidebar />
+                          </div>
 
-                    <div className="col-lg-9">
-                      <BatchTable
-                        heading="Batch"
-                        tableHead={[
-                          "Batch Name",
-                          "Start Year",
-                          "End Year",
-                          "Actions",
-                        ]}
-                        subtitile_1
-                        tableData={state.batchList}
-                        loading={state.loading || state.btnLoading}
-                        total={state.total}
-                        currentPage={state.currentPage}
-                        updateUser={(item) => update(item)}
-                        handlePageChange={(number) => {
-                          setState({ currentPage: number });
-                          GetBatch(number);
-                        }}
-                        updateStatus={(item) => updateStatus(item)}
-                        subtitile_1_onPress={() => setState({ isOpen: true })}
-                      />
+                          <div className="col-lg-9">
+                            <BatchTable
+                              heading="Batch"
+                              tableHead={[
+                                "Batch Name",
+                                "Start Year",
+                                "End Year",
+                                "Actions"
+                              ]}
+                              subtitile_1
+                              tableData={state.batchList}
+                              loading={state.loading || state.btnLoading}
+                              total={state.total}
+                              currentPage={state.currentPage}
+                              updateUser={(item) => update(item)}
+                              handlePageChange={(number) => {
+                                setState({ currentPage: number });
+                                GetBatch(number);
+                              }}
+                              updateStatus={(item) => updateStatus(item)}
+                              subtitile_1_onPress={() =>
+                                setState({ isOpen: true })
+                              }
+                            />
+                          </div>
+                        </div>
+                      </div>
+                      </div>
                     </div>
                   </div>
-                </div>
+               
               </div>
             </div>
             <Modal
