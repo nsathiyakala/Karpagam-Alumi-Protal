@@ -36,6 +36,7 @@ const HelpDeskFormMain = () => {
   const [token, setToken] = useState('');
   const [state, setState] = useSetState({
     pageLoading: false,
+    btnLoading: false,
   });
 
   useEffect(() => {
@@ -128,6 +129,7 @@ const HelpDeskFormMain = () => {
     console.log('Body', Body);
 
     try {
+      setState({ btnLoading: true });
       const response = await axios.post(`${BaseURL}/create_ticket/`, Body, {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -141,9 +143,11 @@ const HelpDeskFormMain = () => {
         content: '',
       });
       setErrMsg({});
+      setState({ btnLoading: false });
     } catch (error) {
       console.log('❌error --->', error);
       message.error(error.response.data.message);
+      setState({ btnLoading: false });
     }
   };
 
@@ -255,7 +259,8 @@ const HelpDeskFormMain = () => {
                         name='submit'
                         type='submit'
                         id='submit'
-                        className='rbt-btn btn-md btn-gradient hover-icon-reverse w-100'
+                        disabled={state.btnLoading}
+                        className={`rbt-btn btn-md btn-gradient hover-icon-reverse w-100  ${state.btnLoading ? 'loading' : ''}`}
                       >
                         <span className='icon-reverse-wrapper'>
                           <span className='btn-text'>Submit</span>

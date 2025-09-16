@@ -1,22 +1,23 @@
-import { BaseURL } from "@/utils/BaseUrl";
-import { message, Modal } from "antd";
-import axios from "axios";
-import { useRouter } from "next/navigation";
-import React, { useEffect, useState } from "react";
-import Link from "next/link";
+import { BaseURL } from '@/utils/BaseUrl';
+import { message, Modal } from 'antd';
+import axios from 'axios';
+import { useRouter } from 'next/navigation';
+import React, { useEffect, useState } from 'react';
+import Link from 'next/link';
+import { useSetState } from '@/utils/commonFunction.utils';
 
 const AlumniTicketsTable = () => {
   const { confirm } = Modal;
   const router = useRouter();
 
   const [formData, setFormData] = useState({
-    role: "",
-    description: "",
+    role: '',
+    description: '',
     // end_year: "",
   });
   const [errMsg, setErrMsg] = useState({});
   const [isEditing, setIsEditing] = useState(false);
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchTerm, setSearchTerm] = useState('');
 
   const [departmentDatas, setDepartmentDatas] = useState([]);
   const [messageApi, contextHolder] = message.useMessage();
@@ -24,15 +25,16 @@ const AlumniTicketsTable = () => {
 
   const itemsPerPage = 10;
   const [currentPage, setCurrentPage] = useState(1);
-  const [token, setToken] = useState("");
+  const [token, setToken] = useState('');
   const [isAdmin, setIsAdmin] = useState(false);
   const [isAlumniManager, setIsAlumniManager] = useState(false);
+  const [state, setState] = useSetState({ pageLoading: false });
 
   useEffect(() => {
-    const Token = localStorage.getItem("token");
+    const Token = localStorage.getItem('token');
     setToken(Token);
     if (!Token) {
-      router.push("/login");
+      router.push('/login');
     }
   }, []);
 
@@ -43,7 +45,8 @@ const AlumniTicketsTable = () => {
   }, [token]);
 
   const GetRole = () => {
-    setLoading(true);
+    setState({ pageLoading: true });
+     
     axios
       .get(`${BaseURL}/my_ticket/`, {
         headers: {
@@ -51,17 +54,19 @@ const AlumniTicketsTable = () => {
         },
       })
       .then((response) => {
-        console.log("✌️response --->", response);
+        console.log('✌️response --->', response);
         setDepartmentDatas(response.data?.results);
-        setLoading(false);
+        setState({ pageLoading: false });
+         
       })
       .catch((error) => {
-        console.log("❌error --->", error);
-        if (error?.response?.data?.code === "token_not_valid") {
-          localStorage.removeItem("token");
-          router.push("/login");
+        console.log('error --->', error);
+        if (error?.response?.data?.code === 'token_not_valid') {
+          localStorage.removeItem('token');
+          router.push('/login');
         }
-        setLoading(true);
+        setState({ pageLoading: false });
+        
       });
   };
 
@@ -76,16 +81,16 @@ const AlumniTicketsTable = () => {
 
   const success = (successMsg) => {
     messageApi.open({
-      type: "success",
+      type: 'success',
       content:
-        successMsg || "Success! Check your email for further instructions.",
+        successMsg || 'Success! Check your email for further instructions.',
     });
   };
 
   const errorNotification = (error) => {
     messageApi.open({
-      type: "error",
-      content: error || "An error occurred. Please try again.",
+      type: 'error',
+      content: error || 'An error occurred. Please try again.',
     });
   };
 
@@ -103,17 +108,20 @@ const AlumniTicketsTable = () => {
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
+  if (state.pageLoading) {
+    return <Loader />; // Show loader while checking token
+  }
   return (
-    <div className="container">
+    <div className='container'>
       {contextHolder}
 
-      <div className="row mb-4 justify-content-center">
-        <div className="col-lg-12">
-          <div className="d-flex justify-content-between ">
+      <div className='row mb-4 justify-content-center'>
+        <div className='col-lg-12'>
+          <div className='d-flex justify-content-between '>
             <h5>All Tickets</h5>
             <Link
-              className="rbt-btn btn-gradient radius-round sm-btn"
-              href="/help-desk"
+              className='rbt-btn btn-gradient radius-round sm-btn'
+              href='/help-desk'
             >
               Create
             </Link>
@@ -121,31 +129,31 @@ const AlumniTicketsTable = () => {
         </div>
       </div>
 
-      <div className="row">
-        <div className="rbt-dashboard-table table-responsive mobile-table-750 mt--30">
+      <div className='row'>
+        <div className='rbt-dashboard-table table-responsive mobile-table-750 mt--30'>
           {departmentDatas?.length === 0 ? (
             // --- EMPTY STATE ---
             <div
               style={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "end",
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'end',
               }}
             >
               <div
                 style={{
-                  textAlign: "center",
-                  width: "400px",
-                  fontSize: "16px",
+                  textAlign: 'center',
+                  width: '400px',
+                  fontSize: '16px',
                 }}
               >
-                <h6 style={{ marginBottom: "10px" }}>No Tickets Found</h6>
+                <h6 style={{ marginBottom: '10px' }}>No Tickets Found</h6>
               </div>
             </div>
           ) : (
             // --- TABLE DATA ---
             <>
-              <table className="rbt-table table table-borderless">
+              <table className='rbt-table table table-borderless'>
                 <thead>
                   <tr>
                     <th>Category</th>
@@ -159,28 +167,28 @@ const AlumniTicketsTable = () => {
                   {currentData.map((item) => (
                     <tr key={item.id}>
                       <th>
-                        <p className="b3">{item.category}</p>
+                        <p className='b3'>{item.category}</p>
                       </th>
                       <td>
-                        <p className="b3">{item.priority}</p>
+                        <p className='b3'>{item.priority}</p>
                       </td>
                       <td>
-                        <p className="b3">{item.status}</p>
+                        <p className='b3'>{item.status}</p>
                       </td>
                       <td>
-                        <div className="rbt-button-group justify-content-end">
+                        <div className='rbt-button-group justify-content-end'>
                           {/* Assign Faculty */}
                           <div
-                            className="rbt-btn btn-xs bg-primary-opacity radius-round color-danger "
+                            className='rbt-btn btn-xs bg-primary-opacity radius-round color-danger '
                             // href={`/help-desk/ticket-detail/${item.ticket_id}`}
                             onClick={() =>
                               router.push(
                                 `/help-desk/alumni-tickets/${item.id}`
                               )
                             }
-                            title="View"
+                            title='View'
                           >
-                            <i className="feather-eye" />
+                            <i className='feather-eye' />
                           </div>
                         </div>
                       </td>

@@ -141,7 +141,7 @@ const MyContactsMain = () => {
     }));
   };
 
-  const handleEducationSubmit = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     console?.log('formDdata:', formData);
 
@@ -167,6 +167,7 @@ const MyContactsMain = () => {
       twitter_handle: formData.twitter_handle,
       address: formData.address,
       postal_code: formData.postal_code,
+      btnLoading: false,
     };
 
     if (isAlumniContact === true || isAlumniContact === 'true') {
@@ -185,6 +186,7 @@ const MyContactsMain = () => {
           type: 'success',
           content: res.data.message,
         });
+        setState({btnLoading:false})
 
         getMemberSkills();
         // router.push("/profile-photograph");
@@ -200,6 +202,7 @@ const MyContactsMain = () => {
             ? error.response.data.twitter_handle[0]
             : error.response.data.message,
         });
+        setState({btnLoading:false})
       }
     } else {
       try {
@@ -313,7 +316,6 @@ const MyContactsMain = () => {
                                   />
                                   <span className='focus-border'></span>
                                 </div>
-
                                 <div className=''>
                                   <FormField
                                     type='text'
@@ -326,7 +328,6 @@ const MyContactsMain = () => {
                                   />
                                   <span className='focus-border'></span>
                                 </div>
-
                                 <div className=''>
                                   <FormField
                                     type='text'
@@ -339,7 +340,6 @@ const MyContactsMain = () => {
                                   />
                                   <span className='focus-border'></span>
                                 </div>
-
                                 <div className=''>
                                   <FormField
                                     type='loadMoreSelect'
@@ -391,7 +391,10 @@ const MyContactsMain = () => {
                                   name='submit'
                                   type='submit'
                                   id='submit'
-                                  className='rbt-btn btn-md btn-gradient hover-icon-reverse w-100'
+                                  disabled={state.btnLoading}
+                                  className={`rbt-btn btn-md btn-gradient hover-icon-reverse w-100 ${
+                                    state.btnLoading ? 'loading' : ""
+                                  }`}
                                 >
                                   <span className='icon-reverse-wrapper'>
                                     <span className='btn-text'>
