@@ -56,6 +56,7 @@ const MyProfileExperienceMain = () => {
     currenLocationPage: 1,
     hasLocationLoadMore: null,
     pageLoading: false,
+    btnLoading: false,
   });
 
   useEffect(() => {
@@ -231,6 +232,7 @@ const MyProfileExperienceMain = () => {
 
     if (isEditing) {
       try {
+        setState({ btnLoading: true });
         const res = await axios.post(
           `${BaseURL}/update_member_experience/${formData.member}/`,
           body,
@@ -240,6 +242,7 @@ const MyProfileExperienceMain = () => {
             },
           }
         );
+        setState({ btnLoading: false });
 
         messageApi.open({
           type: 'success',
@@ -266,6 +269,7 @@ const MyProfileExperienceMain = () => {
           type: 'error',
           content: error.response.data.message,
         });
+        setState({ btnLoading: false });
       }
     } else {
       try {
@@ -748,8 +752,9 @@ const MyProfileExperienceMain = () => {
             </button>
 
             <button
-              className='rbt-btn btn-gradient radius-round sm-btn'
-              type='submit'
+              className={`rbt-btn btn-gradient radius-round sm-btn  ${state.btnLoading ? 'loading' : ''}`}
+              type="submit"
+              disabled={state.btnLoading}
             >
               {isEditing ? 'Update' : 'Create'}
             </button>

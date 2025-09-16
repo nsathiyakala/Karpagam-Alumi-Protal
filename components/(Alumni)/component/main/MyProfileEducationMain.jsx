@@ -48,6 +48,7 @@ const MyProfileEducationMain = () => {
     currenLocationPage: 1,
     hasLocationLoadMore: null,
     pageLoading: false,
+    btnLoading: false,
   });
 
   const router = useRouter();
@@ -210,6 +211,7 @@ const MyProfileEducationMain = () => {
 
     if (isEditing) {
       try {
+         setState({ btnLoading: true });
         const res = await axios.post(
           `${BaseURL}/update_member_education/${formData.member}/`,
           body,
@@ -219,12 +221,13 @@ const MyProfileEducationMain = () => {
             },
           }
         );
+        
 
         messageApi.open({
           type: 'success',
           content: res.data.message,
         });
-
+ setState({ btnLoading: false });
         setIsModalOpen(false);
 
         GetMemberEducation();
@@ -245,6 +248,7 @@ const MyProfileEducationMain = () => {
           type: 'error',
           content: error.response.data.message,
         });
+         setState({ btnLoading: false });
       }
     } else {
       try {
@@ -668,12 +672,13 @@ const MyProfileEducationMain = () => {
               type='button'
               onClick={() => handleCancel()}
             >
-              cancel
+              Cancel
             </button>
 
             <button
-              className='rbt-btn btn-gradient radius-round sm-btn'
+              className={`rbt-btn btn-gradient radius-round sm-btn ${state.btnLoading ? 'loading' : ''}`}
               type='submit'
+              disabled={state.btnLoading}
             >
               {isEditing ? 'Update' : 'Create'}
             </button>

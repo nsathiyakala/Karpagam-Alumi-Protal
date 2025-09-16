@@ -51,6 +51,7 @@ const MyProfileSkillsMain = () => {
     currenSkillPage: 1,
     hasSkillLoadMore: null,
     pageLoading: false,
+    btnLoading: false,
   });
 
   useEffect(() => {
@@ -119,7 +120,7 @@ const MyProfileSkillsMain = () => {
         pageLoading: false,
       });
     } catch (error) {
-      console.log("✌️error --->", error);
+      console.log("error --->", error);
       setState({
         pageLoading: false,
       });
@@ -156,6 +157,7 @@ const MyProfileSkillsMain = () => {
 
     if (isEditing) {
       try {
+        setState({ btnLoading: true });
         const res = await axios.post(
           `${BaseURL}/update_member_skill/${formData.member_skill_id}/`,
           body,
@@ -170,7 +172,7 @@ const MyProfileSkillsMain = () => {
           type: "success",
           content: res.data.message,
         });
-
+setState({ btnLoading: false });
         setIsModalOpen(false);
 
         GetMemberEducation();
@@ -186,6 +188,7 @@ const MyProfileSkillsMain = () => {
           type: "error",
           content: error.response.data.message,
         });
+        setState({ btnLoading: false });
       }
     } else {
       try {
@@ -472,8 +475,9 @@ const MyProfileSkillsMain = () => {
             </button>
 
             <button
-              className="rbt-btn btn-gradient radius-round sm-btn"
+              className={`rbt-btn btn-gradient radius-round sm-btn  ${state.btnLoading ? 'loading' : ''}`}
               type="submit"
+              disabled={state.btnLoading}
             >
               {isEditing ? "Update" : "Create"}
             </button>

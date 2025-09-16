@@ -38,6 +38,7 @@ const MyMilestoneMain = () => {
   const [getMemberEducation, setMemberEducation] = useState([]);
   const [state, setState] = useSetState({
       pageLoading: false,
+      btnLoading: false,
   });
 
   const router = useRouter();
@@ -50,7 +51,7 @@ const MyMilestoneMain = () => {
     setMemberId(MEMBERID);
 
     const Admin = localStorage.getItem("isAdmin");
-    console.log("✌️Admin --->", Admin);
+    console.log("Admin --->", Admin);
     Admin == true || (Admin == "true" && router.push("/users"));
   }, []);
 
@@ -150,6 +151,7 @@ const MyMilestoneMain = () => {
 
     if (isEditing) {
       try {
+        setState({ btnLoading: true });
         const res = await axios.patch(
           `${BaseURL}/milestones/${formData.id}/`,
           body,
@@ -159,6 +161,7 @@ const MyMilestoneMain = () => {
             },
           }
         );
+        setState({ btnLoading: false });
 
         messageApi.open({
           type: "success",
@@ -183,6 +186,7 @@ const MyMilestoneMain = () => {
           type: "error",
           content: error.response.data.message,
         });
+        setState({ btnLoading: false });
       }
     } else {
       try {
@@ -511,12 +515,13 @@ const MyMilestoneMain = () => {
               type="button"
               onClick={() => handleCancel()}
             >
-              cancel
+              Cancel
             </button>
 
             <button
-              className="rbt-btn btn-gradient radius-round sm-btn"
+              className={`rbt-btn btn-gradient radius-round sm-btn  ${state.btnLoading ? 'loading' : ''}`}
               type="submit"
+              disabled={state.btnLoading}
             >
               {isEditing ? "Update" : "Create"}
             </button>
