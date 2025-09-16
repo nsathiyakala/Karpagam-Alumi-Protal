@@ -18,6 +18,7 @@ import { useSetState } from "@/utils/commonFunction.utils";
 import React, { useEffect } from "react";
 import { Provider } from "react-redux";
 import { useParams, usePathname } from "next/navigation";
+import Link from "next/link";
 
 const AllSupportTicketsMain = () => {
   const [state, setState] = useSetState({
@@ -29,7 +30,7 @@ const AllSupportTicketsMain = () => {
   const pathname = usePathname();
 
   console.log("id", id);
-  
+
 
   useEffect(() => {
     if (id) {
@@ -53,13 +54,15 @@ const AllSupportTicketsMain = () => {
     if (pathname.includes("/help-desk/all-messages")) {
       return <AllMessagesMain />;
     }
-    if (id) {
-   
+    if (pathname.includes("/help-desk/ticket-detail")) {
+
       return <ViewAlumniTickets />;
     }
     if (pathname.includes("/help-desk/alumni-tickets")) {
       return <AlumniTicketsTable />;
     }
+
+
     return null;
   };
 
@@ -73,8 +76,9 @@ const AllSupportTicketsMain = () => {
         <div className="rbt-dashboard-area rbt-section-gapBottom section-pad">
           <div className="container-fluid">
             <div className="row justify-content-center mx-0 px-0">
-              <div className="col-11 col-xl-10 px-0 mx-0">
+              <div className="col-11 col-xl-10 px-0 mx-0 con-wid">
                 <div className="container-fluid px-0 mx-0">
+                 
                   <div className="row">
                     <div className="col-lg-12 px-0 mx-0">
                       <div className="row g-5">
@@ -86,11 +90,10 @@ const AllSupportTicketsMain = () => {
                         )}
 
                         <div
-                          className={`${
-                            state?.alltickets || state?.viewtickets
+                          className={`${state?.alltickets || state?.viewtickets
                               ? "col-lg-12"
                               : "col-lg-9"
-                          }`}
+                            }`}
                         >
                           {renderContent()}
                         </div>
