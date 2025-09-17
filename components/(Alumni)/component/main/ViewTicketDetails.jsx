@@ -281,7 +281,9 @@ const ViewTicketDetails = () => {
                 </div>
               </div>
               <div className="col-lg-4 d-flex justify-content-start justify-content-lg-end gap-3">
+                 {(isAdmin == "true" || isAlumniManager == "true") && (
                 <div className="call-to-btn text-start text-lg-end position-relative">
+                  
                   <Link
                     className="rbt-btn btn-gradient radius-round sm-btn"
                     href="/help-desk/open-tickets"
@@ -290,6 +292,7 @@ const ViewTicketDetails = () => {
                     <span data-text="Add New Announcement">Open tickets</span>
                   </Link>
                 </div>
+                 )}
 
                 <div className="call-to-btn text-start text-lg-end position-relative">
                   <Link
@@ -394,74 +397,78 @@ const ViewTicketDetails = () => {
             <div className="jd-section mt-4 rbt-shadow-box">
               <h4 className="jd-section-title">Alumni Request:</h4>
 
-              <div className="jd-text mb-2">
-                <b>Post Reply: </b>
-
-                <form
-                  className="rainbow-dynamic-form max-width-auto"
-                  onSubmit={handleReplySubmit}
-                >
-                  <div style={{ marginTop: "15px" }}>
-                    <FormField
-                      type="textarea"
-                      name="messages"
-                      onChange={handleReplyChange}
-                      value={replyData.messages}
-                      required={true}
-                      error={errMsg.messages}
-                    />
-                  </div>
-
-                  <div className="form-submit-group">
-                    <button
-                      name="submit"
-                      type="submit"
-                      id="submit"
-                      className="rbt-btn btn-gradient radius-round sm-btn"
-                      // style={{
-                      //   cursor: state?.btnLoading
-                      //     ? "not-allowed"
-                      //     : "pointer",
-                      // }}
-                      // disabled={state.btnLoading}
-                    >
-                      {/* {state?.btnLoading ? (
-                            <span className="btn-loader"></span>
-                          ) : ( */}
-                      <span className="icon-reverse-wrapper">
-                        <span className="btn-text">Submit</span>
-                        <span className="btn-icon">
-                          <i className="feather-arrow-right"></i>
-                        </span>
-                      </span>
-                      {/* )} */}
-                    </button>
-                  </div>
-                </form>
-              </div>
+              <p className="jd-text mb-2 ">{SingleData?.content}</p>
 
               {(isAdmin == "true" || isAlumniManager == "true") && (
-                <p className="jd-text mb-2 mt-5">
-                  <b>Replies: </b>
-                  {ticketReplies?.map((ticket) => {
-                    return (
-                      <div
-                        className="jd-similar-item bus-list  mt-3 mb-3 bg-color-primary-opacity flex-column gap-0"
-                        key={ticket?.id}
-                      >
-                        <span style={{ color: "black" }}>
-                          {ticket?.message}
-                        </span>
-                        <span style={{ fontSize: "14px" }}>
-                          Posted by: {ticket?.posted_by} on {ticket?.posted_on}
-                        </span>
+                <>
+                  <div className="jd-text mb-2">
+                    <b>Post Reply: </b>
+
+                    <form
+                      className="rainbow-dynamic-form max-width-auto"
+                      onSubmit={handleReplySubmit}
+                    >
+                      <div style={{ marginTop: "15px" }}>
+                        <FormField
+                          type="textarea"
+                          name="messages"
+                          onChange={handleReplyChange}
+                          value={replyData.messages}
+                          required={true}
+                          error={errMsg.messages}
+                        />
                       </div>
-                    );
-                  })}
-                </p>
+
+                      <div className="form-submit-group">
+                        <button
+                          name="submit"
+                          type="submit"
+                          id="submit"
+                          className="rbt-btn btn-gradient radius-round sm-btn"
+                          // style={{
+                          //   cursor: state?.btnLoading
+                          //     ? "not-allowed"
+                          //     : "pointer",
+                          // }}
+                          // disabled={state.btnLoading}
+                        >
+                          {/* {state?.btnLoading ? (
+                            <span className="btn-loader"></span>
+                          ) : ( */}
+                          <span className="icon-reverse-wrapper">
+                            <span className="btn-text">Submit</span>
+                            <span className="btn-icon">
+                              <i className="feather-arrow-right"></i>
+                            </span>
+                          </span>
+                          {/* )} */}
+                        </button>
+                      </div>
+                    </form>
+                  </div>
+                  <p className="jd-text mb-2 mt-5">
+                    <b>Replies: </b>
+                    {ticketReplies?.map((ticket) => {
+                      return (
+                        <div
+                          className="jd-similar-item bus-list  mt-3 mb-3 bg-color-primary-opacity flex-column gap-0"
+                          key={ticket?.id}
+                        >
+                          <span style={{ color: "black" }}>
+                            {ticket?.message}
+                          </span>
+                          <span style={{ fontSize: "14px" }}>
+                            Posted by: {ticket?.posted_by} on{" "}
+                            {ticket?.posted_on}
+                          </span>
+                        </div>
+                      );
+                    })}
+                  </p>
+                </>
               )}
 
-              {SingleData?.contact_email && (
+              {/* {SingleData?.contact_email && (
                 <p className="jd-text mb-2">
                   <b>Email: </b>
                   <Link href={`mailto:${SingleData?.contact_email}`}>
@@ -477,7 +484,7 @@ const ViewTicketDetails = () => {
                     {SingleData?.contact_number}
                   </Link>
                 </p>
-              )}
+              )} */}
             </div>
 
             {/* </div> */}
@@ -543,15 +550,16 @@ const ViewTicketDetails = () => {
                           value={statusData.due_date}
                         />
                       </div>
-                      <button
-                        className="rbt-btn btn-gradient radius-round sm-btn mt-5 w-100"
-                        type="submit"
-                      >
-                        {" "}
-                        Update
-                      </button>
                     </>
                   )}
+
+                  <button
+                    className="rbt-btn btn-gradient radius-round sm-btn mt-5 w-100"
+                    type="submit"
+                  >
+                    {" "}
+                    Update
+                  </button>
                 </form>
               </div>
             </div>

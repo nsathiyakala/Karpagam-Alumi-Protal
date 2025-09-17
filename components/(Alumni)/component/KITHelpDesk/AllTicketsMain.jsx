@@ -2,7 +2,11 @@
 
 import FormField from "@/commonComponents/FormFields";
 import Models from "@/imports/models.import";
-import { setDropdownData, useSetState, validateForm } from "@/utils/commonFunction.utils";
+import {
+  setDropdownData,
+  useSetState,
+  validateForm,
+} from "@/utils/commonFunction.utils";
 import { Priority } from "@/utils/constant.utils";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -13,11 +17,10 @@ import { message, Modal } from "antd";
 import Pagination from "@/commonComponents/Pagination";
 import axios from "axios";
 import { BaseURL } from "@/utils/BaseUrl";
+import Loader from "../../Loader";
 
 const AllTicketsMain = () => {
-  
-
-const { confirm } = Modal;
+  const { confirm } = Modal;
   const router = useRouter();
   const { Option } = Select;
 
@@ -364,7 +367,6 @@ const { confirm } = Modal;
     const faculty = formData.faculty_ids.map((faculty) => faculty.value);
     setFormData({ ...formData, faculty_ids: faculty });
 
-
     const isValid = validateForm(formData, validationRules, setErrMsg);
     if (!isValid) return;
 
@@ -425,15 +427,13 @@ const { confirm } = Modal;
   const handleStatusClick = (item) => {
     setStatusModal(true);
 
-    console.log("item",item);
-    
+    console.log("item", item);
 
     setStatusData({
       id: item.ticket_id,
       status_id: {
-        value:item.status_id,
-        label:item.status
-        
+        value: item.status_id,
+        label: item.status,
       },
       priority: item.priority,
       due_date: item.due_date,
@@ -522,8 +522,6 @@ const { confirm } = Modal;
         setLoading(false);
       });
   };
-  
-  
 
   const handleStatusSubmit = (e) => {
     e.preventDefault();
@@ -608,12 +606,13 @@ const { confirm } = Modal;
     }));
   };
 
-
   const handleSearchSubmit = async (page = 1, e) => {
+   
     if (e) {
       e.preventDefault();
     }
     try {
+       setLoading(true);
       const postData = {
         category: searchData.category.value,
         priority: searchData.priority,
@@ -640,13 +639,16 @@ const { confirm } = Modal;
       setDepartmentDatas(res.results);
       setStatusModal(false);
       setAllUserFilterFinalDataList(searchData);
+       setLoading(false);
     } catch (error) {
       console.log("✌️error --->", error);
+       setLoading(false);
     }
   };
 
   const HandleClearFilter = async (page) => {
     try {
+       setLoading(true);
       const Body = {
         category: "",
         priority: "",
@@ -674,13 +676,13 @@ const { confirm } = Modal;
         priority: "",
         due_date: "",
       });
+       setLoading(false);
     } catch (error) {
       console.log("✌️error --->", error);
+       setLoading(false);
     }
   };
 
-  
- 
   const StatusOption = statusList.map((item) => ({
     label: item.status,
     value: item.id,
@@ -745,7 +747,9 @@ const { confirm } = Modal;
     return body;
   };
 
-  return (
+  return loading ? (
+    <Loader />
+  ) : (
     <>
       <div className="rbt-dashboard-content bg-color-white rbt-shadow-box helpdesk">
         <div className="content">
@@ -755,7 +759,13 @@ const { confirm } = Modal;
 
           <div className="rbt-dashboard-filter-wrapper">
             <div className="row g-5">
-              <div className={`${isAdmin === "true" || isAlumniManager === "true" ? "col-lg-3" : " col-lg-6"}`}>
+              <div
+                className={`${
+                  isAdmin === "true" || isAlumniManager === "true"
+                    ? "col-lg-3"
+                    : " col-lg-6"
+                }`}
+              >
                 <div className="filter-select rbt-modern-select">
                   <span className="select-label d-block">Catogory</span>
                   <FormField
@@ -793,19 +803,15 @@ const { confirm } = Modal;
               )}
 
               <div className="col-lg-3">
-                <div className="filter-select rbt-modern-select">
+                <div className=" rbt-modern-select">
                   <span className="select-label d-block">Priority</span>
-                  <Select
+                  <FormField
+                    type="select"
                     name="priority"
-                    placeholder="Select Priority"
-                    className="react-select"
-                    classNamePrefix="react-select"
-                    onChange={(selectedOption) =>
-                      handleSearchChange("priority", selectedOption?.value)
-                    }
-                    value={PriorityOption.find(
-                      (option) => option.value === searchData.priority
-                    )}
+                    placeholder="Priority"
+                    className="priority-dd"
+                    onChange={(e) => handleSearchChange(e)}
+                    value={searchData.priority}
                     options={PriorityOption}
                   />
                 </div>
@@ -824,10 +830,7 @@ const { confirm } = Modal;
                     name="due_date"
                     placeholder="Due Date"
                     // className="applicant-input"
-                    onChange={(e) => {
-                      console.log(e.target.value);
-                      
-                      handleSearchChange("due_date", e.target.value)}}
+                    onChange={(e) => handleSearchChange(e)}
                     value={searchData.due_date}
                   />
                 </div>
@@ -961,8 +964,6 @@ const { confirm } = Modal;
                         ))}
                       </tbody>
                     </table>
-
-                    
                   </>
                 )}
               </>
@@ -1029,41 +1030,38 @@ const { confirm } = Modal;
                             </td>
                             <td>
                               <div className="rbt-button-group justify-content-end">
-                                
                                 {/* Reply */}
 
                                 {item?.assignment_response ? (
-                                   <a
-                                  className="rbt-btn btn-xs bg-primary-opacity radius-round color-danger"
-                                  href="#"
-                                  title="Reply"
-                                  style={{
-                                    cursor: "not-allowed",
-                                  }}
-                                >
-                                  <i className="feather-message-circle" />
-                                </a>
-
+                                  <a
+                                    className="rbt-btn btn-xs bg-primary-opacity radius-round color-danger"
+                                    href="#"
+                                    title="Reply"
+                                    style={{
+                                      cursor: "not-allowed",
+                                    }}
+                                  >
+                                    <i className="feather-message-circle" />
+                                  </a>
                                 ) : (
-                                   <a
-                                  className="rbt-btn btn-xs bg-primary-opacity radius-round color-danger"
-                                  href="#"
-                                  title="Reply"
-                                 onClick={() => {
-                                        openResponseModal(item);
-                                      }}
-                                >
-                                  <i className="feather-message-circle" />
-                                </a>
-
+                                  <a
+                                    className="rbt-btn btn-xs bg-primary-opacity radius-round color-danger"
+                                    href="#"
+                                    title="Reply"
+                                    onClick={() => {
+                                      openResponseModal(item);
+                                    }}
+                                  >
+                                    <i className="feather-message-circle" />
+                                  </a>
                                 )}
-                               
+
                                 {/* Status */}
                                 <a
                                   className="rbt-btn btn-xs bg-primary-opacity radius-round"
                                   href="#"
                                   title="Status"
-                                   onClick={() => handleStatusClick(item)}
+                                  onClick={() => handleStatusClick(item)}
                                 >
                                   <i className="feather-check-circle" />
                                 </a>
@@ -1073,25 +1071,23 @@ const { confirm } = Modal;
                         ))}
                       </tbody>
                     </table>
-
-                    
                   </>
                 )}
               </>
             )}
           </div>
           {/* --- PAGINATION --- */}
-                    {departmentDatas?.length > 0 && (
-                      <div className="row">
-                        <div className="col-lg-12 mt-0">
-                          <Pagination
-                            activeNumber={handlePageChange}
-                            totalPage={state.total}
-                            currentPages={state.currentPage}
-                          />
-                        </div>
-                      </div>
-                    )}
+          {departmentDatas?.length > 5 && (
+            <div className="row">
+              <div className="col-lg-12 mt-0">
+                <Pagination
+                  activeNumber={handlePageChange}
+                  totalPage={state.total}
+                  currentPages={state.currentPage}
+                />
+              </div>
+            </div>
+          )}
         </div>
       </div>
 
@@ -1109,7 +1105,6 @@ const { confirm } = Modal;
             <FormField
               label="Faculty Name"
               type="loadMoreSelect"
-              
               name="faculty_ids"
               value={formData.faculty_ids}
               onChange={(e) => {
@@ -1129,7 +1124,6 @@ const { confirm } = Modal;
               type="textarea"
               name="message"
               placeholder="Message"
-              
               onChange={handleChange}
               value={formData.message}
             />
@@ -1165,7 +1159,6 @@ const { confirm } = Modal;
               type="textarea"
               name="responce"
               placeholder="Response"
-             
               onChange={handleResponseChange}
               value={responseData.responce}
               required={true}
@@ -1200,7 +1193,6 @@ const { confirm } = Modal;
               type="textarea"
               name="messages"
               placeholder="Message"
-              
               onChange={handleReplyChange}
               value={replyData.messages}
               required={true}
@@ -1222,9 +1214,9 @@ const { confirm } = Modal;
 
       <Modal
         title={<div className="custom-modal-header">Status Update</div>}
-        open={statusModal} 
-        onCancel={statusModalCancel} 
-        footer={false} 
+        open={statusModal}
+        onCancel={statusModalCancel}
+        footer={false}
         centered
       >
         {/* 4. Form Wrapper */}
@@ -1251,7 +1243,6 @@ const { confirm } = Modal;
                   type="select"
                   name="priority"
                   label="Priority"
-                 
                   onChange={handleStatusChange}
                   value={statusData.priority}
                   options={PriorityOption}
@@ -1264,7 +1255,6 @@ const { confirm } = Modal;
                   type="date"
                   name="due_date"
                   label="Due Date"
-                 
                   onChange={handleStatusChange}
                   value={statusData.due_date}
                 />
@@ -1274,8 +1264,10 @@ const { confirm } = Modal;
 
           {/* 7. Submit Button */}
           <div className="d-flex justify-content-end mt-3">
-            <button  className="rbt-btn btn-gradient radius-round sm-btn"
-              type="submit">
+            <button
+              className="rbt-btn btn-gradient radius-round sm-btn"
+              type="submit"
+            >
               Submit
             </button>
           </div>
@@ -1286,5 +1278,3 @@ const { confirm } = Modal;
 };
 
 export default AllTicketsMain;
-
-
