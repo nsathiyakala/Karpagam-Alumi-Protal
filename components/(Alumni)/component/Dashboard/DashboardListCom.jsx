@@ -7,6 +7,7 @@ import DashboardCommentBox from "./DashboardCommentBox";
 import Models from "@/imports/models.import";
 import DashUserCom from "./DashUserCom";
 import Image from "next/image";
+import LikedUserLIst from "./LikedUserLIst";
 
 const DashboardListCom = ({ data, GetData, editPost, postLikeDisLinke }) => {
   const router = useRouter();
@@ -125,6 +126,13 @@ const DashboardListCom = ({ data, GetData, editPost, postLikeDisLinke }) => {
                   {data?.post_category?.name}
                 </p>
 
+                 <p
+                  className="text-gray mt--dec-40 mb-3"
+                  style={{ fontSize: "16px" }}
+                >
+                  {data?.content}
+                </p>
+
                 <DashUserCom
                   data={data}
                   isShowDate={true}
@@ -179,7 +187,7 @@ const DashboardListCom = ({ data, GetData, editPost, postLikeDisLinke }) => {
                   className="d-flex"
                   style={{ marginRight: "10px" }}
                   onClick={() =>
-                    setState({ isLikedUser: true, openCommentPostId: null })
+                    setState({  openCommentPostId: null })
                   }
                 >
                   {data?.post_likes?.slice(0, 3).map((likeUser, index) => (
@@ -232,7 +240,18 @@ const DashboardListCom = ({ data, GetData, editPost, postLikeDisLinke }) => {
         onCancel={() => setState({ isLikedUser: false })}
         footer={false}
         centered
-      ></Modal>
+      >
+        {state?.postList?.post_likes?.map((likeUserList, index) => (
+          <LikedUserLIst
+            key={index}
+            data={likeUserList}
+            isShowDate={true}
+            isBtnShow={true}
+            btnText="View Detail Post"
+            btnOnClick={() => router?.push(`/dashboard/${data?.id}`)}
+          />
+        ))}
+      </Modal>
     </>
   );
 };
