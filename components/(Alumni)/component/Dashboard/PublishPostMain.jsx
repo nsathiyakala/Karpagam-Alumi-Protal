@@ -6,6 +6,7 @@ import {
   Dropdown,
   setDropdownData,
   TrimText,
+  TruncatedContent,
   useSetState,
   validateForm,
 } from "@/utils/commonFunction.utils";
@@ -77,7 +78,7 @@ const PublishPostMain = () => {
   };
 
   console.log("departmentDatas", departmentDatas);
-  
+
 
   const showDeleteConfirm = (approval) => {
     confirm({
@@ -103,11 +104,11 @@ const PublishPostMain = () => {
           .catch((error) => {
             message.error(
               error.response?.data?.error ||
-                "An error occurred. Please try again."
+              "An error occurred. Please try again."
             );
           });
       },
-      onCancel() {},
+      onCancel() { },
     });
   };
 
@@ -126,93 +127,96 @@ const PublishPostMain = () => {
 
   return (
     <>
-      <div className="container">
-        {/* <div className="row mb-4 justify-content-center">
+      <div className="container section-pad">
+        <div className="row mb-4 justify-content-center">
           <div className="col-lg-12">
             <div className="d-flex justify-content-between ">
-              <h5>All Tickets</h5>
+              <h5>Publish Post</h5>
               <Link
                 className="rbt-btn btn-gradient radius-round sm-btn"
-                href="/help-desk"
+                href="/dashboard"
+
               >
-                Create
+                Back
               </Link>
             </div>
           </div>
-        </div> */}
+        </div>
 
         <div className="row">
-          <div className="rbt-dashboard-table table-responsive mobile-table-750 mt--30">
-            {departmentDatas?.length === 0 ? (
-              // --- EMPTY STATE ---
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "end",
-                }}
-              >
-                <div
-                  style={{
-                    textAlign: "center",
-                    width: "400px",
-                    fontSize: "16px",
-                  }}
-                >
-                  <h6 style={{ marginBottom: "10px" }}>No Data Found</h6>
-                </div>
-              </div>
-            ) : (
-              // --- TABLE DATA ---
-              <>
-                <table className="rbt-table table table-borderless">
-                  <thead>
-                    <tr>
-                      <th>Title</th>
-                      <th>Post Category</th>
-                      <th>Content</th>
-                      <th>Posted Date</th>
+          {token &&
+            (isAdmin === "true" || isAlumniManager === "true") && (
+              <div className="rbt-dashboard-table table-responsive mobile-table-750 ">
+                {departmentDatas?.length === 0 ? (
+                  // --- EMPTY STATE ---
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "end",
+                    }}
+                  >
+                    <div
+                      style={{
+                        textAlign: "center",
+                        width: "400px",
+                        fontSize: "16px",
+                      }}
+                    >
+                      <h6 style={{ marginBottom: "10px" }}>No Data Found</h6>
+                    </div>
+                  </div>
+                ) : (
+                  // --- TABLE DATA ---
+                  <>
+                    <table className="rbt-table table table-borderless">
+                      <thead>
+                        <tr>
+                          <th>Title</th>
+                          <th>Post Category</th>
+                          <th>Content</th>
+                          <th>Posted Date</th>
 
-                      <th>Actions</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {currentData.map((item) => (
-                      <tr key={item.id}>
-                        <th>
-                          <p className="b3">{item.title}</p>
-                        </th>
-                        <td>
-                          <p className="b3">{item.post_category?.name}</p>
-                        </td>
-                        <td>
-                          <p className="b3">
-                            {TruncatedContent(item.content, 80)}
-                          </p>
-                        </td>
-                        <td>
-                          <p className="b3">{item.posted_on}</p>
-                        </td>
-                        <td>
-                          <div className="rbt-button-group justify-content-end">
-                            {/* Assign Faculty */}
-                            <div
-                              className="rbt-btn btn-xs bg-primary-opacity radius-round color-danger "
-                              // href={`/help-desk/ticket-detail/${item.ticket_id}`}
-                              onClick={() => showDeleteConfirm(item)}
-                              title="Approve"
-                            >
-                              <i className="feather-check-circle" />
-                            </div>
-                          </div>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
+                          <th>Actions</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {currentData.map((item) => (
+                          <tr key={item.id}>
+                            <th>
+                              <p className="b3">{item.title}</p>
+                            </th>
+                            <td>
+                              <p className="b3">{item.post_category?.name}</p>
+                            </td>
+                            <td>
+                              <p className="b3">
+                                {TruncatedContent(item.content, 50)}
+                              </p>
+                            </td>
+                            <td>
+                              <p className="b3">{item.posted_on}</p>
+                            </td>
+                            <td>
+                              <div className="rbt-button-group justify-content-end">
+                                {/* Assign Faculty */}
+                                <div
+                                  className="rbt-btn btn-xs bg-primary-opacity radius-round color-danger "
+                                  // href={`/help-desk/ticket-detail/${item.ticket_id}`}
+                                  onClick={() => showDeleteConfirm(item)}
+                                  title="Approve"
+                                >
+                                  <i className="feather-check-circle" />
+                                </div>
+                              </div>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
 
-                {/* --- PAGINATION --- */}
-                {/* {departmentDatas?.length > 0 && (
+                    {/* --- PAGINATION --- */}
+                    {/* {departmentDatas?.length > 0 && (
                   <div className="row">
                     <div className="col-lg-12 mt-0">
                       <Pagination
@@ -223,9 +227,10 @@ const PublishPostMain = () => {
                     </div>
                   </div>
                 )} */}
-              </>
+                  </>
+                )}
+              </div>
             )}
-          </div>
         </div>
       </div>
     </>

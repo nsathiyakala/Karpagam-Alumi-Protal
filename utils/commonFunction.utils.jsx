@@ -344,3 +344,10 @@ export const isUrl = (string) => {
     /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?(\?[^\s]*)?$/;
   return pattern.test(string);
 };
+
+
+export const TruncatedContent = (content, length) => {
+  return content?.length > length
+    ? content.substring(0, length) + "..."
+    : content;
+};
