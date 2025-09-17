@@ -7,6 +7,7 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { Priority } from "@/utils/constant.utils";
 import FormField from "@/commonComponents/FormFields";
+import BorderRadius from "@/components/StyleGuide/Sections/BorderRadius";
 
 const ViewTicketDetails = () => {
   const { id } = useParams();
@@ -262,246 +263,235 @@ const ViewTicketDetails = () => {
   console.log("ticketReplies --->", ticketReplies);
 
   return (
-    <section className="jd-page container-fluid section-pad">
-      <div className="row justify-content-center">
-        <div className="col-11 col-xl-10">
-          <div className="container-fluid">
-            <div className="rbt-callto-action rbt-cta-default style-2 mb-4">
-              <div className="content-wrapper overflow-hidden pt--30 pb--30 bg-color-primary-opacity">
-                <div className="row gy-5 align-items-end justify-content-lg-between">
-                  <div className="col-lg-7">
-                    <div className="inner">
-                      <div className="content text-left">
-                        <h5 className="mb--5">
-                          Viewing the ticke #{SingleData?.id}
-                        </h5>
-                        {/* <p className="b3">Create Announcement</p> */}
-                      </div>
-                    </div>
+    <section className="jd-page container-fluid ">
+      {/* <div className="row justify-content-center"> */}
+      {/* <div className="col-11 col-xl-10 con-wid"> */}
+      <div className="container-fluid">
+        <div className="rbt-callto-action rbt-cta-default style-2 mb-4">
+          <div className="content-wrapper overflow-hidden pt--30 pb--30 bg-color-primary-opacity">
+            <div className="row gy-5 align-items-end justify-content-lg-between">
+              <div className="col-lg-7">
+                <div className="inner">
+                  <div className="content text-left">
+                    <h5 className="mb--5">
+                      Viewing the ticke #{SingleData?.id}
+                    </h5>
+                    {/* <p className="b3">Create Announcement</p> */}
                   </div>
-                  <div className="col-lg-4 d-flex justify-content-start justify-content-lg-end gap-3">
-                    <div className="call-to-btn text-start text-lg-end position-relative">
-                      <Link
-                        className="rbt-btn btn-gradient radius-round sm-btn"
-                        href="/help-desk/open-tickets"
-                        style={{ paddingInline: "10px" }}
-                      >
-                        <span data-text="Add New Announcement">
-                          Open tickets
-                        </span>
-                      </Link>
-                    </div>
+                </div>
+              </div>
+              <div className="col-lg-4 d-flex justify-content-start justify-content-lg-end gap-3">
+                <div className="call-to-btn text-start text-lg-end position-relative">
+                  <Link
+                    className="rbt-btn btn-gradient radius-round sm-btn"
+                    href="/help-desk/open-tickets"
+                    style={{ paddingInline: "10px" }}
+                  >
+                    <span data-text="Add New Announcement">Open tickets</span>
+                  </Link>
+                </div>
 
-                    <div className="call-to-btn text-start text-lg-end position-relative">
-                      <Link
-                        className="rbt-btn btn-gradient radius-round sm-btn"
-                        href="/help-desk/all-support-tickets"
-                        style={{ paddingInline: "10px" }}
-                      >
-                        <span data-text="Add New Announcement">
-                          All tickets
-                        </span>
-                      </Link>
-                    </div>
-                  </div>
+                <div className="call-to-btn text-start text-lg-end position-relative">
+                  <Link
+                    className="rbt-btn btn-gradient radius-round sm-btn"
+                    href="/help-desk/all-support-tickets"
+                    style={{ paddingInline: "10px" }}
+                  >
+                    <span data-text="Add New Announcement">All tickets</span>
+                  </Link>
                 </div>
               </div>
             </div>
+          </div>
+        </div>
 
-            <div className="row gx-4">
-              {/* LEFT */}
-              <div className="col-lg-8">
-                {/* <div className="jd-main-card p-4 "> */}
-                {/* Header */}
+        <div className="row gx-4 mt-5">
+          {/* LEFT */}
+          <div className="col-lg-8">
+            {/* <div className="jd-main-card p-4 "> */}
+            {/* Header */}
 
-                {/* Role Overview */}
+            {/* Role Overview */}
+            <div className="jd-section rbt-shadow-box">
+              <h4 className="jd-section-title">Request by</h4>
+
+              <p className="jd-text mb-2">
+                <b>Name: </b>
+                {SingleData?.name ? (
+                  <Link href={`/members/${SingleData?.member_id}`}>
+                    {SingleData?.name}
+                  </Link>
+                ) : (
+                  "-"
+                )}
+              </p>
+
+              {SingleData?.alumni && (
+                <p className="jd-text mb-2">
+                  <b>Email: </b>
+                  {SingleData?.alumni ? SingleData?.alumni : "-"}
+                </p>
+              )}
+
+              {SingleData?.contact && (
+                <p className="jd-text mb-2">
+                  <b>Contact: </b>
+                  {SingleData?.contact ? SingleData?.contact : "-"}
+                </p>
+              )}
+
+              {SingleData?.batch && (
+                <p className="jd-text mb-2">
+                  <b>Batch: </b>
+                  {SingleData?.batch ? SingleData?.batch : "-"}
+                </p>
+              )}
+
+              {SingleData?.course && (
+                <p className="jd-text mb-2">
+                  <b>Course: </b>
+                  {SingleData?.course ? SingleData?.course : "-"}
+                </p>
+              )}
+            </div>
+
+            {/* Responsibilities */}
+            {(isAdmin == "true" || isAlumniManager == "true") &&
+              SingleData?.assignments?.length > 0 && (
                 <div className="jd-section mt-4 rbt-shadow-box">
-                  <h4 className="jd-section-title">Request by</h4>
-
-                  <p className="jd-text mb-2">
-                    <b>Name: </b>
-                    {SingleData?.name ? (
-                      <Link href={`/members/${SingleData?.member_id}`}>
-                        {SingleData?.name}
-                      </Link>
-                    ) : (
-                      "-"
-                    )}
-                  </p>
-
-                  {SingleData?.alumni && (
-                    <p className="jd-text mb-2">
-                      <b>Email: </b>
-                      {SingleData?.alumni ? SingleData?.alumni : "-"}
-                    </p>
-                  )}
-
-                  {SingleData?.contact && (
-                    <p className="jd-text mb-2">
-                      <b>Contact: </b>
-                      {SingleData?.contact ? SingleData?.contact : "-"}
-                    </p>
-                  )}
-
-                  {SingleData?.batch && (
-                    <p className="jd-text mb-2">
-                      <b>Batch: </b>
-                      {SingleData?.batch ? SingleData?.batch : "-"}
-                    </p>
-                  )}
-
-                  {SingleData?.course && (
-                    <p className="jd-text mb-2">
-                      <b>Course: </b>
-                      {SingleData?.course ? SingleData?.course : "-"}
-                    </p>
-                  )}
-                </div>
-
-                {/* Responsibilities */}
-                {(isAdmin == "true" || isAlumniManager == "true") &&
-                  SingleData?.assignments?.length > 0 && (
-                    <div className="jd-section mt-4 rbt-shadow-box">
-                      <h4 className="jd-section-title">Response:</h4>
-                      <p className="jd-text mb-2">
-                        <b>Address: </b>
-                        {SingleData?.location && SingleData.location}
-                        {SingleData?.location && SingleData?.country_code
-                          ? ", "
-                          : ""}
-                        {SingleData?.country_code && SingleData.country_code}
-                      </p>
-                      {SingleData?.contact_email && (
-                        <p className="jd-text mb-2">
-                          <b>Email: </b>
-                          <Link href={`mailto:${SingleData?.contact_email}`}>
-                            {SingleData?.contact_email}
-                          </Link>
-                        </p>
-                      )}
-
-                      {SingleData?.contact_number && (
-                        <p className="jd-text">
-                          <b>Contact Number: </b>
-                          <Link href={`tellto:${SingleData?.contact_link}`}>
-                            {SingleData?.contact_number}
-                          </Link>
-                        </p>
-                      )}
-                    </div>
-                  )}
-
-                <div className="jd-section mt-4 rbt-shadow-box">
-                  <h4 className="jd-section-title">Alumni Request:</h4>
-
-                  <div className="jd-text mb-2">
-                    <b>Post Reply: </b>
-
-                    <form
-                      className="rainbow-dynamic-form max-width-auto"
-                      onSubmit={handleReplySubmit}
+                  <h4 className="jd-section-title">Response:</h4>
+                  {SingleData?.assignments?.map((edu, index) => (
+                    <div
+                      className="jd-similar-item bus-list  mt-3 mb-3 bg-color-primary-opacity flex-column gap-0"
+                      key={index}
                     >
-                      <div style={{ marginTop: "15px" }}>
-                        <FormField
-                          type="textarea"
-                          name="messages"
-                          onChange={handleReplyChange}
-                          value={replyData.messages}
-                          required={true}
-                          error={errMsg.messages}
-                        />
-                      </div>
+                      <h5 className="mb-2"> {edu?.assigned_to}</h5>
+                      <span style={{ fontSize: "14px" }}>
+                        Assigned on : {edu?.assigned_on}
+                      </span>
+                      <span className="mt-4" style={{ color: "black" }}>
+                        Message : {edu?.message}
+                      </span>
+                      <span style={{ color: "black" }}>
+                        Reply :{" "}
+                        {edu?.response == null ? (
+                          <span
+                            style={{
+                              color: "gray",
+                            }}
+                          >
+                            No Reply
+                          </span>
+                        ) : (
+                          edu?.response
+                        )}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              )}
 
-                      <div className="form-submit-group">
-                        <button
-                          name="submit"
-                          type="submit"
-                          id="submit"
-                          className="rbt-btn btn-gradient radius-round sm-btn"
-                          // style={{
-                          //   cursor: state?.btnLoading
-                          //     ? "not-allowed"
-                          //     : "pointer",
-                          // }}
-                          // disabled={state.btnLoading}
-                        >
-                          {/* {state?.btnLoading ? (
+            <div className="jd-section mt-4 rbt-shadow-box">
+              <h4 className="jd-section-title">Alumni Request:</h4>
+
+              <div className="jd-text mb-2">
+                <b>Post Reply: </b>
+
+                <form
+                  className="rainbow-dynamic-form max-width-auto"
+                  onSubmit={handleReplySubmit}
+                >
+                  <div style={{ marginTop: "15px" }}>
+                    <FormField
+                      type="textarea"
+                      name="messages"
+                      onChange={handleReplyChange}
+                      value={replyData.messages}
+                      required={true}
+                      error={errMsg.messages}
+                    />
+                  </div>
+
+                  <div className="form-submit-group">
+                    <button
+                      name="submit"
+                      type="submit"
+                      id="submit"
+                      className="rbt-btn btn-gradient radius-round sm-btn"
+                      // style={{
+                      //   cursor: state?.btnLoading
+                      //     ? "not-allowed"
+                      //     : "pointer",
+                      // }}
+                      // disabled={state.btnLoading}
+                    >
+                      {/* {state?.btnLoading ? (
                             <span className="btn-loader"></span>
                           ) : ( */}
-                          <span className="icon-reverse-wrapper">
-                            <span className="btn-text">Submit</span>
-                            <span className="btn-icon">
-                              <i className="feather-arrow-right"></i>
-                            </span>
-                          </span>
-                          {/* )} */}
-                        </button>
-                      </div>
-                    </form>
+                      <span className="icon-reverse-wrapper">
+                        <span className="btn-text">Submit</span>
+                        <span className="btn-icon">
+                          <i className="feather-arrow-right"></i>
+                        </span>
+                      </span>
+                      {/* )} */}
+                    </button>
                   </div>
-
-                  {(isAdmin == "true" || isAlumniManager == "true") && (
-                    <p className="jd-text mb-2 mt-5">
-                      <b>Replies: </b>
-                      {ticketReplies?.map((ticket) => {
-                        return (
-                          <div
-                            className="jd-similar-item bus-list  mt-3 mb-3 bg-color-primary-opacity flex-column gap-0"
-                            key={ticket?.id}
-                          >
-                            <span style={{ color: "black" }}>
-                              {ticket?.message}
-                            </span>
-                            <span style={{ fontSize: "14px" }}>
-                              Posted by: {ticket?.posted_by} on{" "}
-                              {ticket?.posted_on}
-                            </span>
-                          </div>
-                        );
-                      })}
-                    </p>
-                  )}
-
-                  {SingleData?.contact_email && (
-                    <p className="jd-text mb-2">
-                      <b>Email: </b>
-                      <Link href={`mailto:${SingleData?.contact_email}`}>
-                        {SingleData?.contact_email}
-                      </Link>
-                    </p>
-                  )}
-
-                  {SingleData?.contact_number && (
-                    <p className="jd-text">
-                      <b>Contact Number: </b>
-                      <Link href={`tellto:${SingleData?.contact_link}`}>
-                        {SingleData?.contact_number}
-                      </Link>
-                    </p>
-                  )}
-                </div>
-
-                {/* </div> */}
+                </form>
               </div>
 
-              {/* RIGHT SIDEBAR */}
-              <div className="col-lg-4 mt-4 mt-lg-0 ">
-                <div className="jd-side-card rbt-shadow-box">
-                  <div className="jd-side-title d-flex justify-content-between mb-4">
-                    <span>More Business Lists</span>
+              {(isAdmin == "true" || isAlumniManager == "true") && (
+                <p className="jd-text mb-2 mt-5">
+                  <b>Replies: </b>
+                  {ticketReplies?.map((ticket) => {
+                    return (
+                      <div
+                        className="jd-similar-item bus-list  mt-3 mb-3 bg-color-primary-opacity flex-column gap-0"
+                        key={ticket?.id}
+                      >
+                        <span style={{ color: "black" }}>
+                          {ticket?.message}
+                        </span>
+                        <span style={{ fontSize: "14px" }}>
+                          Posted by: {ticket?.posted_by} on {ticket?.posted_on}
+                        </span>
+                      </div>
+                    );
+                  })}
+                </p>
+              )}
 
-                    <Link
-                      href="/business-directory"
-                      style={{
-                        fontSize: "15px",
-                      }}
-                    >
-                      See All <i className="feather-arrow-right"></i>
-                    </Link>
-                  </div>
+              {SingleData?.contact_email && (
+                <p className="jd-text mb-2">
+                  <b>Email: </b>
+                  <Link href={`mailto:${SingleData?.contact_email}`}>
+                    {SingleData?.contact_email}
+                  </Link>
+                </p>
+              )}
 
-                  <div >
-                    {/* <div className="fw-bold">
+              {SingleData?.contact_number && (
+                <p className="jd-text">
+                  <b>Contact Number: </b>
+                  <Link href={`tellto:${SingleData?.contact_link}`}>
+                    {SingleData?.contact_number}
+                  </Link>
+                </p>
+              )}
+            </div>
+
+            {/* </div> */}
+          </div>
+
+          {/* RIGHT SIDEBAR */}
+          <div className="col-lg-4  mt-lg-0 ">
+            <div className="jd-side-card rbt-shadow-box">
+              <div className="jd-side-title d-flex justify-content-between mb-4">
+                <span>Update the Ticket</span>
+              </div>
+
+              <div>
+                {/* <div className="fw-bold">
                       
                     </div>
                     <div className="jd-side-small text-muted d-flex align-items-center">
@@ -509,73 +499,67 @@ const ViewTicketDetails = () => {
                       
                     </div> */}
 
-                    <form
-                      className="event-form"
-                      onSubmit={handleReplySubmit}
-                    >
-                      <div  style={{ marginTop: "15px" }}>
+                <form className="event-form" onSubmit={handleStatusSubmit}>
+                  <div style={{ marginTop: "15px" }}>
+                    <FormField
+                      type="text"
+                      label="Category"
+                      value={SingleData?.category}
+                      // disabled={true}
+
+                      className="disabled pointer-events-none"
+                    />
+                  </div>
+
+                  <div style={{ marginTop: "15px" }}>
+                    <FormField
+                      type="select"
+                      name="status_id"
+                      label="Status"
+                      onChange={handleStatusChange}
+                      value={statusData.status_id}
+                      options={StatusOption}
+                    />
+                  </div>
+                  {(isAdmin == "true" || isAlumniManager == "true") && (
+                    <>
+                      <div style={{ marginTop: "15px" }}>
                         <FormField
-                          type="text"
-                          label="Category"
-                          value={SingleData?.category}
-                          disabled={true}
-                          style={{ opacity: "0.7" }}
-                          className="applicants-form"
+                          type="select"
+                          name="priority"
+                          label="Priority"
+                          onChange={handleStatusChange}
+                          value={statusData.priority}
+                          options={PriorityOption}
                         />
                       </div>
 
                       <div style={{ marginTop: "15px" }}>
                         <FormField
-                          type="select"
-                          name="status_id"
-                          label="Status"
+                          type="date"
+                          name="due_date"
+                          label="Due Date"
                           onChange={handleStatusChange}
-                          value={statusData.status_id}
-                          options={StatusOption}
+                          value={statusData.due_date}
                         />
                       </div>
-                      {(isAdmin == "true" || isAlumniManager == "true") && (
-                        <>
-                          <div style={{ marginTop: "15px" }}>
-                            <FormField
-                              type="select"
-                              name="priority"
-                              label="Priority"
-                             
-                              onChange={handleStatusChange}
-                              value={statusData.priority}
-                              options={PriorityOption}
-                            />
-                          </div>
-
-                          <div style={{ marginTop: "15px" }}>
-                            <FormField
-                              type="date"
-                              name="due_date"
-                              label="Due Date"
-                             
-                              onChange={handleStatusChange}
-                              value={statusData.due_date}
-                            />
-                          </div>
-                        </>
-                      )}
-                    </form>
-                  </div>
-
-                  <Link
-                    className="rbt-btn btn-gradient radius-round sm-btn mt-5"
-                    href={"/post-a-directory"}
-                  >
-                    {" "}
-                    Add a Business Listing
-                  </Link>
-                </div>
+                      <button
+                        className="rbt-btn btn-gradient radius-round sm-btn mt-5 w-100"
+                        type="submit"
+                      >
+                        {" "}
+                        Update
+                      </button>
+                    </>
+                  )}
+                </form>
               </div>
             </div>
           </div>
         </div>
       </div>
+      {/* </div> */}
+      {/* </div> */}
     </section>
   );
 };
