@@ -19,6 +19,7 @@ import React, { useEffect } from "react";
 import { Provider } from "react-redux";
 import { useParams, usePathname } from "next/navigation";
 import Link from "next/link";
+import ViewTicketDetails from "./ViewTicketDetails";
 
 const AllSupportTicketsMain = () => {
   const [state, setState] = useSetState({
@@ -54,12 +55,17 @@ const AllSupportTicketsMain = () => {
     if (pathname.includes("/help-desk/all-messages")) {
       return <AllMessagesMain />;
     }
-    if (pathname.includes("/help-desk/ticket-detail")) {
+    if (pathname.includes(`/help-desk/alumni-tickets/${id}`) ){
 
       return <ViewAlumniTickets />;
     }
+    
     if (pathname.includes("/help-desk/alumni-tickets")) {
       return <AlumniTicketsTable />;
+    }
+    if (pathname.includes(`/help-desk/ticket-detail/${id}`)) {
+
+      return <ViewTicketDetails />;
     }
 
 

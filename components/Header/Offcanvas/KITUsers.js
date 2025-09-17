@@ -4,9 +4,11 @@ import Link from "next/link";
 import UserData from "../../../data/user.json";
 import { useEffect, useState } from "react";
 import { Modal } from "antd";
+import Loader from "@/components/(Alumni)/Loader";
 
 const KITUser = () => {
   const [token, setToken] = useState("");
+  const [loading, setLoading] = useState(false);
   const { confirm } = Modal;
   useEffect(() => {
     const Token = localStorage.getItem("token");
@@ -24,14 +26,18 @@ const KITUser = () => {
       cancelText: "Cancel",
       onOk() {
         try {
+          setLoading(true)
           localStorage.clear();
+          setLoading(false)
           window.location.href = "/";
         } catch (error) {
           console.log("✌️error --->", error);
+          setLoading(false)
         }
       },
       onCancel() {
         console.log("Cancel");
+        setLoading(false)
       },
     });
   };
@@ -47,6 +53,7 @@ const KITUser = () => {
 
   return (
     <>
+     
       <div className="rbt-user-menu-list-wrapper">
         {UserData &&
           UserData.user.map((person, index) => (

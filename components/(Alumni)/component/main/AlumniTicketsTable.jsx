@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useSetState } from '@/utils/commonFunction.utils';
+import Loader from '../../Loader';
 
 const AlumniTicketsTable = () => {
   const { confirm } = Modal;

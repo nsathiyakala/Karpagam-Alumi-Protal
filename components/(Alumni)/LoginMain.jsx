@@ -6,6 +6,7 @@ import { message } from "antd";
 import FormField from "@/commonComponents/FormFields";
 import axios from "axios";
 import Models from "@/imports/models.import";
+import Loader from "./Loader";
 
 const LoginMain = () => {
   const router = useRouter();
@@ -48,7 +49,6 @@ const LoginMain = () => {
 
         return;
       }
-
 
       const res = await Models.auth.login(formData);
 
@@ -93,7 +93,6 @@ const LoginMain = () => {
       if (
         res?.groups?.Alumni_Manager === true ||
         res?.groups?.Administrator === true
-        
       ) {
         router?.push("/users");
       } else if (res?.groups?.Alumni === true) {
@@ -160,73 +159,84 @@ const LoginMain = () => {
 
   return (
     <>
-      <div className="col-lg-6">
-        {contextHolder}
-        <div className="rbt-contact-form contact-form-style-1 max-width-auto">
-          <h3 className="title">Login</h3>
-          <form className="max-width-auto" onSubmit={handleSubmit1}>
-            <div className="form-group">
-              <FormField
-                placeholder="Username*"
-                type="text"
-                name="username"
-                value={formData.username}
-                onChange={handleChange}
-                error={errMsg.username}
-                required={true}
-              />
-              <span className="focus-border"></span>
-            </div>
-            <div className="form-group">
-              <FormField
-                placeholder="Password*"
-                type="password"
-                name="password"
-                value={formData.password}
-                onChange={handleChange}
-                error={errMsg.password}
-                // className="applicant-input"
-                required={true}
-              />
-              <span className="focus-border"></span>
-            </div>
+      {loading ? (
+        <div
+          className="text-center pt-10 d-flex justify-content-center align-items-center"
+          // style={{
+          //   height: "500px",
+          //   maxWidth: "100%",
+          // }}
+        >
+          <Loader  />
+        </div>
+      ) : (
+        <div className="col-lg-6">
+          {contextHolder}
+          <div className="rbt-contact-form contact-form-style-1 max-width-auto">
+            <h3 className="title">Login</h3>
+            <form className="max-width-auto" onSubmit={handleSubmit1}>
+              <div className="form-group">
+                <FormField
+                  placeholder="Username*"
+                  type="text"
+                  name="username"
+                  value={formData.username}
+                  onChange={handleChange}
+                  error={errMsg.username}
+                  required={true}
+                />
+                <span className="focus-border"></span>
+              </div>
+              <div className="form-group">
+                <FormField
+                  placeholder="Password*"
+                  type="password"
+                  name="password"
+                  value={formData.password}
+                  onChange={handleChange}
+                  error={errMsg.password}
+                  // className="applicant-input"
+                  required={true}
+                />
+                <span className="focus-border"></span>
+              </div>
 
-            <div className="row mb--30">
-             
-              <div className="col-12">
-                <div className="rbt-lost-password text-end">
-                  <Link className="rbt-btn-link" href="/forgot-password">
-                    Lost your password?
-                  </Link>
+              <div className="row mb--30">
+                <div className="col-12">
+                  <div className="rbt-lost-password text-end">
+                    <Link className="rbt-btn-link" href="/forgot-password">
+                      Lost your password?
+                    </Link>
+                  </div>
                 </div>
               </div>
-            </div>
 
-            <div className="form-submit-group">
-              <button
-                type="submit"
-                className="rbt-btn btn-md btn-gradient hover-icon-reverse w-100"
-              >
-                <span className="icon-reverse-wrapper">
-                  <span className="btn-text">Log In</span>
-                  <span className="btn-icon">
-                    <i className="feather-arrow-right"></i>
+              <div className="form-submit-group">
+                <button
+                  type="submit"
+                  className="rbt-btn btn-md btn-gradient hover-icon-reverse w-100"
+                >
+                  <span className="icon-reverse-wrapper">
+                    <span className="btn-text">Log In</span>
+                    <span className="btn-icon">
+                      <i className="feather-arrow-right"></i>
+                    </span>
+                    <span className="btn-icon">
+                      <i className="feather-arrow-right"></i>
+                    </span>
                   </span>
-                  <span className="btn-icon">
-                    <i className="feather-arrow-right"></i>
-                  </span>
-                </span>
-              </button>
-            </div>
+                </button>
+              </div>
 
-            <div className="mt-5 text-center">
-              <p>
-                Don't have an account? <Link href={"/signin"}>Sign up</Link>
-              </p>
-            </div>
-          </form>
+              <div className="mt-5 text-center">
+                <p>
+                  Don't have an account? <Link href={"/signin"}>Sign up</Link>
+                </p>
+              </div>
+            </form>
+          </div>
         </div>
-      </div>
+      )}
     </>
   );
 };
