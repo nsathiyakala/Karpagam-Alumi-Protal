@@ -19,7 +19,7 @@ import { jobTypeOption, VisibilityPosts } from "@/utils/constant.utils";
 import Loader from "../../Loader";
 import DashboardListCom from "./DashboardListCom";
 
-const DashboardMain = () => {
+const MyPostMain = () => {
   const imgInputRef = useRef(null);
 
   const router = useRouter();
@@ -45,54 +45,25 @@ const DashboardMain = () => {
     postList: [],
     postCatOption: [],
     editPostId: null,
-    myPost: [],
     filterTitle: "",
     filterCategory: "",
     filterShowList: {},
-    AdminLogin: false,
-    AlumniManagerLogin: false,
-    latestBirthDayList: [],
     currentPage: 1,
+    preview: null,
   });
 
   useEffect(() => {
-    const Token = localStorage.getItem("token");
-    if (!Token) {
-      router.push("/login");
-    }
-
-    const admin = localStorage.getItem("isAdmin");
-    setState({ AdminLogin: admin });
-
-    const alumniManager = localStorage.getItem("isAlumniManager");
-    setState({ AlumniManagerLogin: alumniManager });
-  }, []);
-
-  useEffect(() => {
+    getType();
+    getTags();
+    getGroup();
     GetPostCategory();
     GetPostData(1);
-    GetMyPostData(1);
-    UpcommingBirthdaysList();
   }, []);
-
-  const GetMyPostData = async (page) => {
-    try {
-      const res = await Models.post.GetPostData(page);
-      setState({
-        myPost: res?.results,
-        currentPage: page,
-        next: res?.next,
-        previous: res?.previous,
-        total: res?.count,
-      });
-    } catch (error) {
-      console.log("error: ", error);
-    }
-  };
 
   const GetPostData = async (page) => {
     try {
-      const res = await Models.post.GetAllPostData(page);
+      const res = await Models.post.GetPostData(page);
+      console.log("✌️res --->", res);
       setState({
         postList: res?.results,
         currentPage: page,
@@ -110,7 +81,6 @@ const DashboardMain = () => {
       console.log("error: ", error);
     }
   };
-
   const GetPostCategory = async () => {
     try {
       const res = await Models?.masters?.GetPostCategoryData(1);
@@ -121,10 +91,31 @@ const DashboardMain = () => {
     }
   };
 
-  const UpcommingBirthdaysList = async () => {
+  const getType = async () => {
     try {
-      const res = await Models?.post?.UpcommingBirthdays();
-      setState({ latestBirthDayList: res });
+      const res = await Models.post.type();
+      const dropdown = Dropdown(res?.results, "title");
+      setState({ typeOption: dropdown });
+    } catch (error) {
+      console.log("error: ", error);
+    }
+  };
+
+  const getTags = async () => {
+    try {
+      const res = await Models.post.type();
+      const dropdown = Dropdown(res?.results, "title");
+      setState({ tagsOption: dropdown });
+    } catch (error) {
+      console.log("error: ", error);
+    }
+  };
+
+  const getGroup = async () => {
+    try {
+      const res = await Models.post.type();
+      const dropdown = Dropdown(res?.results, "title");
+      setState({ groupsOption: dropdown });
     } catch (error) {
       console.log("error: ", error);
     }
@@ -137,7 +128,7 @@ const DashboardMain = () => {
     };
     try {
       const res = await Models.post.FilterPostData(Body, page);
-
+      console.log("✌️res --->", res);
       setState({
         postList: res?.results,
         currentPage: page,
@@ -163,9 +154,9 @@ const DashboardMain = () => {
       post_category: "",
     };
     try {
-      // const res = await Models.post.FilterPostData(Body,1);
-      const res = await Models.post.GetAllPostData(1);
+      const res = await Models.post.GetPostData(1);
 
+      console.log("✌️res --->", res);
       setState({
         postList: res?.results,
         filterShowList: Body,
@@ -200,15 +191,14 @@ const DashboardMain = () => {
 
   const removeFile = (type) => {
     if (type === "image") {
-      setState({ imageFile: null });
+      setState({ imageFile: null, preview: null });
     }
     // else if (type === "attachment") {
     //   setState({ attachmentFile: null });
     // }
   };
 
-  const createPost = async (e) => {
-    e.preventDefault();
+  const createPost = async () => {
     const body = {
       featured_image: state.imageFile,
       // attach: state.attachmentFile,
@@ -259,7 +249,6 @@ const DashboardMain = () => {
       const res = await Models.post.CreatePostData(formData);
       console.log("✌️res --->", res);
       GetPostData(1);
-      GetMyPostData(1);
       setState({
         isOpenNewPost: false,
         imageFile: null,
@@ -276,9 +265,8 @@ const DashboardMain = () => {
   };
 
   const updatePost = async () => {
-    e.preventDefault();
     const body = {
-      featured_image: state.imageFile,
+      featured_image: state.imageFile || state.preview,
       // attach: state.attachmentFile,
       title: state.title,
       blog: state.blog,
@@ -309,9 +297,7 @@ const DashboardMain = () => {
     if (state.imageFile) {
       formData.append("featured_image", state.imageFile);
     }
-    // if (state.attachmentFile) {
-    //   formData.append("attach", state.attachmentFile);
-    // }
+
     formData.append("title", state.title || "");
     formData.append("blog", state.blog || "");
     formData.append("content", state.content || "");
@@ -349,23 +335,27 @@ const DashboardMain = () => {
   const errorFun = (errors) => {
     setState({ error: errors });
   };
+  console.log("✌️error --->", state.error);
 
   const VisibilityDropDown = Dropdown(VisibilityPosts, "name");
 
   const editPost = async (item) => {
+    console.log("✌️item --->", item);
     try {
       setState({ editPostId: item.id, isOpenNewPost: true });
       const res = await Models?.post?.GetSinglePostData(item.id);
+      console.log("✌️res --->", res);
       setState({ title: res.title });
       let file = null;
-      if (res.featured_image) {
-        const url = new URL(res.featured_image);
-        const filename = url.pathname.split("/").pop();
-        file = await convertUrlToFile(res.featured_image, filename);
-      }
+      // if (res.featured_image) {
+      //   const url = new URL(res.featured_image);
+      //   const filename = url.pathname.split("/").pop();
+      //   file = await convertUrlToFile(res.featured_image, filename);
+      // }
 
       setState({
-        imageFile: file,
+        preview: res?.featured_image ? res?.featured_image : null,
+        imageFile: null,
         title: res?.title,
         blog: res?.blog,
         content: res?.content,
@@ -429,30 +419,25 @@ const DashboardMain = () => {
                           <h5>Filter</h5>
                           <div className="d-flex gap-3">
                             <div
-                              className="rbt-btn btn-gradient radius-round sm-btn"
-                              onClick={() => router?.push("/my-posts")}
-                            >
-                              My Post
-                            </div>
-                            {/* <div
-                              className="rbt-btn btn-gradient radius-round sm-btn"
-                              onClick={() => router?.push("/published-posts")}
-                            >
-                              Publish Post
-                            </div> */}
-
-                            <div
-                              className="rbt-btn btn-gradient radius-round sm-btn"
-                              onClick={() =>
-                                setState({
-                                  isOpenNewPost: true,
-                                  editPostId: null,
-                                })
-                              }
-                            >
-                              New Post
-                            </div>
+                            className="rbt-btn btn-gradient radius-round sm-btn"
+                            onClick={() => router?.push("/dashboard")}
+                          >
+                            All Post
                           </div>
+
+                          <div
+                            className="rbt-btn btn-gradient radius-round sm-btn"
+                            onClick={() =>
+                              setState({
+                                isOpenNewPost: true,
+                                editPostId: null,
+                              })
+                            }
+                          >
+                            New Post
+                          </div>
+                          </div>
+                          
                         </div>
                       </div>
                     </div>
@@ -620,6 +605,7 @@ const DashboardMain = () => {
                                     {state?.postList.length > 0 ? (
                                       state?.postList.map((item, index) => (
                                         <DashboardListCom
+                                          page="mypost"
                                           key={index}
                                           editPost={() => editPost(item)}
                                           data={item}
@@ -825,4 +811,4 @@ const DashboardMain = () => {
   );
 };
 
-export default DashboardMain;
+export default MyPostMain;

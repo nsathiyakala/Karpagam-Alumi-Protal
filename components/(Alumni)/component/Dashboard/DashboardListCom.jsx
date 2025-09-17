@@ -9,7 +9,10 @@ import DashUserCom from "./DashUserCom";
 import Image from "next/image";
 import LikedUserLIst from "./LikedUserLIst";
 
-const DashboardListCom = ({ data, GetData, editPost, postLikeDisLinke }) => {
+const DashboardListCom = ({ data, GetData, editPost, postLikeDisLinke, page }) => {
+
+  console.log("page", page);
+  
   const router = useRouter();
   const { confirm } = Modal;
 
@@ -64,7 +67,7 @@ const DashboardListCom = ({ data, GetData, editPost, postLikeDisLinke }) => {
 
   return (
     <>
-      <div className="col-12">
+      <div className={`col-12 ${page && "mt-0 mb-5"}`}>
         <div
           className="rbt-card event-list-card variation-01 rbt-hover relative"
           style={{ position: "relative" }}
@@ -94,7 +97,7 @@ const DashboardListCom = ({ data, GetData, editPost, postLikeDisLinke }) => {
           <div className="rbt-card-body pt-0">
             <div className="row card-list-2 event-list-card variation-01 rbt-hover relative gap-4">
               {data?.featured_image && (
-                <div className="rbt-card-img col-12 col-md-4 col-lg-3">
+                <div className={`${page ? "rbt-card-img col-12 col-md-5 col-lg-4" : "rbt-card-img col-12 col-md-4 col-lg-3"}`}>
                   <Link
                     href={`/dashboard/${data.id}`}
                     style={{ height: "100%", width: "100%" }}
@@ -115,7 +118,7 @@ const DashboardListCom = ({ data, GetData, editPost, postLikeDisLinke }) => {
                 </div>
               )}
 
-              <div className="col-12 col-md-7 col-lg-8">
+              <div className={`${page ? "col-12 col-md-6 col-lg-7" : "col-12 col-md-7 col-lg-8"}`}>
                 <h4 className="rbt-card-title font-20">
                   <Link href={`/dashboard/${data?.id}`}> {data?.title}</Link>
                 </h4>
