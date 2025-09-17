@@ -300,7 +300,7 @@ const BasicDetailMain = () => {
                       </Link>
                       <Link href={`/edit-profile-picture/${id}`}>Profile Picture</Link>
                       <Link href={`/edit-profile-education/${id}`}>Education</Link>
-                      <Link href={`edit-profile-skills/${id}`}>Skills</Link>
+                      <Link href={`/edit-profile-skills/${id}`}>Skills</Link>
 
                       <Link href={`/edit-profile-experience/${id}`}>Experience</Link>
                       <Link href={`/edit-profile-contact/${id}`}>Contact</Link>

@@ -181,7 +181,7 @@ const BasicProfilePic = () => {
                       </Link>
                       <Link href={`/edit-profile-picture/${id}`} className="active">Profile Picture</Link>
                       <Link href={`/edit-profile-education/${id}`}>Education</Link>
-                      <Link href={`edit-profile-skills/${id}`}>Skills</Link>
+                      <Link href={`/edit-profile-skills/${id}`}>Skills</Link>
 
                       <Link href={`/edit-profile-experience/${id}`}>Experience</Link>
                       <Link href={`/edit-profile-contact/${id}`}>Contact</Link>

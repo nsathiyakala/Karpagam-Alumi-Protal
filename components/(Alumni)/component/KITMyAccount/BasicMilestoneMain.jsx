@@ -16,8 +16,7 @@ import axios from "axios";
 import { BaseURL } from "@/utils/BaseUrl";
 import Loader from '../../Loader';
 
-const BasicSkillsMain = () => {
-
+const BasicMilestoneMain = () => {
     const {id} = useParams()
   const { confirm } = Modal;
   const [activeIndex, setActiveIndex] = useState(4);
@@ -32,96 +31,65 @@ const BasicSkillsMain = () => {
     key: 1,
   });
   const [formData, setFormData] = useState({
-    skill_id: "",
-    member_skill_id: "",
-    // degree: "",
-    // location: "",
-    // start_year: "",
-    // end_year: null,
-    // is_currently_pursuing: false,
+    title: "",
+    description: "",
+    year: "",
   });
   const [memberId, setMemberId] = useState("");
   const [getMemberEducation, setMemberEducation] = useState([]);
-  const [institute, setInstitute] = useState([]);
+  const [state, setState] = useSetState({
+      pageLoading: false,
+      btnLoading: false,
+  });
 
   const router = useRouter();
 
   const [errMsg, setErrMsg] = useState({});
   const [messageApi, contextHolder] = message.useMessage();
 
-  const [state, setState] = useSetState({
-    currenSkillPage: 1,
-    hasSkillLoadMore: null,
-    pageLoading: false,
-    btnLoading: false,
-  });
-
-  useEffect(() => {
-    skillList();
-  }, []);
-
-  useEffect(() => {
-    if (id) {
-      GetMemberEducation();
-    }
-  }, [id]);
-
- 
-
-  const skillList = async () => {
-    try {
-      const res = await Models.masters.skillList(1);
-      const InstituteOption = res?.results?.map((institute) => ({
-        value: institute.skill_id,
-        label: institute.skill,
-      }));
-      setInstitute(InstituteOption);
-      setState({ hasSkillLoadMore: res?.next });
-    } catch (error) {
-      console.log("✌️error --->", error);
-    }
-  };
-
-  const skillListLoadMore = async () => {
-    try {
-      if (state.hasSkillLoadMore) {
-        const res = await Models.job.skillList(state.currenSkillPage + 1);
-        const SkillOption = res?.results?.map((skill) => ({
-          value: skill.skill_id,
-          label: skill.skill,
-        }));
-
-        setInstitute([...institute, ...SkillOption]);
-
-        setState({
-          currenSkillPage: state.currenSkillPage + 1,
-          hasSkillLoadMore: res.next,
-        });
-      } else {
-        setInstitute(institute);
-      }
-    } catch (error) {
-      console.log("error: ", error);
-    }
-  };
+    useEffect(() => {
+        if (id) {
+            GetMemberEducation();
+        }
+    }, [id]);
+  
 
   const GetMemberEducation = async () => {
     setState({
-        pageLoading: true,
-      });
+      pageLoading: true,
+    });
     try {
-      const res = await Models.member.member_skills(id);
-      setMemberEducation(res?.results || []);
+      const res = await Models.masters.milestone(id);
+      setMemberEducation(res?.results);
       setState({
-        pageLoading: false,
-      });
+      pageLoading: false,
+    });
     } catch (error) {
-      console.log("error --->", error);
+      console.log("✌️error --->", error);
       setState({
-        pageLoading: false,
-      });
+      pageLoading: false,
+    });
     }
   };
+
+  const UpdateMemberGetEducation = (department) => {
+    axios
+      .get(`${BaseURL}/milestones/${department?.id}/`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      })
+      .then((response) => {
+        console.log("response:", response.data);
+        // setFormData(response.data);
+        setFormData(response.data);
+      })
+      .catch((error) => {
+        console.log("error:", error);
+      });
+  };
+
+  //
 
   const handleChange = (event) => {
     const { name, value, type, checked } = event.target;
@@ -130,13 +98,30 @@ const BasicSkillsMain = () => {
       [name]: type === "checkbox" ? checked : value, // Set to checked for checkboxes
     }));
   };
-
+  const success = (success) => {
+    messageApi.open({
+      type: "success",
+      content: success || "Successfully Registered",
+    });
+  };
+  const errorNotification = (error) => {
+    messageApi.open({
+      type: "error",
+      content: error || "An error occurred. Please try again.",
+    });
+  };
   const handleEducationSubmit = async (e) => {
     e.preventDefault();
     console?.log("formDdata:", formData);
 
     const validationRules = {
-      skill_id: {
+      title: {
+        required: true,
+      },
+      // description: {
+      //     required: true
+      // },
+      year: {
         required: true,
       },
     };
@@ -145,17 +130,22 @@ const BasicSkillsMain = () => {
     if (!isValid) return;
 
     const body = {
-      member_id: id,
-      skill_id: formData.skill_id.value,
+      member: id,
+      title: formData.title,
+      description: formData.description,
+      year: formData.year,
     };
 
     // Conditionally add end_year if not currently pursuing
+    // if (!formData.is_currently_pursuing) {
+    //     body.end_year = formData.end_year;
+    // }
 
     if (isEditing) {
       try {
         setState({ btnLoading: true });
-        const res = await axios.post(
-          `${BaseURL}/update_member_skill/${formData.member_skill_id}/`,
+        const res = await axios.patch(
+          `${BaseURL}/milestones/${formData.id}/`,
           body,
           {
             headers: {
@@ -163,18 +153,22 @@ const BasicSkillsMain = () => {
             },
           }
         );
+        setState({ btnLoading: false });
 
         messageApi.open({
           type: "success",
-          content: res.data.message,
+          content: "Milestone updated successfully",
+          // content: res.data.message,
         });
-setState({ btnLoading: false });
+
         setIsModalOpen(false);
 
         GetMemberEducation();
 
         setFormData({
-          skill_id: "",
+          title: "",
+          description: "",
+          year: "",
         });
 
         // router.push("/profile-photograph");
@@ -188,7 +182,7 @@ setState({ btnLoading: false });
       }
     } else {
       try {
-        const res = await axios.post(`${BaseURL}/create_member_skill/`, body, {
+        const res = await axios.post(`${BaseURL}/milestones/`, body, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
@@ -196,7 +190,9 @@ setState({ btnLoading: false });
 
         messageApi.open({
           type: "success",
-          content: res.data.message,
+          content: "milestone created successfully",
+
+          // content: res.data.message,
         });
 
         setIsModalOpen(false);
@@ -204,7 +200,9 @@ setState({ btnLoading: false });
         GetMemberEducation();
 
         setFormData({
-          skill_id: "",
+          title: "",
+          description: "",
+          year: "",
         });
 
         // router.push("/profile-photograph");
@@ -222,13 +220,17 @@ setState({ btnLoading: false });
     setIsModalOpen(false);
     setIsEditing(false);
     setFormData({
-      skill_id: "",
+      title: "",
+      description: "",
+      year: "",
     });
   };
 
   const showModal = () => {
     setFormData({
-      skill_id: "",
+      title: "",
+      description: "",
+      year: "",
     });
     setIsEditing(false);
     setIsModalOpen(true);
@@ -237,33 +239,32 @@ setState({ btnLoading: false });
   const editDepartment = (department) => () => {
     setIsEditing(true);
     setIsModalOpen(true);
-    setFormData({
-      skill_id: department.skill_id,
-      member_skill_id: department.member_skill_id,
-    });
+    if (id) {
+      UpdateMemberGetEducation(department);
+    }
   };
 
   const showDeleteConfirm = (department) => {
+    console.log("✌️department --->", department);
+
     confirm({
-      title: "Delete this skill?",
-      content: "Are you sure you want to delete this skill?",
+      title: "delete this Milestone?",
+      content: "Are you sure you want to delete this Milestone?",
       okText: "Delete",
       okType: "danger",
       cancelText: "Cancel",
       onOk() {
         axios
-          .delete(
-            `${BaseURL}/delete_member_skill/${department.member_skill_id}/`,
-            {
-              headers: {
-                Authorization: `Bearer ${localStorage.getItem("token")}`,
-              },
-            }
-          )
+          .delete(`${BaseURL}/milestones/${department.id}/`, {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          })
           .then((response) => {
             console.log("✌️response --->", response);
-            message.success(response.data.message || "Operation successful!");
-
+            message.success(
+              response.data.message || "Successfully Deleted Milestone"
+            );
             GetMemberEducation();
           })
           .catch((error) => {
@@ -278,15 +279,13 @@ setState({ btnLoading: false });
         console.log("Cancel");
       },
     });
-
-    // Perform is_active logic here if needed
   };
 
- return state.pageLoading ? (
-     <Loader /> // 👈 show loader
-   ) : (
+  return state.pageLoading ? (
+    <Loader /> // 👈 show loader
+  ) : (
     <>
-     {contextHolder}
+      {contextHolder}
 
       <div className="my-account-section bg-color-white section-pad">
         <div className="container">
@@ -300,11 +299,11 @@ setState({ btnLoading: false });
                       </Link>
                       <Link href={`/edit-profile-picture/${id}`}>Profile Picture</Link>
                       <Link href={`/edit-profile-education/${id}`}>Education</Link>
-                      <Link href={`/edit-profile-skills/${id}`} className="active">Skills</Link>
+                      <Link href={`/edit-profile-skills/${id}`}>Skills</Link>
 
                       <Link href={`/edit-profile-experience/${id}`}>Experience</Link>
                       <Link href={`/edit-profile-contact/${id}`}>Contact</Link>
-                      <Link href={`/edit-milestone/${id}`}>Milestone</Link>
+                      <Link href={`/edit-milestone/${id}`} className="active">Milestone</Link>
                   </div>
                 </div>
                 <div className="col-lg-9 col-12">
@@ -313,12 +312,12 @@ setState({ btnLoading: false });
                       <div className="row row--15 gy-5">
                         <div className="section-title d-flex justify-content-between">
                           <h4 class="rbt-title-style-3 mb-0">
-                            Skills
+                            Milestone
                             <div
                               className="text-gray mt-2"
                               style={{ fontSize: "14px" }}
                             >
-                              Please update Skills details here
+                              Please update milestone details here
                             </div>
                           </h4>
 
@@ -358,11 +357,31 @@ setState({ btnLoading: false });
                                                 color: "white",
                                               }}
                                             >
-                                              {edu?.skill_name}
+                                              {edu?.title}
                                             </Link>
                                           </h6>
 
-                                        
+                                          {edu?.year && (
+                                            <div
+                                              style={{
+                                                color: "white",
+                                                fontSize: "14px",
+                                              }}
+                                            >
+                                              {edu?.year}
+                                            </div>
+                                          )}
+
+                                          {edu?.description && (
+                                            <div
+                                              style={{
+                                                color: "white",
+                                                fontSize: "14px",
+                                              }}
+                                            >
+                                              {edu?.description}
+                                            </div>
+                                          )}
 
                                           <div
                                             className="rbt-button-group"
@@ -407,7 +426,7 @@ setState({ btnLoading: false });
                                     className="text-gray mt-2"
                                     style={{ fontSize: "14px" }}
                                   >
-                                    No Skills added
+                                    No Milestones added
                                   </div>
                                 </>
                               )}
@@ -427,7 +446,7 @@ setState({ btnLoading: false });
       <Modal
         title={
           <div className="custom-modal-header">
-            {isEditing ? "Edit Profile Education" : "Create Profile Education"}
+            {isEditing ? "Edit Profile Milestone" : "Create Profile Milestone"}
           </div>
         }
         open={isModalOpen}
@@ -437,29 +456,50 @@ setState({ btnLoading: false });
       >
         {/* 4. Form Wrapper */}
         <form className="applicants-form" onSubmit={handleEducationSubmit}>
-          {/* 5. Status Select (Load More) */}
+         
+
           <div style={{ marginTop: "15px" }}>
             <FormField
-              type="loadMoreSelect"
-                name="skill_id"
-                label="Skill"
-                // className={"applicant-input "}
-                  onChange={(value) =>
-                  setFormData({
-                    ...formData,
-                    skill_id: value,
-                  })
-                }
-                value={formData.skill_id}
-                options={institute}
-                error={errMsg?.skill_id}
+             type="text"
+                name="title"
+                label="Title"
+                // className={"applicant-input"}
+                onChange={handleChange}
+                value={formData.title}
+                error={errMsg?.title}
                 required
-                loadMore={() => skillListLoadMore()}
             />
           </div>
 
-          
+          <div style={{ marginTop: "15px" }}>
+            <FormField
+             type="text"
+                 name="description"
+                label="Description"
+                // className={"applicant-input"}
+                 onChange={handleChange}
+                value={formData.description}
+                // error={errMsg?.title}
+                // required
+            />
+          </div>
 
+         
+
+           <div style={{ marginTop: "15px" }}>
+            <FormField
+             type="text"
+                name="year"
+                label="Year"
+                // className={"applicant-input"}
+                onChange={handleChange}
+                value={formData.year}
+                error={errMsg?.year}
+                required={true}
+            />
+          </div>
+
+         
           {/* 7. Submit Button */}
           <div className="d-flex justify-content-end mt-5 gap-3">
             <button
@@ -467,7 +507,7 @@ setState({ btnLoading: false });
               type="button"
               onClick={() => handleCancel()}
             >
-              cancel
+              Cancel
             </button>
 
             <button
@@ -480,8 +520,8 @@ setState({ btnLoading: false });
           </div>
         </form>
       </Modal>
-   </>
+    </>
   );
 };
 
-export default BasicSkillsMain;
+export default BasicMilestoneMain;

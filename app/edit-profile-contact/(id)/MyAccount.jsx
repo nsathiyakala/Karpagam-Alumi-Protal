@@ -13,10 +13,8 @@ import KITHeader from "@/components/Header/KITHeader";
 
 import KITFooter from "@/components/Footer/KITFooter";
 import BreadCrumb from "@/components/Common/BreadCrumb";
-import MembersMain from "@/components/(Alumni)/component/main/MembersMain";
-import MembersLoginMain from "@/components/(Alumni)/component/main/MembersLoginMain";
-import Form from "@/commonComponents/Form"
-import MyAccountMain from "@/components/(Alumni)/component/KITMyAccount/MyAccountMain";
+
+import BasicContactMain from "@/components/(Alumni)/component/KITMyAccount/BasicContactMain";
 
 const MyAccount = () => {
   const [token, setToken] = useState("");
@@ -39,7 +37,7 @@ const MyAccount = () => {
 
         <BreadCrumb title="Members" text="Members" />
 
-        <MyAccountMain/>
+        <BasicContactMain/>
 
        
 

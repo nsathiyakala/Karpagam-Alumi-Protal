@@ -17,6 +17,7 @@ import MembersMain from "@/components/(Alumni)/component/main/MembersMain";
 import MembersLoginMain from "@/components/(Alumni)/component/main/MembersLoginMain";
 import Form from "@/commonComponents/Form"
 import MyAccountMain from "@/components/(Alumni)/component/KITMyAccount/MyAccountMain";
+import BasicExperienceMain from "@/components/(Alumni)/component/KITMyAccount/BasicExperienceMain";
 
 const MyAccount = () => {
   const [token, setToken] = useState("");
@@ -39,7 +40,7 @@ const MyAccount = () => {
 
         <BreadCrumb title="Members" text="Members" />
 
-        <MyAccountMain/>
+        <BasicExperienceMain/>
 
        
 
