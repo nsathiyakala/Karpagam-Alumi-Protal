@@ -17,7 +17,7 @@ import { BaseURL } from "@/utils/BaseUrl";
 const AllTicketsMain = () => {
   
 
-  const { confirm } = Modal;
+const { confirm } = Modal;
   const router = useRouter();
   const { Option } = Select;
 
@@ -77,8 +77,6 @@ const AllTicketsMain = () => {
   const [allUserFilterFinalDataList, setAllUserFilterFinalDataList] = useState(
     []
   );
-
-  const pathname = usePathname();
 
   useEffect(() => {
     const Token = localStorage.getItem("token");
@@ -225,8 +223,6 @@ const AllTicketsMain = () => {
     }
   };
 
-  console.log("statusList", statusList);
-
   console.log("currenFacultyPage", state.currenFacultyPage);
 
   const facultyListLoadMore = async () => {
@@ -325,6 +321,8 @@ const AllTicketsMain = () => {
     }));
   };
 
+  console.log("handleStatusChange", statusData);
+
   const responseModalCancel = () => {
     setResponseModal(false);
     setResponseData({
@@ -366,6 +364,7 @@ const AllTicketsMain = () => {
     const faculty = formData.faculty_ids.map((faculty) => faculty.value);
     setFormData({ ...formData, faculty_ids: faculty });
 
+
     const isValid = validateForm(formData, validationRules, setErrMsg);
     if (!isValid) return;
 
@@ -385,7 +384,7 @@ const AllTicketsMain = () => {
       .then((response) => {
         message.success(response.data.message);
         setLoading(true);
-        GetRole();
+        GetRole(1);
         setLoading(false);
       })
       .catch((error) => {
@@ -426,11 +425,16 @@ const AllTicketsMain = () => {
   const handleStatusClick = (item) => {
     setStatusModal(true);
 
-    console.log("item", item);
+    console.log("item",item);
+    
 
     setStatusData({
       id: item.ticket_id,
-      status_id: item?.status?.label,
+      status_id: {
+        value:item.status_id,
+        label:item.status
+        
+      },
       priority: item.priority,
       due_date: item.due_date,
     });
@@ -518,9 +522,13 @@ const AllTicketsMain = () => {
         setLoading(false);
       });
   };
+  
+  
 
   const handleStatusSubmit = (e) => {
     e.preventDefault();
+
+    console.log("statusData", statusData);
 
     if (isAdmin == "true" || isAlumniManager == "true") {
       axios
@@ -541,7 +549,7 @@ const AllTicketsMain = () => {
           message.success(response.data.message);
           setLoading(true);
           setStatusModal(false);
-          GetRole();
+          GetRole(1);
           setStatusData({
             status_id: "",
             priority: "",
@@ -574,7 +582,7 @@ const AllTicketsMain = () => {
           message.success(response.data.message);
           setLoading(true);
           setStatusModal(false);
-          GetRole();
+          GetRole(1);
           GetFatultyAssignedTickets(1);
           setStatusData({
             status_id: "",
@@ -592,66 +600,16 @@ const AllTicketsMain = () => {
     }
   };
 
-  //   const handleSearchChange = (e) => {
-  //     const { name, value } = e.target;
-  //     setSearchData((prevState) => ({
-  //       ...prevState,
-  //       [name]: value,
-  //     }));
-  //   };
-
-  const handleSearchChange = (name, value) => {
-    console.log("handleSearchChange" , name, value);
-    
-    setSearchData((prev) => ({
-      ...prev,
+  const handleSearchChange = (e) => {
+    const { name, value } = e.target;
+    setSearchData((prevState) => ({
+      ...prevState,
       [name]: value,
     }));
   };
 
-  // const handleSearchSubmit = (e) => {
-  //   e.preventDefault();
-  //   const postData = {
-  //     category: searchData.category,
-  //     priority: searchData.priority,
-  //     due_date: searchData.due_date,
-  //   };
-
-  //   // Add status_id only if the condition is true
-  //   if (isAdmin === "true" || isAlumniManager === "true") {
-  //     postData.status_id = searchData.status_id;
-  //   }
-  //   axios
-  //     .post(`${BaseURL}/filter_ticket/`, postData)
-  //     .then((response) => {
-  //       // message.success(response.data.message);
-  //       setLoading(true);
-  //       setStatusModal(false);
-  //       setDepartmentDatas(response.data?.results);
-  //       setAllUserFilterFinalDataList(postData);
-  //       // GetRole();
-  //       // setSearchData({
-  //       //   category: "",
-  //       //   status_id: "",
-  //       //   priority: "",
-  //       //   due_date: "",
-  //       // });
-  //     })
-  //     .catch((error) => {
-  //       message.error(error.response.data.errors);
-  //       console.log(error.response.data);
-  //       if (error?.response?.data?.code === "token_not_valid") {
-  //         localStorage.removeItem("token");
-  //         router.push("/login");
-  //       }
-  //       setLoading(false);
-  //     });
-  // };
 
   const handleSearchSubmit = async (page = 1, e) => {
-
-    console.log("hello handleSearchSubmit");
-    
     if (e) {
       e.preventDefault();
     }
@@ -721,56 +679,8 @@ const AllTicketsMain = () => {
     }
   };
 
-  //   const HandleClearFilter = () => {
-  //     const Body = {
-  //       category: "",
-  //       priority: "",
-  //       due_date: "",
-  //     };
-
-  //     // // Add status_id only if the condition is true
-  //     // if (isAdmin === "true" || isAlumniManager === "true") {
-  //     //   postData.status_id = searchData.status_id;
-  //     // }
-  //     axios
-  //       .post(`${BaseURL}/filter_ticket/`, Body)
-  //       .then((response) => {
-
-  //         setState({
-  //           tocketList: res.results,
-  //           currentPage: page,
-  //           next: res?.next,
-  //           prev: res?.previous,
-  //           refresh: false,
-  //           moreLoading: false,
-  //           loading: false,
-  //           total: res?.count,
-  //           pageLoading: false,
-  //         });
-  // console.log('✌️response --->', response);
-  //         // message.success(response.data.message);
-  //         setLoading(true);
-  //         setStatusModal(false);
-  //         setDepartmentDatas(response.data?.results);
-  //         setAllUserFilterFinalDataList(Body);
-  //         // GetRole();
-  //         setSearchData({
-  //           category: "",
-  //           status_id: "",
-  //           priority: "",
-  //           due_date: "",
-  //         });
-  //       })
-  //       .catch((error) => {
-  //         message.error(error.response.data.errors);
-  //         console.log(error.response.data);
-  //         if (error?.response?.data?.code === "token_not_valid") {
-  //           localStorage.removeItem("token");
-  //           router.push("/login");
-  //         }
-  //         setLoading(false);
-  //       });
-  //   };
+  
+ 
   const StatusOption = statusList.map((item) => ({
     label: item.status,
     value: item.id,

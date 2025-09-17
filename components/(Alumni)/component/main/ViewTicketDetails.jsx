@@ -1,11 +1,12 @@
 import { BaseURL } from "@/utils/BaseUrl";
-import { formattedDate } from "@/utils/commonFunction.utils";
+import { formattedDate, validateForm } from "@/utils/commonFunction.utils";
 import { message, Modal } from "antd";
 import axios from "axios";
 import { useParams, useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { Priority } from "@/utils/constant.utils";
+import FormField from "@/commonComponents/FormFields";
 
 const ViewTicketDetails = () => {
   const { id } = useParams();
@@ -265,28 +266,40 @@ const ViewTicketDetails = () => {
       <div className="row justify-content-center">
         <div className="col-11 col-xl-10">
           <div className="container-fluid">
-
             <div className="rbt-callto-action rbt-cta-default style-2 mb-4">
               <div className="content-wrapper overflow-hidden pt--30 pb--30 bg-color-primary-opacity">
-                <div className="row gy-5 align-items-end">
-                  <div className="col-lg-8">
+                <div className="row gy-5 align-items-end justify-content-lg-between">
+                  <div className="col-lg-7">
                     <div className="inner">
                       <div className="content text-left">
                         <h5 className="mb--5">
-                          Viewing the ticke  #{SingleData?.id}
+                          Viewing the ticke #{SingleData?.id}
                         </h5>
                         {/* <p className="b3">Create Announcement</p> */}
                       </div>
                     </div>
                   </div>
-                  <div className="col-lg-4 d-flex justify-content-start justify-content-lg-end">
+                  <div className="col-lg-4 d-flex justify-content-start justify-content-lg-end gap-3">
                     <div className="call-to-btn text-start text-lg-end position-relative">
                       <Link
                         className="rbt-btn btn-gradient radius-round sm-btn"
-                        href="/my-business-directory"
+                        href="/help-desk/open-tickets"
+                        style={{ paddingInline: "10px" }}
                       >
                         <span data-text="Add New Announcement">
-                          My Business Directory
+                          Open tickets
+                        </span>
+                      </Link>
+                    </div>
+
+                    <div className="call-to-btn text-start text-lg-end position-relative">
+                      <Link
+                        className="rbt-btn btn-gradient radius-round sm-btn"
+                        href="/help-desk/all-support-tickets"
+                        style={{ paddingInline: "10px" }}
+                      >
+                        <span data-text="Add New Announcement">
+                          All tickets
                         </span>
                       </Link>
                     </div>
@@ -301,7 +314,6 @@ const ViewTicketDetails = () => {
                 {/* <div className="jd-main-card p-4 "> */}
                 {/* Header */}
 
-
                 {/* Role Overview */}
                 <div className="jd-section mt-4 rbt-shadow-box">
                   <h4 className="jd-section-title">Request by</h4>
@@ -309,9 +321,7 @@ const ViewTicketDetails = () => {
                   <p className="jd-text mb-2">
                     <b>Name: </b>
                     {SingleData?.name ? (
-                      <Link
-                        href={`/members/${SingleData?.member_id}`}
-                      >
+                      <Link href={`/members/${SingleData?.member_id}`}>
                         {SingleData?.name}
                       </Link>
                     ) : (
@@ -329,12 +339,9 @@ const ViewTicketDetails = () => {
                   {SingleData?.contact && (
                     <p className="jd-text mb-2">
                       <b>Contact: </b>
-                      {SingleData?.contact
-                        ? SingleData?.contact
-                        : "-"}
+                      {SingleData?.contact ? SingleData?.contact : "-"}
                     </p>
                   )}
-
 
                   {SingleData?.batch && (
                     <p className="jd-text mb-2">
@@ -349,11 +356,10 @@ const ViewTicketDetails = () => {
                       {SingleData?.course ? SingleData?.course : "-"}
                     </p>
                   )}
-
                 </div>
 
                 {/* Responsibilities */}
-                {(isAdmin == "true" || isAlumniManager == "true") && (
+                {(isAdmin == "true" || isAlumniManager == "true") &&
                   SingleData?.assignments?.length > 0 && (
                     <div className="jd-section mt-4 rbt-shadow-box">
                       <h4 className="jd-section-title">Response:</h4>
@@ -382,27 +388,70 @@ const ViewTicketDetails = () => {
                           </Link>
                         </p>
                       )}
-
                     </div>
-                  )
-
-                )}
-
+                  )}
 
                 <div className="jd-section mt-4 rbt-shadow-box">
                   <h4 className="jd-section-title">Alumni Request:</h4>
+
+                  <div className="jd-text mb-2">
+                    <b>Post Reply: </b>
+
+                    <form
+                      className="rainbow-dynamic-form max-width-auto"
+                      onSubmit={handleReplySubmit}
+                    >
+                      <div style={{ marginTop: "15px" }}>
+                        <FormField
+                          type="textarea"
+                          name="messages"
+                          onChange={handleReplyChange}
+                          value={replyData.messages}
+                          required={true}
+                          error={errMsg.messages}
+                        />
+                      </div>
+
+                      <div className="form-submit-group">
+                        <button
+                          name="submit"
+                          type="submit"
+                          id="submit"
+                          className="rbt-btn btn-gradient radius-round sm-btn"
+                          // style={{
+                          //   cursor: state?.btnLoading
+                          //     ? "not-allowed"
+                          //     : "pointer",
+                          // }}
+                          // disabled={state.btnLoading}
+                        >
+                          {/* {state?.btnLoading ? (
+                            <span className="btn-loader"></span>
+                          ) : ( */}
+                          <span className="icon-reverse-wrapper">
+                            <span className="btn-text">Submit</span>
+                            <span className="btn-icon">
+                              <i className="feather-arrow-right"></i>
+                            </span>
+                          </span>
+                          {/* )} */}
+                        </button>
+                      </div>
+                    </form>
+                  </div>
+
                   {(isAdmin == "true" || isAlumniManager == "true") && (
-                    <p className="jd-text mb-2">
+                    <p className="jd-text mb-2 mt-5">
                       <b>Replies: </b>
                       {ticketReplies?.map((ticket) => {
                         return (
-                          <div className="jd-similar-item bus-list  mt-3 mb-3 bg-color-primary-opacity flex-column gap-0"
+                          <div
+                            className="jd-similar-item bus-list  mt-3 mb-3 bg-color-primary-opacity flex-column gap-0"
                             key={ticket?.id}
-                           
                           >
                             <span style={{ color: "black" }}>
                               {ticket?.message}
-                            </span> 
+                            </span>
                             <span style={{ fontSize: "14px" }}>
                               Posted by: {ticket?.posted_by} on{" "}
                               {ticket?.posted_on}
@@ -430,9 +479,7 @@ const ViewTicketDetails = () => {
                       </Link>
                     </p>
                   )}
-
                 </div>
-
 
                 {/* </div> */}
               </div>
@@ -453,22 +500,73 @@ const ViewTicketDetails = () => {
                     </Link>
                   </div>
 
-
-                  <div
-
-                    className="jd-similar-item bus-list mb-3 bg-color-primary-opacity"
-                  >
-                    <div className="fw-bold">
-                      {/* <img src={item?.logo} alt="business img" /> */}
+                  <div >
+                    {/* <div className="fw-bold">
+                      
                     </div>
                     <div className="jd-side-small text-muted d-flex align-items-center">
                       {"item "}
-                      {/* {item?.business_name} */}
-                    </div>
+                      
+                    </div> */}
+
+                    <form
+                      className="event-form"
+                      onSubmit={handleReplySubmit}
+                    >
+                      <div  style={{ marginTop: "15px" }}>
+                        <FormField
+                          type="text"
+                          label="Category"
+                          value={SingleData?.category}
+                          disabled={true}
+                          style={{ opacity: "0.7" }}
+                          className="applicants-form"
+                        />
+                      </div>
+
+                      <div style={{ marginTop: "15px" }}>
+                        <FormField
+                          type="select"
+                          name="status_id"
+                          label="Status"
+                          onChange={handleStatusChange}
+                          value={statusData.status_id}
+                          options={StatusOption}
+                        />
+                      </div>
+                      {(isAdmin == "true" || isAlumniManager == "true") && (
+                        <>
+                          <div style={{ marginTop: "15px" }}>
+                            <FormField
+                              type="select"
+                              name="priority"
+                              label="Priority"
+                             
+                              onChange={handleStatusChange}
+                              value={statusData.priority}
+                              options={PriorityOption}
+                            />
+                          </div>
+
+                          <div style={{ marginTop: "15px" }}>
+                            <FormField
+                              type="date"
+                              name="due_date"
+                              label="Due Date"
+                             
+                              onChange={handleStatusChange}
+                              value={statusData.due_date}
+                            />
+                          </div>
+                        </>
+                      )}
+                    </form>
                   </div>
 
-                  <Link className="rbt-btn btn-gradient radius-round sm-btn mt-5"
-                    href={"/post-a-directory"}>
+                  <Link
+                    className="rbt-btn btn-gradient radius-round sm-btn mt-5"
+                    href={"/post-a-directory"}
+                  >
                     {" "}
                     Add a Business Listing
                   </Link>
