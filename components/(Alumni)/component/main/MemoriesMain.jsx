@@ -457,7 +457,7 @@ const MemoriesMain = () => {
             </div>
           </div>
         </div>
-      ) : state.memoriesDetails?.is_admin ?(
+      ) : state.memoriesDetails?.approved ?(
         <>
           <div className="rbt-blog-area rbt-section-overlayping-top rbt-section-gapBottom  kit-memo">
             <div className="container">
