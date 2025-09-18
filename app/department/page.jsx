@@ -5,7 +5,7 @@ import Department from "./(department)";
 
 
 export const metadata = {
-  title: "Instructor Dashboard - Online Courses & Education NEXTJS14 Template",
+  title: "Karpagam Institute of Technology - Department",
   description: "Online Courses & Education NEXTJS14 Template",
 };
 
