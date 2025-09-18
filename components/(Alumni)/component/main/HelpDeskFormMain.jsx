@@ -32,6 +32,7 @@ const HelpDeskFormMain = () => {
   });
 
   const [errMsg, setErrMsg] = useState({});
+  const [memberId, setMemberId] = useState('');
   const [categoryTicket, setCategoryTicket] = useState([]);
   const [token, setToken] = useState('');
   const [state, setState] = useSetState({
@@ -45,6 +46,9 @@ const HelpDeskFormMain = () => {
     if (!Token) {
       router.push('/login');
     }
+
+    const memberId = localStorage.getItem('member_id');
+    setMemberId(memberId)
 
     const Alumni = localStorage.getItem('isAlumni');
     
@@ -62,7 +66,7 @@ const HelpDeskFormMain = () => {
     }
   }, [token]);
 
-  const memberId = localStorage.getItem('member_id');
+  
 
   const GetHelpDesk = () => {
     axios
