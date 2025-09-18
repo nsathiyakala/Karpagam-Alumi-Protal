@@ -5,7 +5,7 @@ import Country from "./(country)";
 
 
 export const metadata = {
-  title: "Instructor Dashboard - Online Courses & Education NEXTJS14 Template",
+  title: "Karpagam Institute of Technology - Country",
   description: "Online Courses & Education NEXTJS14 Template",
 };
 

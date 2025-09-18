@@ -4,7 +4,7 @@ import EventCategory from "./(event-category)";
 
 
 export const metadata = {
-  title: "Instructor Dashboard - Online Courses & Education NEXTJS14 Template",
+  title: "Karpagam Institute of Technology - Event Category",
   description: "Online Courses & Education NEXTJS14 Template",
 };
 
