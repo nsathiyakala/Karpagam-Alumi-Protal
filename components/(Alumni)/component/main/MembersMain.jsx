@@ -48,8 +48,8 @@ const MembersMain = () => {
           {latestMembers &&
             latestMembers.map((item, index) => (
               <div
-                className="col-lg-3 col-md-6 col-sm-6 col-12 "
-                key={index}
+                className="col-lg-3 col-md-6 col-sm-6 col-12 p-15"
+                key={index} 
               >
                 {/* {latestMembers.map((item, innerIndex) => ( */}
                   <div className="team" >
@@ -59,7 +59,7 @@ const MembersMain = () => {
                     data-bs-toggle="modal"
                     data-bs-target={`#exampleModal${index}`}
                   >
-                    <div className="thumbnail">
+                    <div className="thumbnail" >
                       <img
                       
                         src={item?.profile_picture &&
