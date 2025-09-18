@@ -623,12 +623,7 @@ const MembersLoginMain = () => {
                               <nav className="mainmenu-nav">
                                 <ul className="dashboard-mainmenu rbt-default-sidebar-list">
                                   <li className="nav-item" role="presentation">
-                                    <a
-                                      className={`w-100 ${
-                                        pathname === "#" ? "active" : ""
-                                      }`}
-                                      href="#"
-                                    >
+                                    
                                       <FormField
                                         type="select"
                                         onChange={(e) =>
@@ -641,7 +636,7 @@ const MembersLoginMain = () => {
                                         options={memberTypeOption}
                                         placeholder={"Member Type"}
                                       />
-                                    </a>
+                                    
                                   </li>
 
                                   <li className="nav-item" role="presentation">

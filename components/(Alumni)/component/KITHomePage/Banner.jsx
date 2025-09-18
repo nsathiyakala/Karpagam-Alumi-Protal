@@ -56,25 +56,22 @@ const Banner = () => {
                           </Link>
                         </div> */}
 
-                        <div className='call-to-btn  mt-0'>
-                          <Link
-                            className='rbt-btn btn-gradient hover-icon-reverse radius-round'
-                            href='#'
-                          >
-                            <span className='icon-reverse-wrapper'>
-                              <span className='btn-text'>
-                                {' '}
-                                More About University
-                              </span>
-                              <span className='btn-icon'>
-                                <i className='feather-arrow-right'></i>
-                              </span>
-                              <span className='btn-icon'>
-                                <i className='feather-arrow-right'></i>
-                              </span>
-                            </span>
-                          </Link>
-                        </div>
+                        <div className="call-to-btn  mt-0 d-flex justify-content-center" >
+                  <Link
+                    className="rbt-btn btn-gradient hover-icon-reverse radius-round d-flex align-items-center"
+                    href="/about"
+                  >
+                    <span className="icon-reverse-wrapper">
+                      <span className="btn-text"> More About University</span>
+                      <span className="btn-icon">
+                        <i className="feather-arrow-right"></i>
+                      </span>
+                      <span className="btn-icon">
+                        <i className="feather-arrow-right"></i>
+                      </span>
+                    </span>
+                  </Link>
+                </div>
 
                         <div className='social-share-wrapper mt--40'>
                           <ul className='social-icon social-default transparent-with-border'>

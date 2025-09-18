@@ -18,6 +18,7 @@ import Models from "@/imports/models.import";
 import { jobTypeOption, VisibilityPosts } from "@/utils/constant.utils";
 import Loader from "../../Loader";
 import DashboardListCom from "./DashboardListCom";
+import Pagination from "@/commonComponents/Pagination";
 
 const MyPostMain = () => {
   const imgInputRef = useRef(null);
@@ -624,6 +625,25 @@ const MyPostMain = () => {
                                     )}
                                   </div>
                                 </div>
+
+                                {state?.postList.length > 9 && (
+                                    <div>
+                                      <div
+                                        className="mb-20 "
+                                        style={{
+                                          display: "flex",
+                                          justifyContent: "center",
+                                          alignItems: "center",
+                                        }}
+                                      >
+                                        <Pagination
+                                          activeNumber={handlePageChange}
+                                          totalPage={state.total}
+                                          currentPages={state.currentPage}
+                                        />
+                                      </div>
+                                    </div>
+                                  )}
                               </div>
                             </div>
                           </>

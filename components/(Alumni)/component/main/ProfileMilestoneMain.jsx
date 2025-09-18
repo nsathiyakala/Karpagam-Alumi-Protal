@@ -370,7 +370,7 @@ const ProfileMilestoneMain = () => {
 
 
                                                         <div className="form-submit-group d-flex justify-content-between flex-wrap">
-                                                            <div>
+                                                            <div className="d-flex justify-content-between">
                                                                 <Link
                                                                     name="submit"
                                                                     type="button"

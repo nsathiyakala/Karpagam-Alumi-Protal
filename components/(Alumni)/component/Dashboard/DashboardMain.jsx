@@ -18,6 +18,7 @@ import Models from "@/imports/models.import";
 import { jobTypeOption, VisibilityPosts } from "@/utils/constant.utils";
 import Loader from "../../Loader";
 import DashboardListCom from "./DashboardListCom";
+import Pagination from "@/commonComponents/Pagination";
 
 const DashboardMain = () => {
   const imgInputRef = useRef(null);
@@ -53,6 +54,7 @@ const DashboardMain = () => {
     AlumniManagerLogin: false,
     latestBirthDayList: [],
     currentPage: 1,
+    pageLoading:false
   });
 
   useEffect(() => {
@@ -77,6 +79,7 @@ const DashboardMain = () => {
 
   const GetMyPostData = async (page) => {
     try {
+      setState({pageLoading:true})
       const res = await Models.post.GetPostData(page);
       setState({
         myPost: res?.results,
@@ -84,13 +87,16 @@ const DashboardMain = () => {
         next: res?.next,
         previous: res?.previous,
         total: res?.count,
+        pageLoading:false
       });
     } catch (error) {
       console.log("error: ", error);
+      setState({pageLoading:false})
     }
   };
 
   const GetPostData = async (page) => {
+    setState({pageLoading:true})
     try {
       const res = await Models.post.GetAllPostData(page);
       setState({
@@ -99,6 +105,7 @@ const DashboardMain = () => {
         next: res?.next,
         previous: res?.previous,
         total: res?.count,
+        pageLoading:false,
       });
     } catch (error) {
       if (error?.messages?.length > 0) {
@@ -108,6 +115,7 @@ const DashboardMain = () => {
         }
       }
       console.log("error: ", error);
+      setState({pageLoading:false})
     }
   };
 
@@ -131,6 +139,7 @@ const DashboardMain = () => {
   };
 
   const handleFiltersSubmit = async (page) => {
+    setState({pageLoading:true})
     const Body = {
       title: state.filterTitle,
       post_category: state.filterCategory,
@@ -145,6 +154,7 @@ const DashboardMain = () => {
         previous: res?.previous,
         total: res?.count,
         filterShowList: Body,
+        pageLoading:false
       });
     } catch (error) {
       console.log("error: ", error);
@@ -154,6 +164,7 @@ const DashboardMain = () => {
           localStorage.removeItem("token");
         }
       }
+      setState({pageLoading:false})
     }
   };
 
@@ -637,7 +648,28 @@ const DashboardMain = () => {
                                       <div> No Posts Found</div>
                                     )}
                                   </div>
+
+                                 
                                 </div>
+
+                                 {state?.postList.length > 9 && (
+                                    <div>
+                                      <div
+                                        className="mb-20 "
+                                        style={{
+                                          display: "flex",
+                                          justifyContent: "center",
+                                          alignItems: "center",
+                                        }}
+                                      >
+                                        <Pagination
+                                          activeNumber={handlePageChange}
+                                          totalPage={state.total}
+                                          currentPages={state.currentPage}
+                                        />
+                                      </div>
+                                    </div>
+                                  )}
                               </div>
                             </div>
                           </>

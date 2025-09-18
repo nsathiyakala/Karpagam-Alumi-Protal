@@ -67,7 +67,7 @@ const DashboardListCom = ({ data, GetData, editPost, postLikeDisLinke, page }) =
 
   return (
     <>
-      <div className={`col-12 ${page && "mt-0 mb-5"}`}>
+      <div className={`col-12 mt-0 mb-5`}>
         <div
           className="rbt-card event-list-card variation-01 rbt-hover relative"
           style={{ position: "relative" }}
@@ -94,7 +94,7 @@ const DashboardListCom = ({ data, GetData, editPost, postLikeDisLinke, page }) =
             </div>
           )}
 
-          <div className="rbt-card-body pt-0">
+          <div className="rbt-card-body pt-0 card-w-img">
             <div className="row card-list-2 event-list-card variation-01 rbt-hover relative gap-4">
               {data?.featured_image && (
                 <div className={`${page ? "rbt-card-img col-12 col-md-5 col-lg-4" : "rbt-card-img col-12 col-md-4 col-lg-3"}`}>
@@ -133,7 +133,7 @@ const DashboardListCom = ({ data, GetData, editPost, postLikeDisLinke, page }) =
                   className="text-gray mt--dec-40 mb-3"
                   style={{ fontSize: "16px" }}
                 >
-                  {data?.content}
+                  {TrimText (data?.content , 150)}
                 </p>
 
                 <DashUserCom

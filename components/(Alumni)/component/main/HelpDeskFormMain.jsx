@@ -47,6 +47,7 @@ const HelpDeskFormMain = () => {
     }
 
     const Alumni = localStorage.getItem('isAlumni');
+    
     console.log('Alumni --->', Alumni);
 
     if (Alumni !== 'true') {
@@ -61,15 +62,21 @@ const HelpDeskFormMain = () => {
     }
   }, [token]);
 
+  const memberId = localStorage.getItem('member_id');
+
   const GetHelpDesk = () => {
     axios
-      .get(`${BaseURL}/create_ticket/`, {
+      .get(`${BaseURL}/member_data/${memberId}/`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       })
       .then((response) => {
-        setFixedFormData(response.data);
+        setFixedFormData({
+           full_name: `${response?.data?.member_data?.first_name} ${response?.data?.member_data?.last_name}`,
+    email: response?.data?.member_data?.email,
+    contact: response?.data?.member_data?.mobile_no,
+        });
       })
       .catch((error) => {
         console.log('❌error --->', error);
@@ -135,6 +142,8 @@ const HelpDeskFormMain = () => {
           Authorization: `Bearer ${token}`,
         },
       });
+
+      
       console.log('✌️response --->', response);
       message.success(response.data.message);
       router.push('/help-desk/alumni-tickets');

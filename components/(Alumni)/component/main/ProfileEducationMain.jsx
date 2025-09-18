@@ -183,6 +183,8 @@ const ProfileEducationMain = () => {
     e.preventDefault();
     console?.log("formDdata:", formData);
 
+    handleSubmit(e)
+
     const validationRules = {
       institute: {
         required: true,
@@ -389,7 +391,7 @@ const ProfileEducationMain = () => {
                           <form
                             id="contact-form"
                             className="rainbow-dynamic-form max-width-auto"
-                            onSubmit={(e) => handleSubmit(e)}
+                            onSubmit={(e) => handleEducationSubmit(e)}
                           >
                             {/* Left Column */}
                             <div className="form-grid">
@@ -549,7 +551,7 @@ const ProfileEducationMain = () => {
                             </div>
 
                             <div className="form-submit-group d-flex justify-content-between flex-wrap">
-                              <div>
+                              <div className="d-flex justify-content-between">
                                 <Link
                                   name="submit"
                                   type="button"
