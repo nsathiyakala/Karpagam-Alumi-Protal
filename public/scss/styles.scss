@@ -1692,3 +1692,8 @@ padding-bottom: 20px;
 .card-w-img img{
   max-height: 250px;
 }
+
+.rbt-team-thumbnail img{
+  min-height: 360px;
+  object-fit: cover;
+}

@@ -954,8 +954,8 @@ const MembersLoginMain = () => {
                                           >
                                             <div className="thumbnail">
                                               <img
-                                                // src={member?.profile_picture}
-                                                src="/images/team/team-07.jpg"
+                                                // src=
+                                                src={member?.profile_picture ?? "/images/dummy-member.png"}
                                                 width={415}
                                                 height={555}
                                                 priority
@@ -973,7 +973,7 @@ const MembersLoginMain = () => {
                                             <div className="thumbnail">
                                               <img
                                                 // src={member?.profile_picture}
-                                                src="/images/team/team-07.jpg"
+                                                src="/images/dummy-member.jpg"
                                                 width={415}
                                                 height={555}
                                                 priority
@@ -1031,7 +1031,7 @@ const MembersLoginMain = () => {
                                 )}
                               </div>
 
-                              {state.memberList?.length > 0 && (
+                              {state.memberList?.length > 9 && (
                                 <div>
                                   <div
                                     className="mb-20 "

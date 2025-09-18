@@ -482,8 +482,8 @@ const MyBusinessListing = () => {
                                           <Link
                                             href={`/event-details/${item.id}`}
                                           >
-                                            <Image
-                                              src='/images/event/grid-type-01.jpg'
+                                            <img
+                                              src={item?.logo ?? '/images/event/grid-type-01.jpg'}
                                               width={355}
                                               height={240}
                                               priority
