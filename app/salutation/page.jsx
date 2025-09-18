@@ -2,7 +2,7 @@ import BackToTop from "@/app/backToTop";
 import NewsRoom from "./(salutation)";
 
 export const metadata = {
-  title: "Course With Sidebar - Online Courses & Education NEXTJS14 Template",
+  title: "Karpagam Institute of technology - Salutation",
   description: "Online Courses & Education NEXTJS14 Template",
 };
 

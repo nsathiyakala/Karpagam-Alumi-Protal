@@ -3,7 +3,7 @@ import Users from "./(users)";
 
 
 export const metadata = {
-  title: "Instructor Dashboard - Online Courses & Education NEXTJS14 Template",
+  title: "Karpagam Institute of Technology - Dashboard",
   description: "Online Courses & Education NEXTJS14 Template",
 };
 

@@ -3,7 +3,7 @@ import Role from "./(role)";
 
 
 export const metadata = {
-  title: "Instructor Dashboard - Online Courses & Education NEXTJS14 Template",
+  title: "Karpagam Institute Of Technology - Role",
   description: "Online Courses & Education NEXTJS14 Template",
 };
 
