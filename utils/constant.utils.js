@@ -29,7 +29,7 @@ export const menus = {
   ],
   faculty: [
     { label: "Dashboard", href: "/dashboard" },
-    { label: "Home", href: "/home" },
+    // { label: "Home", href: "/home" },
     { label: "Members", href: "/members" },
     { label: "Job Board", href: "/job-board" },
     { label: "Business Directory", href: "/business-directory" },
