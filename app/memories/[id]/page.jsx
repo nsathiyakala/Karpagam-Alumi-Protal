@@ -39,7 +39,7 @@ const Page = () => {
 
           {/* <BreadCrumb title="Memories" text="Memories" /> */}
           <KITBanner
-            col="col-lg-10 offset-lg-1"
+            col="col-lg-10 offset-lg-1 "
             text="Memories"
             
           />

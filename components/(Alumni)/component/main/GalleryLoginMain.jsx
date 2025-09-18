@@ -13,7 +13,7 @@ import {
   validateForm,
 } from "@/utils/commonFunction.utils";
 import Models from "@/imports/models.import";
-import { Modal } from "antd";
+import { message, Modal } from "antd";
 import FormField from "@/commonComponents/FormFields";
 import Pagination from "@/commonComponents/Pagination";
 
@@ -257,7 +257,8 @@ const GalleryLoginMain = () => {
     return { value: (i + 1).toString(), label: month };
   });
 
-  const createMemories = async () => {
+  const createMemories = async (e) => {
+    e.preventDefault()
     try {
       for (const image of state.uploadedImages) {
         const formData = new FormData();
@@ -613,7 +614,7 @@ const GalleryLoginMain = () => {
         footer={false}
         centered
       >
-        <form className="applicants-form" onSubmit={createMemories}>
+        <form className="applicants-form" onSubmit={(e)=>createMemories(e)}>
           <div style={{ marginTop: "15px" }}>
             <FormField
               type="file"

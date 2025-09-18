@@ -457,17 +457,269 @@ const MemoriesMain = () => {
             </div>
           </div>
         </div>
-      ) : (
+      ) : state.memoriesDetails?.is_admin ?(
         <>
-        <div className="rbt-blog-area section-pad  kit-memo">
+          <div className="rbt-blog-area rbt-section-overlayping-top rbt-section-gapBottom  kit-memo">
+            <div className="container">
+              <div className="row">
+                <div className="col-lg-10 offset-lg-1 mt_dec--30">
+                  {/* {state.memoriesDetails?.post &&
+              state.memoriesDetails?.post?.map((data, index) => ( */}
+                  <div className="col-12 mt--30">
+                    <div className="rbt-card variation-02 height-auto rbt-hover">
+                      <div className="rbt-card-img">
+                        <Link href={"#"}>
+                          <Image
+                            src={state.memoriesDetails?.photos[0]}
+                            width={1085}
+                            height={645}
+                            priority
+                            unoptimized={true}
+                            alt="Card image"
+                          />
+                        </Link>
 
-            <div className="album-none">
-            <h5>Memories is Empty !</h5>
+                        <div className="rbt-button-group justify-content-end">
+                          {(state.memoriesDetails?.is_admin ||
+                            state.memoriesDetails?.is_owner) && (
+                            <>
+                              <a
+                                className="rbt-btn btn-xs bg-white radius-round text-primary"
+                                href="#"
+                                title="Edit Memory"
+                                onClick={() =>
+                                  setState({ isMemoriesOpen: true })
+                                }
+                              >
+                                <i className="feather-edit pl--0" />
+                              </a>
+                              <a
+                                className="rbt-btn btn-xs bg-white radius-round text-danger"
+                                href="#"
+                                title="Delete Memory"
+                                onClick={() => showDeleteConfirm()}
+                              >
+                                <i className="feather-trash-2 pl--0" />
+                              </a>
+                            </>
+                          )}
+
+                          {state.memoriesDetails?.approved ? (
+                            <a
+                              className="rbt-btn btn-xs  radius-round"
+                              href="#"
+                              title="Approved"
+                              onClick={() => {
+                                if (!state.memoriesDetails?.approved) {
+                                  approveMemory();
+                                }
+                              }}
+                            >
+                              <i className="feather-check-circle pl--0" />
+                            </a>
+                          ) : (
+                            <a
+                              className="rbt-btn btn-xs  radius-round"
+                              href="#"
+                              title="Pending"
+                              onClick={() => {
+                                if (!state.memoriesDetails?.approved) {
+                                  approveMemory();
+                                }
+                              }}
+                            >
+                              <i className="feather-x-circle pl--0" />
+                            </a>
+                          )}
+                        </div>
+                      </div>
+
+                      <div className="rbt-card-body kit-memo-body">
+                        {state.memoriesDetails?.post?.title && (
+                          <>
+                            <h3 className="rbt-card-title">
+                              <Link
+                                href={`/dashboard/${state.memoriesDetails?.post?.id}`}
+                              >
+                                {state.memoriesDetails?.post?.title}
+                              </Link>
+                            </h3>
+                            <p className="rbt-card-text">
+                              {state.memoriesDetails?.post?.post_category?.name}
+                            </p>
+                          </>
+                        )}
+
+                        {/* Action Buttons */}
+                        <div className="kit-memo-actions d-flex justify-content-around align-items-center border-top pt-3">
+                          <button
+                            className={`btn btn-ghost kit-memo-like disabled ${
+                              state.memoriesDetails?.post?.data
+                                ?.is_liked_by_user
+                                ? "mt-4"
+                                : ""
+                            }`}
+                            style={{
+                              color:
+                                state.memoriesDetails?.post?.is_liked_by_user &&
+                                "red",
+                            }}
+                            onClick={PostLike}
+                          >
+                            <i className="feather-thumbs-up me-1 "></i> Like
+                          </button>
+                          <button
+                            className="btn btn-ghost kit-memo-comment-toggle disabled" 
+                            data-bs-toggle="collapse"
+                            data-bs-target="#kitMemoComments"
+                          >
+                            <i className="feather-message-circle me-1"></i>{" "}
+                            Comment
+                          </button>
+                          <button className="btn btn-ghost kit-memo-share">
+                            <i className="feather-share-2 me-1"></i> Share
+                          </button>
+                        </div>
+
+                        {/* Likes Section */}
+                        {state.memoriesDetails?.post?.post_likes?.length >
+                          0 && (
+                          <div className="kit-memo-likes d-flex align-items-center mt-3">
+                            {/* Avatars */}
+                            <div
+                              className="d-flex"
+                              style={{ marginRight: "10px" }}
+                            >
+                              {state.memoriesDetails?.post?.post_likes
+                                ?.slice(0, 3) // show only first 3
+                                .map((likeUser, index) => (
+                                  <img
+                                    key={index}
+                                    src={
+                                      likeUser?.profile_photo ||
+                                      "/images/dummy-member.jpg"
+                                    }
+                                    alt={likeUser?.name || "User"}
+                                    className="rounded-circle border border-white"
+                                    style={{
+                                      width: "30px",
+                                      height: "30px",
+                                      marginLeft: index === 0 ? "0" : "-10px", // overlap effect like Instagram
+                                      zIndex: 10 - index,
+                                    }}
+                                  />
+                                ))}
+                            </div>
+
+                            {/* Text */}
+                            <span style={{ fontSize: "14px" }}>
+                              Liked by{" "}
+                              <strong>
+                                {
+                                  state.memoriesDetails?.post?.post_likes[0]
+                                    ?.liked_by
+                                }
+                              </strong>
+                              {state.memoriesDetails?.post?.post_likes?.length >
+                                1 && (
+                                <>
+                                  {" "}
+                                  and{" "}
+                                  <strong>
+                                    {state.memoriesDetails?.post?.post_likes
+                                      ?.length - 1}{" "}
+                                    others
+                                  </strong>
+                                </>
+                              )}
+                            </span>
+                          </div>
+                        )}
+
+                        {/* Comment Section */}
+                        <CommentBox
+                          data={state.memoriesDetails?.post}
+                          commentLength={true}
+                          cancelOnClick={() => setState({ isComment: false })}
+                          handleReplayComment={(value) => addNewComment(value)}
+                          deleteComment={(id) => handleDeleteComment(id)}
+                          AdminLogin={state?.AdminLogin}
+                          AlumniManagerLogin={state?.AlumniManagerLogin}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  {/* ))}  */}
+                </div>
+              </div>
+            </div>
           </div>
 
-        </div>
-        
+          
         </>
+      ) : (
+        <div className=" kit-memo">
+            <div className="album-none">
+              <h5>Memory is not yet approved by admin</h5>
+              <div className="d-flex gap-3">
+                {state.memoriesDetails?.is_admin &&
+                   (
+                  <>
+                    <a
+                      className="p-2  btn-xs bg-white radius-round text-primary"
+                      href="#"
+                      title="Edit Memory"
+                      onClick={() => setState({ isMemoriesOpen: true })}
+                    >
+                      Edit {""}
+                      <i className="feather-edit pl--0" />
+                    </a>
+                    <a
+                      className="p-2  btn-xs bg-white radius-round text-danger"
+                      href="#"
+                      title="Delete Memory"
+                      onClick={() => showDeleteConfirm()}
+                    >
+                      Delete {""}
+                      <i className="feather-trash-2 pl--0" />
+                    </a>
+
+                     {state.memoriesDetails?.approved ? (
+                  <a
+                    className="p-2 btn-xs  radius-round"
+                    href="#"
+                    title="Approved"
+                    onClick={() => {
+                      if (!state.memoriesDetails?.approved) {
+                        approveMemory();
+                      }
+                    }}
+                  >
+                    Change approval status {""}
+                    <i className="feather-check-circle pl--0" />
+                  </a>
+                ) : (
+                  <a
+                    className="p-2 btn-xs  radius-round"
+                    href="#"
+                    title="Pending"
+                    onClick={() => {
+                      if (!state.memoriesDetails?.approved) {
+                        approveMemory();
+                      }
+                    }}
+                  >
+                    Change approval status{" "}
+                    <i className="feather-x-circle pl--0" />
+                  </a>
+                )}
+                  </>
+                )}
+
+               
+              </div>
+            </div>
+          </div>
       )}
 
       {/* Upload photos */}

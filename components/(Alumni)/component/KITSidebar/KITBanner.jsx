@@ -4,7 +4,7 @@ import React from "react";
 const KITBanner = ({ text, col, blogdata }) => {
   return (
     <>
-      <div className="rbt-page-banner-wrapper">
+      <div className="rbt-page-banner-wrapper memo-det">
         <div className="rbt-banner-image"></div>
         <div className="rbt-banner-content">
           <div className="rbt-banner-content-top">
