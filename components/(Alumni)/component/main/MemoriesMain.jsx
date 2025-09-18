@@ -14,6 +14,7 @@ import {
 import Models from "@/imports/models.import";
 import FormField from "@/commonComponents/FormFields";
 import CommentBox from "../CommentBox";
+import { RWebShare } from "react-web-share";
 
 const MemoriesMain = () => {
   const params = useParams();
@@ -380,9 +381,18 @@ const MemoriesMain = () => {
                           <i className="feather-message-circle me-1"></i>{" "}
                           Comment
                         </button>
-                        <button className="btn btn-ghost kit-memo-share">
-                          <i className="feather-share-2 me-1"></i> Share
-                        </button>
+                        <RWebShare
+                          data={{
+                            title: "Karpagam Institute Of Technology - Memory",
+                            text: `Check this out!`,
+                            url: window.location.href,
+                          }}
+                          onClick={() => console.log("shared successfully!")}
+                        >
+                          <button className="btn btn-ghost kit-memo-share">
+                            <i className="feather-share-2 me-1"></i> Share
+                          </button>
+                        </RWebShare>
                       </div>
 
                       {/* Likes Section */}
@@ -457,7 +467,7 @@ const MemoriesMain = () => {
             </div>
           </div>
         </div>
-      ) : state.memoriesDetails?.approved ?(
+      ) : state.memoriesDetails?.approved ? (
         <>
           <div className="rbt-blog-area rbt-section-overlayping-top rbt-section-gapBottom  kit-memo">
             <div className="container">
@@ -569,16 +579,25 @@ const MemoriesMain = () => {
                             <i className="feather-thumbs-up me-1 "></i> Like
                           </button>
                           <button
-                            className="btn btn-ghost kit-memo-comment-toggle disabled" 
+                            className="btn btn-ghost kit-memo-comment-toggle disabled"
                             data-bs-toggle="collapse"
                             data-bs-target="#kitMemoComments"
                           >
                             <i className="feather-message-circle me-1"></i>{" "}
                             Comment
                           </button>
+                           <RWebShare
+                          data={{
+                            title: "Karpagam Institute Of Technology - Memory",
+                            text: `Check this out! `,
+                            url: window.location.href,
+                          }}
+                          onClick={() => console.log("shared successfully!")}
+                        >
                           <button className="btn btn-ghost kit-memo-share">
                             <i className="feather-share-2 me-1"></i> Share
                           </button>
+                        </RWebShare>
                         </div>
 
                         {/* Likes Section */}
@@ -654,72 +673,67 @@ const MemoriesMain = () => {
               </div>
             </div>
           </div>
-
-          
         </>
       ) : (
         <div className=" kit-memo">
-            <div className="album-none">
-              <h5>Memory is not yet approved by admin</h5>
-              <div className="d-flex gap-3">
-                {state.memoriesDetails?.is_admin &&
-                   (
-                  <>
-                    <a
-                      className="p-2  btn-xs bg-white radius-round text-primary"
-                      href="#"
-                      title="Edit Memory"
-                      onClick={() => setState({ isMemoriesOpen: true })}
-                    >
-                      Edit {""}
-                      <i className="feather-edit pl--0" />
-                    </a>
-                    <a
-                      className="p-2  btn-xs bg-white radius-round text-danger"
-                      href="#"
-                      title="Delete Memory"
-                      onClick={() => showDeleteConfirm()}
-                    >
-                      Delete {""}
-                      <i className="feather-trash-2 pl--0" />
-                    </a>
-
-                     {state.memoriesDetails?.approved ? (
+          <div className="album-none">
+            <h5>Memory is not yet approved by admin</h5>
+            <div className="d-flex gap-3">
+              {state.memoriesDetails?.is_admin && (
+                <>
                   <a
-                    className="p-2 btn-xs  radius-round"
+                    className="p-2  btn-xs bg-white radius-round text-primary"
                     href="#"
-                    title="Approved"
-                    onClick={() => {
-                      if (!state.memoriesDetails?.approved) {
-                        approveMemory();
-                      }
-                    }}
+                    title="Edit Memory"
+                    onClick={() => setState({ isMemoriesOpen: true })}
                   >
-                    Change approval status {""}
-                    <i className="feather-check-circle pl--0" />
+                    Edit {""}
+                    <i className="feather-edit pl--0" />
                   </a>
-                ) : (
                   <a
-                    className="p-2 btn-xs  radius-round"
+                    className="p-2  btn-xs bg-white radius-round text-danger"
                     href="#"
-                    title="Pending"
-                    onClick={() => {
-                      if (!state.memoriesDetails?.approved) {
-                        approveMemory();
-                      }
-                    }}
+                    title="Delete Memory"
+                    onClick={() => showDeleteConfirm()}
                   >
-                    Change approval status{" "}
-                    <i className="feather-x-circle pl--0" />
+                    Delete {""}
+                    <i className="feather-trash-2 pl--0" />
                   </a>
-                )}
-                  </>
-                )}
 
-               
-              </div>
+                  {state.memoriesDetails?.approved ? (
+                    <a
+                      className="p-2 btn-xs  radius-round"
+                      href="#"
+                      title="Approved"
+                      onClick={() => {
+                        if (!state.memoriesDetails?.approved) {
+                          approveMemory();
+                        }
+                      }}
+                    >
+                      Change approval status {""}
+                      <i className="feather-check-circle pl--0" />
+                    </a>
+                  ) : (
+                    <a
+                      className="p-2 btn-xs  radius-round"
+                      href="#"
+                      title="Pending"
+                      onClick={() => {
+                        if (!state.memoriesDetails?.approved) {
+                          approveMemory();
+                        }
+                      }}
+                    >
+                      Change approval status{" "}
+                      <i className="feather-x-circle pl--0" />
+                    </a>
+                  )}
+                </>
+              )}
             </div>
           </div>
+        </div>
       )}
 
       {/* Upload photos */}

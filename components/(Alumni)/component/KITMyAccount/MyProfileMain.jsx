@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { RWebShare } from "react-web-share";
 
 const MyProfileMain = () => {
   const { id } = useParams();
@@ -170,9 +171,18 @@ const MyProfileMain = () => {
               )}
 
               {(isAdmin == true || isAdmin == "true") && (
+                 <RWebShare
+                          data={{
+                            title: "Karpagam Institute Of Technology",
+                            text: `Check this out!`,
+                            url: window.location.href,
+                          }}
+                          onClick={() => console.log("shared successfully!")}
+                        >
                 <button className="rbt-btn btn-gradient radius-round sm-btn">
                   Share Profile
                 </button>
+                </RWebShare>
               )}
             </div>
           </div>

@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { RWebShare } from "react-web-share";
 
 const ProfilePage = () => {
   return (
@@ -48,9 +49,19 @@ const ProfilePage = () => {
               <button className="rbt-btn btn-gradient radius-round sm-btn">
                 Edit Profile
               </button>{" "}
+              <RWebShare
+                          data={{
+                            title: "Karpagam Institute Of Technology",
+                            text: `Check this out!`,
+                            url: window.location.href,
+                          }}
+                          onClick={() => console.log("shared successfully!")}
+                        >
               <button className="rbt-btn btn-gradient radius-round sm-btn">
                 Share Profile
               </button>
+
+              </RWebShare>
             </div>
           </div>
         </div>
