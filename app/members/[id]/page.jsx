@@ -4,7 +4,7 @@ import Members from "../(members)";
 import MyAccount from "../(id)/MyAccount";
 
 export const metadata = {
-  title: "Histudy - Online Courses & Education NEXTJS14 Template",
+  title: "Karpagam Institute of Technology",
   description: "Online Courses & Education NEXTJS14 Template",
 };
 
