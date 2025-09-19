@@ -1,20 +1,20 @@
-import React, { useEffect, useState } from 'react';
-import FormField from '@/commonComponents/FormFields';
+import React, { useEffect, useState } from "react";
+import FormField from "@/commonComponents/FormFields";
 
-import { useRouter } from 'next/navigation';
+import { useRouter } from "next/navigation";
 import {
   setDropdownData,
   TrimText,
   useSetState,
-} from '@/utils/commonFunction.utils';
-import { message, Modal, Tooltip } from 'antd';
-import { usePathname } from 'next/navigation';
-import Link from 'next/link';
-import axios from 'axios';
-import { BaseURL } from '@/utils/BaseUrl';
-import Models from '@/imports/models.import';
-import { jobTypeOption } from '@/utils/constant.utils';
-import Loader from '../../Loader';
+} from "@/utils/commonFunction.utils";
+import { message, Modal, Tooltip } from "antd";
+import { usePathname } from "next/navigation";
+import Link from "next/link";
+import axios from "axios";
+import { BaseURL } from "@/utils/BaseUrl";
+import Models from "@/imports/models.import";
+import { jobTypeOption } from "@/utils/constant.utils";
+import Loader from "../../Loader";
 
 const JobBoardMain = () => {
   const { confirm } = Modal;
@@ -29,17 +29,17 @@ const JobBoardMain = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
-    job_title: '',
-    industry: '',
-    role: '',
-    location: '',
-    post_type: '',
+    job_title: "",
+    industry: "",
+    role: "",
+    location: "",
+    post_type: "",
   });
 
   const [departmentList, setDepartmentList] = useState([]);
   const [roleList, setRoleList] = useState([]);
   const [locationList, setLocationList] = useState([]);
-  const [token, setToken] = useState('');
+  const [token, setToken] = useState("");
   const [isAdmin, setIsAdmin] = useState(false);
   const [isAlumniManager, setIsAlumniManager] = useState(false);
   const [isAlumni, setIsAlumni] = useState(false);
@@ -72,22 +72,22 @@ const JobBoardMain = () => {
   const pathname = usePathname();
 
   useEffect(() => {
-    const Token = localStorage.getItem('token');
+    const Token = localStorage.getItem("token");
     setToken(Token);
     if (!Token) {
-      router.push('/login');
+      router.push("/login");
     }
 
-    const Admin = localStorage.getItem('isAdmin');
+    const Admin = localStorage.getItem("isAdmin");
     setIsAdmin(Admin);
 
-    const AlumniManager = localStorage.getItem('isAlumniManager');
+    const AlumniManager = localStorage.getItem("isAlumniManager");
     setIsAlumniManager(AlumniManager);
 
-    const Alumni = localStorage.getItem('isAlumni');
+    const Alumni = localStorage.getItem("isAlumni");
     setIsAlumni(Alumni);
 
-    const Faculty = localStorage.getItem('isFaculty');
+    const Faculty = localStorage.getItem("isFaculty");
     setIsFatulty(Faculty);
 
     // if (Admin !== "true" && AlumniManager !== "true") {
@@ -96,7 +96,7 @@ const JobBoardMain = () => {
   }, []);
 
   useEffect(() => {
-    if (token && (isAlumni == 'true' || isFatulty == 'true')) {
+    if (token && (isAlumni == "true" || isFatulty == "true")) {
       GetJobs();
       GetDepartmentList();
       GetRoleList();
@@ -106,7 +106,7 @@ const JobBoardMain = () => {
   }, [token, isAlumni, isFatulty]);
 
   useEffect(() => {
-    if (token && (isAdmin == 'true' || isAlumniManager == 'true')) {
+    if (token && (isAdmin == "true" || isAlumniManager == "true")) {
       getJobsAdmin();
       GetDepartmentList();
       GetRoleList();
@@ -127,10 +127,10 @@ const JobBoardMain = () => {
         setNormelUserFilter(response.data?.results);
       })
       .catch((error) => {
-        console.log('❌error --->', error);
-        if (error?.response?.data?.code === 'token_not_valid') {
-          localStorage.removeItem('token');
-          router.push('/login');
+        console.log("❌error --->", error);
+        if (error?.response?.data?.code === "token_not_valid") {
+          localStorage.removeItem("token");
+          router.push("/login");
         }
       });
   };
@@ -147,10 +147,10 @@ const JobBoardMain = () => {
         setFilteredData(response.data?.results);
       })
       .catch((error) => {
-        console.log('❌error --->', error);
-        if (error?.response?.data?.code === 'token_not_valid') {
-          localStorage.removeItem('token');
-          router.push('/login');
+        console.log("❌error --->", error);
+        if (error?.response?.data?.code === "token_not_valid") {
+          localStorage.removeItem("token");
+          router.push("/login");
         }
       });
   };
@@ -170,7 +170,7 @@ const JobBoardMain = () => {
         setState({ pageLoading: false });
       })
       .catch((error) => {
-        console.log('❌error --->', error);
+        console.log("❌error --->", error);
         setState({ pageLoading: false });
       });
   };
@@ -179,29 +179,29 @@ const JobBoardMain = () => {
     try {
       const res = await Models.job.industryList();
 
-      const dropdown = setDropdownData(res?.results, 'title');
-      console.log('industry dd', dropdown);
+      const dropdown = setDropdownData(res?.results, "title");
+      console.log("industry dd", dropdown);
 
       setDepartmentList(dropdown);
       setState({
         hasIndustryLoadMore: res?.next,
       });
     } catch (error) {
-      console.log('✌️error --->', error);
+      console.log("✌️error --->", error);
     }
   };
 
   const GetRoleList = async () => {
     try {
       const res = await Models.job.roleList();
-      const dropdown = setDropdownData(res?.results, 'role');
+      const dropdown = setDropdownData(res?.results, "role");
 
-      console.log('dropdown', dropdown);
+      console.log("dropdown", dropdown);
 
       setRoleList(dropdown);
       setState({ hasRoleLoadMore: res?.next });
     } catch (error) {
-      console.log('✌️error --->', error);
+      console.log("✌️error --->", error);
     }
   };
 
@@ -209,16 +209,16 @@ const JobBoardMain = () => {
     try {
       setState({ loading: true });
       const res = await Models.job.locationList();
-      const dropdown = setDropdownData(res?.results, 'location');
+      const dropdown = setDropdownData(res?.results, "location");
 
-      console.log('initial location res', res);
+      console.log("initial location res", res);
 
       setLocationList(dropdown);
 
       setState({ loading: false, hasLocationLoadMore: res?.next });
     } catch (error) {
       setState({ loading: false });
-      console.log('✌️error --->', error);
+      console.log("✌️error --->", error);
     }
   };
 
@@ -252,27 +252,27 @@ const JobBoardMain = () => {
 
   const success = (successMsg) => {
     messageApi.open({
-      type: 'success',
+      type: "success",
       content:
-        successMsg || 'Success! Check your email for further instructions.',
+        successMsg || "Success! Check your email for further instructions.",
     });
   };
 
   const errorNotification = (error) => {
     messageApi.open({
-      type: 'error',
-      content: error || 'An error occurred. Please try again.',
+      type: "error",
+      content: error || "An error occurred. Please try again.",
     });
   };
 
   const showDeleteConfirm = (post) => {
     confirm({
       title: post.is_active
-        ? 'Are you sure you want to InActive this Post?'
-        : 'Are you sure you want to Active this Post?',
-      okText: post.is_active ? 'InActive' : 'Active',
-      okType: 'danger',
-      cancelText: 'Cancel',
+        ? "Are you sure you want to InActive this Post?"
+        : "Are you sure you want to Active this Post?",
+      okText: post.is_active ? "InActive" : "Active",
+      okType: "danger",
+      cancelText: "Cancel",
       onOk() {
         setLoading(true);
         axios
@@ -288,26 +288,26 @@ const JobBoardMain = () => {
             }
           )
           .then((response) => {
-            success(response.data.message || 'Operation successful!');
+            success(response.data.message || "Operation successful!");
             getJobsAdmin(); // Refresh the job list
             setLoading(false);
           })
           .catch((error) => {
             errorNotification(
               error.response?.data?.error ||
-                'An error occurred. Please try again.'
+                "An error occurred. Please try again."
             );
             setLoading(false);
           });
       },
       onCancel() {
-        console.log('Cancel');
+        console.log("Cancel");
       },
     });
   };
 
   const handleSearchFilter = (e) => {
-    console.log('handleSearchFilter');
+    console.log("handleSearchFilter");
 
     const value = e.target.value.toLowerCase();
 
@@ -325,7 +325,7 @@ const JobBoardMain = () => {
         setFilteredData(AdminDataLists); // Reset to original data if input is cleared
       }
     }
-    console.log('token', token);
+    console.log("token", token);
 
     {
       if (value) {
@@ -345,7 +345,7 @@ const JobBoardMain = () => {
   };
 
   const handleFilterChange = (e) => {
-    console.log('handleFilterChange e', e);
+    console.log("handleFilterChange e", e);
 
     const { name, value } = e.target;
     setFormData((prevState) => ({
@@ -386,7 +386,7 @@ const JobBoardMain = () => {
     (loc) => loc.location == allUserFilterFinalDataList.location
   );
 
-  console.log('formData', formData);
+  console.log("formData", formData);
 
   const bodyData = () => {
     const body = {};
@@ -414,11 +414,11 @@ const JobBoardMain = () => {
 
     const body = bodyData();
 
-    console.log('bodyData', body);
+    console.log("bodyData", body);
 
     e.preventDefault();
 
-    if (isAdmin == 'true' || isAlumniManager == 'true') {
+    if (isAdmin == "true" || isAlumniManager == "true") {
       axios
         .post(`${BaseURL}/main_filter_job/`, body, {
           headers: {
@@ -441,10 +441,10 @@ const JobBoardMain = () => {
           // });
         })
         .catch((error) => {
-          console.log('❌error --->', error);
+          console.log("❌error --->", error);
           setState({ pageLoading: false });
         });
-    } else if (isAlumni == 'true' || isFatulty == 'true') {
+    } else if (isAlumni == "true" || isFatulty == "true") {
       setState({ pageLoading: true });
       axios
         .post(`${BaseURL}/filter_job/`, body, {
@@ -469,23 +469,23 @@ const JobBoardMain = () => {
         })
         .catch((error) => {
           setState({ pageLoading: false });
-          console.log('❌error --->', error);
+          console.log("❌error --->", error);
         });
     }
   };
 
-  console.log('allUserFilterFinalDataList', allUserFilterFinalDataList);
+  console.log("allUserFilterFinalDataList", allUserFilterFinalDataList);
 
   const handleClearFilter = () => {
     const Body = {
-      job_title: '',
-      industry: '',
-      role: '',
-      location: '',
-      post_type: '',
+      job_title: "",
+      industry: "",
+      role: "",
+      location: "",
+      post_type: "",
     };
 
-    if (isAdmin == 'true' || isAlumniManager == 'true') {
+    if (isAdmin == "true" || isAlumniManager == "true") {
       axios
         .post(`${BaseURL}/main_filter_job/`, Body, {
           headers: {
@@ -499,18 +499,18 @@ const JobBoardMain = () => {
           setNormelUserFilter(response.data?.results);
 
           setFormData({
-            job_title: '',
-            industry: '',
-            role: '',
-            location: '',
-            post_type: '',
+            job_title: "",
+            industry: "",
+            role: "",
+            location: "",
+            post_type: "",
           });
           setAllUserFilterFinalDataList(Body);
         })
         .catch((error) => {
-          console.log('❌error --->', error);
+          console.log("❌error --->", error);
         });
-    } else if (isAlumni == 'true' || isFatulty == 'true') {
+    } else if (isAlumni == "true" || isFatulty == "true") {
       axios
         .post(`${BaseURL}/filter_job/`, Body, {
           headers: {
@@ -523,16 +523,16 @@ const JobBoardMain = () => {
           setListOfPosts(response.data?.results);
           setNormelUserFilter(response.data?.results);
           setFormData({
-            job_title: '',
-            industry: '',
-            role: '',
-            location: '',
-            post_type: '',
+            job_title: "",
+            industry: "",
+            role: "",
+            location: "",
+            post_type: "",
           });
           setAllUserFilterFinalDataList(Body);
         })
         .catch((error) => {
-          console.log('❌error --->', error);
+          console.log("❌error --->", error);
         });
     }
   };
@@ -542,7 +542,7 @@ const JobBoardMain = () => {
       if (state.hasIndustryLoadMore) {
         const res = await Models.job.industryList(state.currenIndustryPage + 1);
 
-        const IndustryOption = setDropdownData(res?.results, 'title');
+        const IndustryOption = setDropdownData(res?.results, "title");
 
         setDepartmentList([...departmentList, ...IndustryOption]);
         setState({
@@ -553,7 +553,7 @@ const JobBoardMain = () => {
         setDepartmentList(departmentList);
       }
     } catch (error) {
-      console.log('error: ', error);
+      console.log("error: ", error);
     }
   };
   const roleListLoadMore = async () => {
@@ -564,11 +564,11 @@ const JobBoardMain = () => {
         //   value: item.skill_id,
         //   label: item.skill,
         // }));
-        const RoleOption = setDropdownData(res?.results, 'role');
+        const RoleOption = setDropdownData(res?.results, "role");
 
-        console.log('roleList', roleList);
+        console.log("roleList", roleList);
 
-        console.log('RoleOption', RoleOption);
+        console.log("RoleOption", RoleOption);
 
         setRoleList([...roleList, ...RoleOption]);
         setState({
@@ -579,7 +579,7 @@ const JobBoardMain = () => {
         setRoleList(roleList);
       }
     } catch (error) {
-      console.log('error: ', error);
+      console.log("error: ", error);
     }
   };
 
@@ -591,11 +591,11 @@ const JobBoardMain = () => {
         //   value: item.skill_id,
         //   label: item.skill,
         // }));
-        const LocationOption = setDropdownData(res?.results, 'location');
+        const LocationOption = setDropdownData(res?.results, "location");
 
-        console.log('roleList', locationList);
+        console.log("roleList", locationList);
 
-        console.log('RoleOption', LocationOption);
+        console.log("RoleOption", LocationOption);
 
         setLocationList([...locationList, ...LocationOption]);
         setState({
@@ -606,25 +606,27 @@ const JobBoardMain = () => {
         setRoleList(locationList);
       }
     } catch (error) {
-      console.log('error: ', error);
+      console.log("error: ", error);
     }
   };
 
+  console.log("listOfPosts.length", listOfPosts);
+
   return (
-    <div className='rbt-dashboard-area section-pad'>
-      <div className='container-fluid'>
-        <div className='row justify-content-center'>
-          <div className='col-11 col-xl-10 con-wid'>
-            <div className='container-fluid'>
-              <div className='row'>
-                <div className='col-lg-12'>
-                  <div className='row mb-4'>
-                    <div className='col-12'>
-                      <div className='d-flex justify-content-between '>
+    <div className="rbt-dashboard-area section-pad">
+      <div className="container-fluid">
+        <div className="row justify-content-center">
+          <div className="col-11 col-xl-10 con-wid">
+            <div className="container-fluid">
+              <div className="row">
+                <div className="col-lg-12">
+                  <div className="row mb-4">
+                    <div className="col-12">
+                      <div className="d-flex justify-content-between ">
                         <h5>Filter</h5>
                         <Link
-                          className='rbt-btn btn-gradient radius-round sm-btn'
-                          href='/post-a-job'
+                          className="rbt-btn btn-gradient radius-round sm-btn"
+                          href="/post-a-job"
                         >
                           Post New Job
                         </Link>
@@ -632,46 +634,46 @@ const JobBoardMain = () => {
                     </div>
                   </div>
 
-                  <div className='row g-5'>
+                  <div className="row g-5">
                     {/* --------------------sidebar start--------------------- */}
 
-                    <div className='col-lg-3 d-sidebar'>
-                      <div className='rbt-default-sidebar sticky-top rbt-shadow-box rbt-gradient-border'>
-                        <div className='inner'>
-                          <div className='content-item-content'>
-                            <div className='rbt-default-sidebar-wrapper'>
-                              <nav className='mainmenu-nav'>
-                                <ul className='dashboard-mainmenu rbt-default-sidebar-list'>
-                                  <li className='nav-item' role='presentation'>
+                    <div className="col-lg-3 d-sidebar">
+                      <div className="rbt-default-sidebar sticky-top rbt-shadow-box rbt-gradient-border">
+                        <div className="inner">
+                          <div className="content-item-content">
+                            <div className="rbt-default-sidebar-wrapper">
+                              <nav className="mainmenu-nav">
+                                <ul className="dashboard-mainmenu rbt-default-sidebar-list">
+                                  <li className="nav-item" role="presentation">
                                     <a
                                       className={`${
-                                        pathname === '#' ? 'active' : ''
+                                        pathname === "#" ? "active" : ""
                                       }`}
-                                      href='#'
+                                      href="#"
                                     >
                                       <FormField
-                                        type='text'
-                                        className='applicant-input'
+                                        type="text"
+                                        className="applicant-input"
                                         onChange={(e) => handleFilterChange(e)}
-                                        name='job_title'
+                                        name="job_title"
                                         value={formData.job_title}
-                                        placeholder='Job Title'
+                                        placeholder="Job Title"
                                       />
                                     </a>
                                   </li>
 
-                                  <li className='nav-item' role='presentation'>
+                                  <li className="nav-item" role="presentation">
                                     <a
                                       className={`w-100 ${
-                                        pathname === '#' ? 'active' : ''
+                                        pathname === "#" ? "active" : ""
                                       }`}
-                                      href='#'
+                                      href="#"
                                     >
                                       <FormField
-                                        type='loadMoreSelect'
-                                        className='member-dd'
-                                        name='industry'
-                                        placeholder={'Industry'}
+                                        type="loadMoreSelect"
+                                        className="member-dd"
+                                        name="industry"
+                                        placeholder={"Industry"}
                                         value={formData.industry}
                                         onChange={(e) => {
                                           setFormData({
@@ -685,24 +687,24 @@ const JobBoardMain = () => {
                                     </a>
                                   </li>
 
-                                  <li className='nav-item' role='presentation'>
+                                  <li className="nav-item" role="presentation">
                                     <a
                                       className={`w-100 ${
-                                        pathname === '#' ? 'active' : ''
+                                        pathname === "#" ? "active" : ""
                                       }`}
-                                      href='#'
+                                      href="#"
                                     >
                                       <FormField
-                                        type='loadMoreSelect'
-                                        className='member-dd'
+                                        type="loadMoreSelect"
+                                        className="member-dd"
                                         style={{
-                                          color: 'gray',
-                                          fontSize: '14px',
-                                          width: '100%',
+                                          color: "gray",
+                                          fontSize: "14px",
+                                          width: "100%",
                                         }}
                                         options={roleList}
-                                        name='role'
-                                        placeholder={'Role'}
+                                        name="role"
+                                        placeholder={"Role"}
                                         value={formData.role}
                                         onChange={(e) => {
                                           setFormData({ ...formData, role: e });
@@ -712,20 +714,20 @@ const JobBoardMain = () => {
                                     </a>
                                   </li>
 
-                                  <li className='nav-item' role='presentation'>
+                                  <li className="nav-item" role="presentation">
                                     <a
                                       className={`w-100 ${
-                                        pathname === '#' ? 'active' : ''
+                                        pathname === "#" ? "active" : ""
                                       }`}
-                                      href='#'
+                                      href="#"
                                     >
                                       <FormField
-                                        type='loadMoreSelect'
-                                        className='member-dd'
+                                        type="loadMoreSelect"
+                                        className="member-dd"
                                         style={{
-                                          color: 'gray',
-                                          fontSize: '14px',
-                                          width: '100%',
+                                          color: "gray",
+                                          fontSize: "14px",
+                                          width: "100%",
                                         }}
                                         onChange={(e) => {
                                           setFormData({
@@ -733,8 +735,8 @@ const JobBoardMain = () => {
                                             location: e,
                                           });
                                         }}
-                                        name='location'
-                                        placeholder={'Location'}
+                                        name="location"
+                                        placeholder={"Location"}
                                         value={formData.location}
                                         options={locationList}
                                         loadMore={() => locationListLoadMore()}
@@ -742,18 +744,18 @@ const JobBoardMain = () => {
                                     </a>
                                   </li>
 
-                                  <li className='nav-item' role='presentation'>
+                                  <li className="nav-item" role="presentation">
                                     <a
                                       className={`w-100 ${
-                                        pathname === '#' ? 'active' : ''
+                                        pathname === "#" ? "active" : ""
                                       }`}
-                                      href='#'
+                                      href="#"
                                     >
                                       <FormField
-                                        type='select'
+                                        type="select"
                                         onChange={(e) => handleFilterChange(e)}
-                                        name='post_type'
-                                        placeholder={'Post Type'}
+                                        name="post_type"
+                                        placeholder={"Post Type"}
                                         value={formData.post_type}
                                         options={JobOption}
                                       />
@@ -763,19 +765,19 @@ const JobBoardMain = () => {
                               </nav>
 
                               <div
-                                className=' d-flex flex-wrap mt-5'
-                                style={{ columnGap: '10px', rowGap: '8px' }}
+                                className=" d-flex flex-wrap mt-5"
+                                style={{ columnGap: "10px", rowGap: "8px" }}
                               >
                                 <Link
-                                  className='rbt-btn btn-gradient radius-round sm-btn'
-                                  href='#'
+                                  className="rbt-btn btn-gradient radius-round sm-btn"
+                                  href="#"
                                   onClick={handleFiltersSubmit}
                                 >
                                   Filter
                                 </Link>
                                 <Link
-                                  className='rbt-btn btn-border-gradient radius-round sm-btn'
-                                  href='#'
+                                  className="rbt-btn btn-border-gradient radius-round sm-btn"
+                                  href="#"
                                   onClick={handleClearFilter}
                                 >
                                   Clear all
@@ -814,27 +816,27 @@ const JobBoardMain = () => {
 
                     {/* --------------------table start--------------------- */}
 
-                    <div className='col-lg-9'>
+                    <div className="col-lg-9">
                       {state.pageLoading ? (
                         <Loader />
                       ) : (
                         <>
-                          <div className='rbt-elements-area bg-color-extra2 mb-5'>
-                            <div className='container'>
-                              <div className='row p-0'>
-                                <div className='col-lg-12 p-0'>
+                          <div className="rbt-elements-area bg-color-extra2 mb-5">
+                            <div className="container">
+                              <div className="row p-0">
+                                <div className="col-lg-12 p-0">
                                   <form
-                                    action='#'
-                                    className='rbt-search-style-1'
+                                    action="#"
+                                    className="rbt-search-style-1"
                                   >
                                     <input
-                                      type='text'
-                                      placeholder='Search Job with Job title and Role'
+                                      type="text"
+                                      placeholder="Search Job with Job title and Role"
                                       // name="search_filter"
                                       onChange={handleSearchFilter}
                                     />
-                                    <button className='search-btn'>
-                                      <i className='feather-search'></i>
+                                    <button className="search-btn">
+                                      <i className="feather-search"></i>
                                     </button>
                                   </form>
                                 </div>
@@ -842,8 +844,8 @@ const JobBoardMain = () => {
                             </div>
                           </div>
 
-                          <div className='rbt-dashboard-content  p-0'>
-                            <div className='content'>
+                          <div className="rbt-dashboard-content  p-0">
+                            <div className="content">
                               {/* <div className="section-title d-flex justify-content-between ">
                             <h4 className="rbt-title-style-3">
                               {" "}
@@ -858,26 +860,37 @@ const JobBoardMain = () => {
                             </Link>
                           </div> */}
 
-                              <div className='rbt-callto-action rbt-cta-default style-2 mb-2'>
-                                <div className='content-wrapper overflow-hidden pt--30 pb--30 bg-color-primary-opacity'>
-                                  <div className='row gy-5 align-items-end'>
-                                    <div className='col-lg-8'>
-                                      <div className='inner'>
-                                        <div className='content text-left'>
-                                          <h5 className='mb--5'>
-                                            {listOfPosts.length} record(s) found
-                                          </h5>
+                              <div className="rbt-callto-action rbt-cta-default style-2 mb-2">
+                                <div className="content-wrapper overflow-hidden pt--30 pb--30 bg-color-primary-opacity">
+                                  <div className="row gy-5 align-items-end">
+                                    <div className="col-lg-8">
+                                      <div className="inner">
+                                        <div className="content text-left">
+                                          {(isAdmin == "true" ||
+                                            isAlumniManager == "true") && (
+                                            <h5 className="mb--5">
+                                              {currentDataForAdmin.length}{" "}
+                                              records found
+                                            </h5>
+                                          )}
+
+                                          {(isAlumni == "true" ||
+                                            isFatulty == "true") && (
+                                            <h5 className="mb--5">
+                                              {listOfPosts.length} records found
+                                            </h5>
+                                          )}
                                           {/* <p className="b3">Create Announcement</p> */}
                                         </div>
                                       </div>
                                     </div>
-                                    <div className='col-lg-4 d-flex justify-content-start justify-content-lg-end'>
-                                      <div className='call-to-btn text-start text-lg-end position-relative'>
+                                    <div className="col-lg-4 d-flex justify-content-start justify-content-lg-end">
+                                      <div className="call-to-btn text-start text-lg-end position-relative">
                                         <Link
-                                          className='rbt-btn btn-gradient radius-round sm-btn'
-                                          href='/my-job-posts'
+                                          className="rbt-btn btn-gradient radius-round sm-btn"
+                                          href="/my-job-posts"
                                         >
-                                          <span data-text='Add New Announcement'>
+                                          <span data-text="Add New Announcement">
                                             My Job List
                                           </span>
                                         </Link>
@@ -887,10 +900,10 @@ const JobBoardMain = () => {
                                 </div>
                               </div>
 
-                              {(isAdmin == 'true' ||
-                                isAlumniManager == 'true') && (
-                                <div className='rbt-dashboard-table table-responsive mobile-table-750'>
-                                  <table className='rbt-table table table-borderless'>
+                              {(isAdmin == "true" ||
+                                isAlumniManager == "true") && (
+                                <div className="rbt-dashboard-table table-responsive mobile-table-750">
+                                  <table className="rbt-table table table-borderless">
                                     <thead>
                                       <tr>
                                         <th>Job Title</th>
@@ -905,65 +918,61 @@ const JobBoardMain = () => {
                                       {currentDataForAdmin.map((item) => (
                                         <tr key={item.id}>
                                           <th>
-                                            <span className='b3 '>
-                                              <Link href='#'>
+                                            <span className="b3 ">
+                                              <Link href={`/job-details/${item.id}`}>
                                                 {item.job_title}
                                               </Link>
                                             </span>
                                           </th>
                                           <td>
-                                            <span className='b3'>
-                                              <Link href='#'>
+                                            <span className="b3">
+                                              <Link href="#">
                                                 {item?.industry}
                                               </Link>
                                             </span>
                                           </td>
                                           <td>
-                                            <span className='b3'>
-                                              <Link href='#'>{item?.role}</Link>
+                                            <span className="b3">
+                                              <Link href="#">{item?.role}</Link>
                                             </span>
                                           </td>
                                           <td>
-                                            <span className='b3'>
-                                              <Link href='#'>
+                                            <span className="b3">
+                                              <Link href="#">
                                                 {item.application_count}
                                               </Link>
                                             </span>
                                           </td>
                                           <td>
-                                            <span className='b3'>
-                                              <Link href='#'>
+                                            <span className="b3">
+                                              <Link href="#">
                                                 {item?.posted_on}
                                               </Link>
                                             </span>
                                           </td>
 
                                           <td>
-                                            <div className='rbt-button-group justify-content-end gap-2'>
+                                            <div className="rbt-button-group justify-content-end gap-2">
                                               {item?.is_active && (
                                                 <>
                                                   <Link
                                                     className={`rbt-btn btn-xs radius-round ${
                                                       item.application_count ===
                                                       0
-                                                        ? 'bg-gray'
-                                                        : 'bg-coral-opacity'
+                                                        ? "bg-gray"
+                                                        : "bg-coral-opacity"
                                                     } `}
                                                     href={
                                                       item.application_count > 0
                                                         ? `/applicants/${item?.id}`
-                                                        : '#'
+                                                        : "#"
                                                     }
-                                                    title='View'
-                                                    // onClick={
-                                                    //   item.application_count > 0
-                                                    //     ? () =>
-                                                    //         router.push(
-                                                    //           `/applicants/${item?.id}`
-                                                    //         )
-                                                    //     : null
-                                                    // }
-
+                                                    title={
+                                                      item.application_count ===
+                                                      0
+                                                        ? "No applicants"
+                                                        : "View Applicants"
+                                                    }
                                                     style={{
                                                       opacity:
                                                         item.application_count ===
@@ -973,22 +982,22 @@ const JobBoardMain = () => {
                                                       cursor:
                                                         item.application_count ===
                                                         0
-                                                          ? 'not-allowed'
-                                                          : 'pointer',
+                                                          ? "not-allowed"
+                                                          : "pointer",
                                                     }}
                                                   >
-                                                    <i className='feather-eye pl--0'></i>
+                                                    <i className="feather-eye pl--0"></i>
                                                   </Link>
 
                                                   <div
-                                                    className='rbt-btn btn-xs bg-primary-opacity radius-round color-info'
+                                                    className="rbt-btn btn-xs bg-primary-opacity radius-round color-info"
                                                     href={`/edit-a-job/${item?.id}/`}
-                                                    title='Edit'
+                                                    title="Edit"
                                                     onClick={() =>
                                                       handleEditClick(item?.id)
                                                     }
                                                   >
-                                                    <i className='feather-edit pl--0'></i>
+                                                    <i className="feather-edit pl--0"></i>
                                                   </div>
                                                 </>
                                               )}
@@ -996,31 +1005,31 @@ const JobBoardMain = () => {
                                               <Tooltip
                                                 title={
                                                   item?.is_active
-                                                    ? 'Active'
-                                                    : 'InActive'
+                                                    ? "Active"
+                                                    : "InActive"
                                                 }
                                               >
                                                 {item?.is_active ? (
                                                   <Link
-                                                    className='rbt-btn btn-xs bg-color-success-opacity radius-round color-success'
-                                                    href='#'
-                                                    title='Active'
+                                                    className="rbt-btn btn-xs bg-color-success-opacity radius-round color-success"
+                                                    href="#"
+                                                    title="Active"
                                                     onClick={() =>
                                                       showDeleteConfirm(item)
                                                     }
                                                   >
-                                                    <i className='feather-check-circle pl--0'></i>
+                                                    <i className="feather-check-circle pl--0"></i>
                                                   </Link>
                                                 ) : (
                                                   <Link
-                                                    className='rbt-btn btn-xs bg-color-danger-opacity radius-round color-danger'
-                                                    href='#'
-                                                    title='Inactive'
+                                                    className="rbt-btn btn-xs bg-color-danger-opacity radius-round color-danger"
+                                                    href="#"
+                                                    title="Inactive"
                                                     onClick={() =>
                                                       showDeleteConfirm(item)
                                                     }
                                                   >
-                                                    <i className='feather-x-circle pl--0'></i>
+                                                    <i className="feather-x-circle pl--0"></i>
                                                   </Link>
                                                 )}
                                               </Tooltip>
@@ -1033,18 +1042,18 @@ const JobBoardMain = () => {
                                 </div>
                               )}
 
-                              {(isAlumni == 'true' || isFatulty == 'true') && (
-                                <div className='rbt-dashboard-table table-responsive mobile-table-750'>
-                                  <div className='row g-5 m-0'>
+                              {(isAlumni == "true" || isFatulty == "true") && (
+                                <div className="rbt-dashboard-table table-responsive mobile-table-750">
+                                  <div className="row g-5 m-0">
                                     {listOfPosts.length > 0 ? (
                                       listOfPosts.map((value, index) => (
                                         <div
-                                          className='col-lg-6 col-12'
+                                          className="col-lg-6 col-12"
                                           key={index}
                                         >
                                           <div
-                                            className='rbt-card  event-list-card variation-01 rbt-hover relative'
-                                            style={{ position: 'relative' }}
+                                            className="rbt-card  event-list-card variation-01 rbt-hover relative"
+                                            style={{ position: "relative" }}
                                           >
                                             {/* Edit Icon in Top Right
                                     <div
@@ -1065,23 +1074,23 @@ const JobBoardMain = () => {
                                       </a>
                                     </div> */}
 
-                                            <div className='rbt-card-body pt-0'>
-                                              <ul className='rbt-meta'>
+                                            <div className="rbt-card-body pt-0">
+                                              <ul className="rbt-meta">
                                                 <li>
-                                                  <i className='feather-map-pin'></i>
+                                                  <i className="feather-map-pin"></i>
                                                   {value?.location}
                                                 </li>
                                                 <li>
-                                                  <i className='feather-calendar'></i>
+                                                  <i className="feather-calendar"></i>
                                                   {value?.dead_line}
                                                 </li>
 
                                                 <li>
-                                                  <i className='feather-user'></i>
+                                                  <i className="feather-user"></i>
                                                   {value?.posted_by}
                                                 </li>
                                               </ul>
-                                              <h4 className='rbt-card-title font-20'>
+                                              <h4 className="rbt-card-title font-20">
                                                 <Link
                                                   href={`/job-details/${value?.id}`}
                                                 >
@@ -1089,20 +1098,20 @@ const JobBoardMain = () => {
                                                 </Link>
                                               </h4>
                                               <p
-                                                className='text-gray mt--dec-40 mb-3'
-                                                style={{ fontSize: '16px' }}
+                                                className="text-gray mt--dec-40 mb-3"
+                                                style={{ fontSize: "16px" }}
                                               >
                                                 {TrimText(
                                                   value.job_description
                                                 )}
                                               </p>
-                                              <div className='rbt-card-bottom mt-0'>
+                                              <div className="rbt-card-bottom mt-0">
                                                 <a
-                                                  className='rbt-btn-link color-primary'
+                                                  className="rbt-btn-link color-primary"
                                                   href={`/job-details/${value?.id}`}
                                                 >
                                                   View Job
-                                                  <i className='feather-arrow-right'></i>
+                                                  <i className="feather-arrow-right"></i>
                                                 </a>
                                               </div>
                                             </div>
