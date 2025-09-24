@@ -153,7 +153,7 @@ const HomeMain = ({ blogs }) => {
       <div className="rbt-callto-action-area rbt-section-gapTop">
         <div
           className="rbt-callto-action rbt-cta-default style-4 mt--75"
-          style={{ backgroundImage: "url('/images/shape/untitled-1.jpg')" }}
+          style={{ backgroundImage: "url('/images/shape/Untitled-1.jpg')" }}
         >
           <CallToActionFour btnClass="rbt-btn btn-gradient hover-icon-reverse radius-round" />
         </div>
