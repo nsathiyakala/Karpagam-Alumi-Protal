@@ -2,7 +2,7 @@ import Link from "next/link";
 
 const BreadCrumb = ({ title, text }) => {
   return (
-    <div className="rbt-breadcrumb-default ptb--20 ptb_md--20 ptb_sm--20 bg-color-darker">
+    <div className="rbt-breadcrumb-default ptb--20 ptb_md--20 ptb_sm--20 bg-blue">
       <div className="container">
         <div className="row">
           <div className="col-lg-12">

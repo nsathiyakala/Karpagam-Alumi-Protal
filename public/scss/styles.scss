@@ -362,6 +362,26 @@ body {
   font-size: 12px;
 }
 
+[data-gradient-overlay]:before {
+ background: linear-gradient(90deg, #3f4040, #474948) !important;
+}
+
+.rbt-card{
+  background-color: transparent !important;
+  border: 1px solid #dfdfdf;
+  box-shadow: none !important;
+}
+
+// .rbt-card {
+//     overflow: hidden;
+//     box-shadow: var(--shadow-1);
+//     padding: 30px;
+//     border-radius: var(--radius);
+//     background: var(--color-white);
+//     position: relative;
+//     height: 100%;
+// }
+
 .newsroom-card {
   display: flex;
   flex-direction: row;

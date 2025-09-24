@@ -68,9 +68,9 @@ const Connect = () => {
           );
         })}
 
-        <div className="px-3">
+        {/* <div className="px-3">
            <AlumniConnect/>
-        </div>
+        </div> */}
 
        
     </>
