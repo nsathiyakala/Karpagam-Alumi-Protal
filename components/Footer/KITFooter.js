@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 
-import logo from "../../public/images/logo/logo.png";
+import logo from "../../public/images/logo/footer-logo.png";
 import logoLight from "../../public/images/dark/logo/logo-light.png";
 
 import SingleFooter from "./FooterProps/SingleFooter";
@@ -36,7 +36,7 @@ KITFooter = () => {
 
   return (
     <>
-      <footer className="rbt-footer footer-style-1 ">
+      <footer className="rbt-footer footer-style-1" style={{backgroundColor:'#f4f7f7'}}>
         <div className="footer-top">
           <div className="container-fluid">
             <div className="row justify-content-center">
@@ -73,7 +73,7 @@ KITFooter = () => {
 
                         <div className="contact-btn mt--30">
                           <Link
-                            className="rbt-btn hover-icon-reverse btn-border-gradient radius-round"
+                            className="rbt-btn btn-gradient hover-icon-reverse radius-round d-flex align-items-center"
                             href="/contact"
                           >
                             <div className="icon-reverse-wrapper">
