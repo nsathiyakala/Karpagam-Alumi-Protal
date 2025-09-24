@@ -1,8 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap');
+
 /**
  * Typography
  */
 
-@import url('https://fonts.googleapis.com/css2?family=Source+Serif+Pro:ital,wght@0,400;0,600;0,700;0,900;1,400&display=swap');
 
 /*
 	font-family: 'Source Serif Pro', serif; 
@@ -21,7 +22,7 @@ html {
 body {
 	font-size: 18px;
 	line-height: 1.5;
-	font-family: var(--font-primary);
+	font-family: "Manrope", sans-serif !important;
 	color: var(--color-body);
 	font-weight: 400;
 	scroll-behavior: auto;
@@ -74,7 +75,7 @@ h6,
 .h5,
 .h6 {
 	word-break: break-word;
-	font-family: var(--font-secondary);
+	font-family: "Plus Jakarta Sans", sans-serif !important;
 	line-height: 1.4074;
 	color: var(--color-heading);
 }
@@ -195,22 +196,24 @@ h2,
 .h2,
 h3,
 .h3 {
-	font-weight: var(--f-bold);
+	font-weight: var(--f-medium);
 }
 
 h4,
 .h4,
 h5,
 .h5 {
-	font-weight: var(--f-bold);
+	font-weight: var(-f-regular);
 }
 
 h6,
 .h6 {
-	font-weight: var(--f-medium);
+	font-weight: var(--f-regular);
+	// font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
 p {
+	font-family: "Manrope", sans-serif !important;
 	font-size: 18px;
 	line-height: 1.45;
 	margin-bottom: 30px;
