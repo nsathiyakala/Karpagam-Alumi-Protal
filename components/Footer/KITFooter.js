@@ -8,7 +8,8 @@ import SingleFooter from "./FooterProps/SingleFooter";
 import CopyRight from "./CopyRight";
 import { useAppContext } from "@/context/Context";
 
-const KITFooter = () => {
+const 
+KITFooter = () => {
   const { isLightTheme } = useAppContext();
 
   const footer = {

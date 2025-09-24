@@ -23,7 +23,7 @@ export default function AlumniConnect() {
         animate={
           !isMobile && !paused
             ? { x: ["-100%", "100%"] } // left → right
-            : { x: 0 }
+            : { x: "-100" }
         }
         transition={
           !isMobile && !paused
@@ -56,3 +56,6 @@ export default function AlumniConnect() {
     </section>
   );
 }
+
+
+
