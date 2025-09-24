@@ -29,7 +29,7 @@
         &.active,
         &:hover {
             background-color: var(--color-primary);
-            background-image: linear-gradient(to right, var(--color-primary), var(--color-secondary), var(--color-secondary), var(--color-primary));
+            background-image: linear-gradient(to right, var(--color-btn-1), var(--color-btn-2), var(--color-btn-2), var(--color-btn-1));
             color: #fff;
             background-size: 300% 100%;
         }

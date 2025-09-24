@@ -11,7 +11,7 @@ const EventList = ({ isPagination, top, start, end }) => {
 
   
   return (
-    <div className="rbt-course-area rbt-sec-cir-shadow-1 bg-color-extra2  section-pad">
+    <div className="rbt-course-area rbt-sec-cir-shadow-1 bg-liblue  section-pad home-events">
   
         <div className="container">
           <div className="row mb--50">
@@ -32,7 +32,7 @@ const EventList = ({ isPagination, top, start, end }) => {
           <div className="row g-5">
             {getAllCourse?.map((data, index) => (
               <div className={`col-lg-4 col-md-6 col-12`} key={index}>
-                <div className="rbt-card variation-04 rbt-hover">
+                <div className="rbt-card variation-04 rbt-hover bg-blue">
                   <div className="rbt-card-img">
                    
                       <Image
@@ -54,21 +54,21 @@ const EventList = ({ isPagination, top, start, end }) => {
                   </div>
                   <div className="rbt-card-body">
                     <ul className="rbt-meta">
-                      <li>
-                        <i className="feather-book"></i>
+                      <li className="text-green">
+                        <i className="feather-book text-green"></i>
                         {data.lesson} 
                       </li>
-                      <li>
-                        <i className="feather-users"></i>
+                      <li className="text-green">
+                        <i className="feather-users text-green"></i>
                         {data.student} 
                       </li>
                     </ul>
-                    <h4 className="rbt-card-title">
-                      <Link href={`/course-details/${data.id}`}>
+                    <h4 className="rbt-card-title ">
+                      <Link className="text-white" href={`/course-details/${data.id}`}>
                         {data.courseTitle}
                       </Link>
                     </h4>
-                    <p className="rbt-card-text">{data.desc}</p>
+                    <p className="rbt-card-text text-white-off">{data.desc}</p>
 
                     
 

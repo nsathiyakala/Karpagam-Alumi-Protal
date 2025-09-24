@@ -134,10 +134,10 @@ const JobList = ({
 
   return (
     <>
-      <div className="row g-5">
+      <div className="row g-5 home-jobs">
         {latestJobs.map((data, index) => (
           <div className={`${childClass}`} key={index}>
-            <div className={`rbt-card ${parentClass} variation-01 rbt-hover`}>
+            <div className={`rbt-card ${parentClass} variation-01 rbt-hover bg-liblue`}>
               <div className="rbt-card-img">
                 <Link href={`/job-details/${data.id}`}>
                   <Image

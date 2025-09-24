@@ -286,14 +286,18 @@ body{
 }
 
 .bg-blue {
-  background-color: #005385;
+  background-color: #192f59;
 }
 .bg-blue-opacity-1 {
-  background-color: #00528556;
+  background-color: #192f5956;
 }
 
 .bg-green {
   background-color: #2B8F4F;
+}
+
+.bg-liblue {
+  background: #e8edf5;
 }
 
 .text-green {
@@ -304,8 +308,22 @@ body{
   color: #a54428;
 }
 
+.text-white-off {
+  color: var(--color-white-off);
+}
+
 .rounded {
   border-radius: 5px !important;
+}
+ 
+.home-events .rbt-meta li{
+
+  color: #2B8F4F !important;
+}
+
+.home-jobs .rbt-meta li{
+
+  color: #192f59 !important;
 }
 
 // .rbt-btn-g{
@@ -1701,7 +1719,7 @@ padding-bottom: 20px;
 
 .rbt-btn {
     padding: 0 15px;
-    background: var(--color-primary);
+    background: linear-gradient(to right, var(--color-btn-1), var(--color-btn-2), var(--color-btn-2), var(--color-btn-1)) !important;
     height: 40px;
     
     color: var(--color-white);
