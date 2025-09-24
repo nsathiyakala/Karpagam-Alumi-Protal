@@ -517,7 +517,7 @@ const PostDetailMain = () => {
                           })
                         }
                       >
-                        <i className="feather-message-circle me-1"></i>{" "}
+                       <i className="feather-message-circle me-1" style={{color:'#43ad27'}}></i> {" "}
                         {state?.postList?.post_comments_count} Comments
                       </button>
 

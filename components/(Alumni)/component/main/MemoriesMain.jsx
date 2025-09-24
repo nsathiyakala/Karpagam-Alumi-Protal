@@ -371,15 +371,14 @@ const MemoriesMain = () => {
                           }}
                           onClick={PostLike}
                         >
-                          <i className="feather-thumbs-up me-1"></i> Like
+                          <i className="feather-thumbs-up me-1" style={{color:'#2f65df'}}></i>
                         </button>
                         <button
                           className="btn btn-ghost kit-memo-comment-toggle"
                           data-bs-toggle="collapse"
                           data-bs-target="#kitMemoComments"
                         >
-                          <i className="feather-message-circle me-1"></i>{" "}
-                          Comment
+                           <i className="feather-message-circle me-1" style={{color:'#43ad27'}}></i> 
                         </button>
                         <RWebShare
                           data={{
@@ -390,7 +389,7 @@ const MemoriesMain = () => {
                           onClick={() => console.log("shared successfully!")}
                         >
                           <button className="btn btn-ghost kit-memo-share">
-                            <i className="feather-share-2 me-1"></i> Share
+                           <i className="feather-share-2 me-1" style={{color:'#e53031'}}></i> 
                           </button>
                         </RWebShare>
                       </div>
@@ -576,15 +575,14 @@ const MemoriesMain = () => {
                             }}
                             onClick={PostLike}
                           >
-                            <i className="feather-thumbs-up me-1 "></i> Like
+                            <i className="feather-thumbs-up me-1" style={{color:'#2f65df'}}></i>
                           </button>
                           <button
                             className="btn btn-ghost kit-memo-comment-toggle disabled"
                             data-bs-toggle="collapse"
                             data-bs-target="#kitMemoComments"
                           >
-                            <i className="feather-message-circle me-1"></i>{" "}
-                            Comment
+                           <i className="feather-message-circle me-1" style={{color:'#43ad27'}}></i> 
                           </button>
                            <RWebShare
                           data={{
@@ -595,7 +593,7 @@ const MemoriesMain = () => {
                           onClick={() => console.log("shared successfully!")}
                         >
                           <button className="btn btn-ghost kit-memo-share">
-                            <i className="feather-share-2 me-1"></i> Share
+                           <i className="feather-share-2 me-1" style={{color:'#e53031'}}></i> 
                           </button>
                         </RWebShare>
                         </div>

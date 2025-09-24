@@ -16,7 +16,7 @@ export default function AlumniConnect() {
   }, []);
 
   return (
-    <section className="py-4 bg-gradient overflow-hidden rounded">
+    <section className="py-4 overflow-hidden rounded bg-blue w-100">
       <motion.div
         className="d-flex align-items-center gap-4 text-white fw-semibold fs-10 text-orange"
         initial={{ x: "-100%" }} // start off-screen left
@@ -31,7 +31,7 @@ export default function AlumniConnect() {
             : {}
         }
       >
-        <span className="text-orange scroll-connect">
+        <span className="text-white scroll-connect">
           CONNECT with your classmates on your Alumni Association
         </span>
         <div className="call-to-btn text-start mt-0">
