@@ -1,7 +1,7 @@
 [
   {
     "id": "event-1",
-    "courseImg": "/images/event/grid-type-01.jpg",
+    "courseImg": "/images/event/2.jpg",
     "offPrice": 20,
     "lesson": "March 14, 2024",
     "student": "By Edit role",
@@ -12,7 +12,7 @@
   },
   {
     "id": "event-2",
-    "courseImg": "/images/event/grid-type-01.jpg",
+    "courseImg": "/images/event/3.jpg",
     "offPrice": 0,
     "lesson": "Feb 7, 2024",
     "student": "By author",
@@ -23,7 +23,7 @@
   },
   {
     "id": "event-3",
-    "courseImg": "/images/event/grid-type-01.jpg",
+    "courseImg": "/images/event/1.jpg",
     "offPrice": 10,
     "lesson": "Feb 4, 2022",
     "student": "By author",

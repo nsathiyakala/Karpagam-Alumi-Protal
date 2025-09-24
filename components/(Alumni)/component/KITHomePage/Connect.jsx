@@ -11,19 +11,19 @@ const Connect = () => {
   const CourseDetails = [
     {
       category:"Success Stories",
-      cateBigImg:"/images/category/image/web-design.jpg"
+      cateBigImg:"/images/category/image/2.jpg"
     },
     {
       category:"President Message",
-      cateBigImg:"/images/category/image/web-design.jpg"
+      cateBigImg:"/images/category/image/3.jpg"
     },
     {
       category:"Business Directory",
-      cateBigImg:"/images/category/image/web-design.jpg"
+      cateBigImg:"/images/category/image/4.jpg"
     },
     {
       category:"Be a Mentor",
-      cateBigImg:"/images/category/image/web-design.jpg"
+      cateBigImg:"/images/category/image/1.jpg"
     },
   ]
 
