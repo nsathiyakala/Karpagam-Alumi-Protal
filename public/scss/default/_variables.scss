@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap');
+
 /*-- Variables --*/
 :root {
     //Themes colors
@@ -174,8 +176,8 @@
 
 
     //Font Family
-    --font-primary: 'Euclid Circular';
-    --font-secondary: 'Euclid Circular';
+    --font-primary: "Plus Jakarta Sans", sans-serif;
+    --font-secondary: "Manrope", sans-serif;
     --font-alt: 'Source Serif Pro', serif;
 
 
