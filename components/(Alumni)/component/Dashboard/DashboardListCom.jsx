@@ -158,14 +158,6 @@ const DashboardListCom = ({ data, GetData, editPost, postLikeDisLinke, page }) =
 
             <div className="kit-memo-actions d-flex align-items-center border-top pt-3 mt-4">
               <button
-                className="btn btn-ghost kit-memo-like"
-                style={{ color: data?.post_liked && "red" }}
-                onClick={postLikeDisLinke}
-              >
-                <i className="feather-thumbs-up me-1"></i> Like
-              </button>
-
-              <button
                 className="btn btn-ghost kit-memo-comment-toggle"
                 onClick={() =>
                   setState({
@@ -175,11 +167,20 @@ const DashboardListCom = ({ data, GetData, editPost, postLikeDisLinke, page }) =
                   })
                 }
               >
-                <i className="feather-message-circle me-1"></i> Comment
+                <i className="feather-message-circle me-1" style={{color:'#43ad27'}}></i> 
+              </button>
+              <button
+                className="btn btn-ghost kit-memo-like"
+                style={{ color: data?.post_liked && "red" }}
+                onClick={postLikeDisLinke}
+              >
+                <i className="feather-thumbs-up me-1" style={{color:'#2f65df'}}></i>
               </button>
 
+              
+
               <button className="btn btn-ghost kit-memo-share">
-                <i className="feather-share-2 me-1"></i> Share
+                <i className="feather-share-2 me-1" style={{color:'#e53031'}}></i> 
               </button>
             </div>
 

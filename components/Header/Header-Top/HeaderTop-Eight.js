@@ -7,19 +7,14 @@ import Link from 'next/link';
 import HeaderTopData from '../../../data/headerTop';
 import { useAppContext } from '@/context/Context';
 
-const HeaderTopEight = ({
-  bgColor,
-  gapSpaceBetween,
-  container,
-  flexDirection,
-}) => {
+const HeaderTopEight = ({ gapSpaceBetween, container, flexDirection }) => {
   const router = useRouter();
   const { toggle, setToggle } = useAppContext();
   return (
     <>
       <div
-        className={`rbt-header-top rbt-header-top-1 ${gapSpaceBetween} ${bgColor} top-expended-activation d-none d-xl-block
-        `}
+        className={`rbt-header-top rbt-header-top-1 ${gapSpaceBetween} top-expended-activation d-none d-xl-block`}
+        style={{ backgroundColor: '#192f59' }}
       >
         <div className={`${container}`}>
           <div className='top-expended-wrapper'>
@@ -34,7 +29,7 @@ const HeaderTopEight = ({
                       <div className='header-info'>
                         <ul className='rbt-information-list'>
                           <li>
-                            <Link href='mailto:info@karpagamtech.ac.in'>
+                            <Link className='text-white' href='mailto:info@karpagamtech.ac.in'>
                               <i className='fas fa-envelope'></i>
                               info@karpagamtech.ac.in
                             </Link>
@@ -52,7 +47,7 @@ const HeaderTopEight = ({
                             ''
                           ) : (
                             <li>
-                              <Link href='tel:04223502440'>
+                              <Link className='text-white' href='tel:04223502440'>
                                 <i className='fas fa-phone'></i>
                                 0422 3502440
                               </Link>
@@ -94,22 +89,22 @@ const HeaderTopEight = ({
                         <div className='header-info d-none d-xl-block'>
                           <ul className='social-share-transparent'>
                             <li>
-                              <Link href='#'>
+                              <Link className='text-white' href='#'>
                                 <i className='fab fa-facebook-f'></i>
                               </Link>
                             </li>
                             <li>
-                              <Link href='#'>
+                              <Link className='text-white' href='#'>
                                 <i className='fab fa-twitter'></i>
                               </Link>
                             </li>
                             <li>
-                              <Link href='#'>
+                              <Link className='text-white' href='#'>
                                 <i className='fab fa-linkedin-in'></i>
                               </Link>
                             </li>
                             <li>
-                              <Link href='#'>
+                              <Link className='text-white' href='#'>
                                 <i className='fab fa-instagram'></i>
                               </Link>
                             </li>

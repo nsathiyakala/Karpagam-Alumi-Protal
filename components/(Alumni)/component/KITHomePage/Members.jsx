@@ -83,7 +83,7 @@ const Members = () => {
                           data?.profile_picture &&
                           !data.profile_picture.includes('undefined')
                             ? data.profile_picture
-                            : '/images/team/team-01.jpg'
+                            : '/images/team/3.webp'
                         }
                         width={415}
                         height={555}
@@ -131,7 +131,7 @@ const Members = () => {
                                 item?.profile_picture &&
                                 !item.profile_picture.includes('undefined')
                                   ? item.profile_picture
-                                  : '/images/dummy-profile-pic.png'
+                                  : '/images/1.webp'
                               }
                               width={415}
                               height={555}
