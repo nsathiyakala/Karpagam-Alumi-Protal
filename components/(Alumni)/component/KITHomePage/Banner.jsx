@@ -81,22 +81,22 @@ const Banner = () => {
                           <ul className='social-icon social-default transparent-with-border'>
                             <li>
                               <Link href='https://www.facebook.com/'>
-                                <i className='feather-facebook'></i>
+                                <i className='feather-facebook' style={{color:'#43ad27'}}></i>
                               </Link>
                             </li>
                             <li>
                               <Link href='https://www.twitter.com'>
-                                <i className='feather-twitter'></i>
+                                <i className='feather-twitter' style={{color:'#43ad27'}} ></i>
                               </Link>
                             </li>
                             <li>
                               <Link href='https://www.instagram.com/'>
-                                <i className='feather-instagram'></i>
+                                <i className='feather-instagram' style={{color:'#43ad27'}}></i>
                               </Link>
                             </li>
                             <li>
                               <Link href='https://www.linkdin.com/'>
-                                <i className='feather-linkedin'></i>
+                                <i className='feather-linkedin' style={{color:'#43ad27'}}></i>
                               </Link>
                             </li>
                           </ul>
