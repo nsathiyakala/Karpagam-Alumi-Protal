@@ -16,7 +16,7 @@ const CallToActionFour = ({ btnClass }) => {
               <div className="col-lg-8 mt--30 offset-lg-3">
                 <div className="inner">
                   <div className="content text-left">
-                    <h2 className="title" data-sal="slide-up">
+                    <h2 className="title text-white" data-sal="slide-up">
                       Alumni Strength, United Forever.
                     </h2>
                     <div className="call-to-btn text-start mt--30">

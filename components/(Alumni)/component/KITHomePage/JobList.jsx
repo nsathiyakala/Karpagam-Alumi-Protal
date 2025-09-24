@@ -72,7 +72,7 @@ const JobList = ({
   const Jobdata = [
     {
       id: "event-1",
-      img: "/images/event/grid-type-01.jpg",
+      img: "/images/event/latest-job-1.jpg",
       date: "11 Jan 2025",
       location: "IAC",
       time: "8:00 am - 5:00 pm",
@@ -82,7 +82,7 @@ const JobList = ({
     },
     {
       id: "event-2",
-      img: "/images/event/grid-type-01.jpg",
+      img: "/images/event/latest-job-1.jpg",
       date: "20 Feb 2025",
       location: "Chennai",
       time: "10:00 am - 6:00 pm",
@@ -92,7 +92,7 @@ const JobList = ({
     },
     {
       id: "event-3",
-      img: "/images/event/grid-type-01.jpg",
+      img: "/images/event/latest-job-1.jpg",
       date: "5 Mar 2025",
       location: "Coimbatore",
       time: "9:00 am - 4:00 pm",
@@ -102,7 +102,7 @@ const JobList = ({
     },
     {
       id: "event-3",
-      img: "/images/event/grid-type-01.jpg",
+      img: "/images/event/latest-job-1.jpg",
       date: "5 Mar 2025",
       location: "Coimbatore",
       time: "9:00 am - 4:00 pm",
@@ -112,7 +112,7 @@ const JobList = ({
     },
     {
       id: "event-3",
-      img: "/images/event/grid-type-01.jpg",
+      img: "/images/event/latest-job-1.jpg",
       date: "5 Mar 2025",
       location: "Coimbatore",
       time: "9:00 am - 4:00 pm",
@@ -122,7 +122,7 @@ const JobList = ({
     },
     {
       id: "event-3",
-      img: "/images/event/grid-type-01.jpg",
+      img: "/images/event/latest-job-1.jpg",
       date: "5 Mar 2025",
       location: "Coimbatore",
       time: "9:00 am - 4:00 pm",
@@ -141,7 +141,7 @@ const JobList = ({
               <div className="rbt-card-img">
                 <Link href={`/job-details/${data.id}`}>
                   <Image
-                    src={`/images/event/grid-type-01.jpg`}
+                    src={`/images/event/latest-job-1.jpg`}
                     width={355}
                     height={240}
                     priority
