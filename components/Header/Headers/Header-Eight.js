@@ -121,7 +121,7 @@ const HeaderEight = ({
             <HeaderRightTwo
               userType="Admin"
               btnText="Register Now"
-              btnClass="rbt-marquee-btn marquee-auto btn-border-gradient radius-round btn-sm hover-transform-none"
+              btnClass="  radius-round btn-sm "
             />
           </div>
         </div>

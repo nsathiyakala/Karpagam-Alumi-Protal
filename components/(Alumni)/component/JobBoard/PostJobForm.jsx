@@ -230,6 +230,8 @@ const PostJobForm = () => {
         formData.skills.forEach(
           (skill) => formDataToSend.append("skills", skill.value) // Append each skill ID
         );
+      }else if (key === "experience_level_from") {
+        formDataToSend.append("experience_level_from", formData.experience_level_from.value);
       } else if (key === "industry") {
         formDataToSend.append("industry", formData.industry.value);
       } else if (key === "role") {
@@ -321,6 +323,28 @@ const PostJobForm = () => {
   };
 
   const skillListLoadMore = async () => {
+    try {
+      if (state.hasSkillLoadMore) {
+        const res = await Models.job.skillList(state.currenSkillPage + 1);
+        const SkillOption = res?.results?.map((item) => ({
+          value: item.skill_id,
+          label: item.skill,
+        }));
+        setSkills([...skills, ...SkillOption]);
+        setState({
+          currenSkillPage: state.currenSkillPage + 1,
+          hasSkillLoadMore: res.next,
+        });
+      } else {
+        setSkills(skills);
+      }
+    } catch (error) {
+      console.log("error: ", error);
+    }
+  };
+  
+
+  const experienceList = async () => {
     try {
       if (state.hasSkillLoadMore) {
         const res = await Models.job.skillList(state.currenSkillPage + 1);
@@ -464,6 +488,24 @@ const PostJobForm = () => {
                     <div className="form-group">
                       <FormField
                         placeholder="Experience From"
+                        type="loadMoreSelect"
+                        className="form-dd"
+                        name="experience_level_from"
+                        value={formData.experience_level_from}
+                         onChange={(e) => {
+                          setFormData({ ...formData, experience_level_from: e });
+                          console.log("experience_level_from select", e);
+                        }}
+                        // onChange={(e) => handleChange(e)}
+                        error={errMsg.experience_level_from}
+                        required={true}
+                        options={YearOfExperience}
+                        
+                        
+                        
+                      />
+                      {/* <FormField
+                        placeholder="Experience From"
                         type="select"
                         name="experience_level_from"
                         value={formData.experience_level_from}
@@ -471,7 +513,7 @@ const PostJobForm = () => {
                         options={YearOfExperience}
                         error={errMsg.experience_level_from}
                         required={true}
-                      />
+                      /> */}
                       <span className="focus-border"></span>
                     </div>
 

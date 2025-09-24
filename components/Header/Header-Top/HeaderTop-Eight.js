@@ -18,9 +18,8 @@ const HeaderTopEight = ({
   return (
     <>
       <div
-        className={`rbt-header-top rbt-header-top-1 ${gapSpaceBetween} ${bgColor} top-expended-activation ${
-          !toggle ? 'd-none' : ''
-        }`}
+        className={`rbt-header-top rbt-header-top-1 ${gapSpaceBetween} ${bgColor} top-expended-activation d-none d-xl-block
+        `}
       >
         <div className={`${container}`}>
           <div className='top-expended-wrapper'>

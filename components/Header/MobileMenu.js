@@ -118,9 +118,9 @@ const MobileMenu = () => {
              {!token && <div className="rbt-btn-wrapper mb--20">
               <Link
                 className="rbt-btn btn-border-gradient radius-round btn-sm hover-transform-none w-100 justify-content-center text-center"
-                href="#"
+                href="/signin"
               >
-                <span>Enroll Now</span>
+                <span>Register Now</span>
               </Link>
             </div>}
             

@@ -237,7 +237,9 @@
 @import "dark-mode/dark-mode";
 
 body{
-  overflow-x: hidden;
+  overflow-x: hidden !important;
+  overflow-y: auto !important;
+
 }
 
 .btn-loader {
@@ -290,6 +292,14 @@ body{
   background-color: #00528556;
 }
 
+.bg-green {
+  background-color: #2B8F4F;
+}
+
+.text-green {
+  color: #2B8F4F;
+}
+
 .text-orange {
   color: #a54428;
 }
@@ -297,6 +307,14 @@ body{
 .rounded {
   border-radius: 5px !important;
 }
+
+// .rbt-btn-g{
+//   background-color: #2B8F4F;
+// }
+
+// .rbt-btn:hover{
+//   background-color: #2B8F4F;
+// }
 
 .KITgallery {
   padding: 50px 10px;
@@ -1621,10 +1639,12 @@ padding-bottom: 20px;
 .font-20{
   font-size: 20px !important;
 }
-
-.rbt-user-wrapper:hover .rbt-user-menu-list-wrapper{
+@media screen and (min-width:1600px) and (max-width:1200px) {
+  .rbt-user-wrapper:hover .rbt-user-menu-list-wrapper{
   left: -180px;
 }
+}
+
 
 @media screen and (min-width:1200px) and (max-width:1800px) {
 .con-wid{
