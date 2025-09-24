@@ -552,7 +552,7 @@ textarea:-ms-input-placeholder {
 }
 
 [data-gradient-overlay]:before {
-    background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
+    background: linear-gradient(90deg, var(--color-btn-1), var(--color-btn-2));
 }
 
 @for $i from 1 through 10 {
