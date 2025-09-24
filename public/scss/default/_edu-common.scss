@@ -155,7 +155,7 @@
 -------------------------------*/
 
 .theme-gradient {
-    background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
+    background: linear-gradient(90deg, var(--color-btn-1), var(--color-btn-2));
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-background-clip: text;
@@ -163,7 +163,7 @@
 }
 
 %theme-gradient {
-    background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
+    background: linear-gradient(90deg, var(--color-btn-1), var(--color-btn-2));
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-background-clip: text;
