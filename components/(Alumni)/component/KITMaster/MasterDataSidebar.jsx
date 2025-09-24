@@ -29,7 +29,7 @@ const MasterDataSidebar = () => {
 
   return (
     <>
-      <div className="rbt-default-sidebar sticky-top rbt-shadow-box rbt-gradient-border">
+      <div className="rbt-default-sidebar sticky-top rbt-shadow-box rbt-gradient-border bg-gray">
         <div className="inner">
           <div className="content-item-content">
             <div className="rbt-default-sidebar-wrapper">

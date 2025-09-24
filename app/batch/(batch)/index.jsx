@@ -193,7 +193,7 @@ const Course = () => {
           <KITHeader headerSticky="rbt-sticky" headerType="" />
 
           <div className="rbt-page-banner-wrapper">
-            <div className="rbt-banner-image" />
+            <div className="rbt-banner-image admin" />
           </div>
           <div className="rbt-dashboard-area rbt-section-overlayping-top rbt-section-gapBottom">
             <div className="container-fluid">

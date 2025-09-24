@@ -861,7 +861,7 @@ const JobBoardMain = () => {
                           </div> */}
 
                               <div className="rbt-callto-action rbt-cta-default style-2 mb-2">
-                                <div className="content-wrapper overflow-hidden pt--30 pb--30 bg-color-primary-opacity">
+                                <div className="content-wrapper overflow-hidden pt--30 pb--30 bg-blue">
                                   <div className="row gy-5 align-items-end">
                                     <div className="col-lg-8">
                                       <div className="inner">
@@ -902,7 +902,7 @@ const JobBoardMain = () => {
 
                               {(isAdmin == "true" ||
                                 isAlumniManager == "true") && (
-                                <div className="rbt-dashboard-table table-responsive mobile-table-750">
+                                <div className="rbt-dashboard-table table-responsive mobile-table-750 mt-5">
                                   <table className="rbt-table table table-borderless">
                                     <thead>
                                       <tr>

@@ -399,7 +399,7 @@ const MyBusinessListing = () => {
                       </div> */}
 
                           <div className='rbt-callto-action rbt-cta-default style-2 px-4'>
-                            <div className='content-wrapper overflow-hidden pt--30 pb--30 bg-color-primary-opacity'>
+                            <div className='content-wrapper overflow-hidden pt--30 pb--30 bg-blue'>
                               <div className='row gy-5 align-items-end justify-content-between'>
                                 <div className='col-lg-8'>
                                   <div className='inner'>

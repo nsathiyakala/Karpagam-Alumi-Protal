@@ -47,7 +47,7 @@ const Announcement = () => {
           </div>
 
           <div className="rbt-callto-action rbt-cta-default style-2">
-            <div className="content-wrapper overflow-hidden pt--30 pb--30 bg-color-primary-opacity">
+            <div className="content-wrapper overflow-hidden pt--30 pb--30 bg-blue">
               <div className="row gy-5 align-items-end">
                 <div className="col-lg-8">
                   <div className="inner">

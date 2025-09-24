@@ -268,7 +268,7 @@ const ViewTicketDetails = () => {
       {/* <div className="col-11 col-xl-10 con-wid"> */}
       <div className="container-fluid">
         <div className="rbt-callto-action rbt-cta-default style-2 mb-4">
-          <div className="content-wrapper overflow-hidden pt--30 pb--30 bg-color-primary-opacity">
+          <div className="content-wrapper overflow-hidden pt--30 pb--30 bg-blue">
             <div className="row gy-5 align-items-end justify-content-lg-between">
               <div className="col-lg-7">
                 <div className="inner">

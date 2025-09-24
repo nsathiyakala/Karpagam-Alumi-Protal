@@ -167,7 +167,7 @@ const Register = (props) => {
   return (
     <>
       <div className="col-lg-6">
-        <div className="rbt-contact-form contact-form-style-1 max-width-auto">
+        <div className="rbt-contact-form contact-form-style-1 max-width-auto ">
           <h3 className="title">Register</h3>
           <form className="max-width-auto" onSubmit={(e) => handleSubmit(e)}>
             <div className="form-group">
