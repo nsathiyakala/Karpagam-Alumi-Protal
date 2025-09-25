@@ -40,7 +40,7 @@ const MyMiltestone = () => {
 
        
 
-        <Separator />
+         {/* <Separator /> */}
         <KITFooter />
       </Context>
     </Provider>

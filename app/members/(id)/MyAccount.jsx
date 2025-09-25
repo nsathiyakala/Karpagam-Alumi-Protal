@@ -44,7 +44,7 @@ const MyAccount = () => {
 
        
 
-        <Separator />
+         {/* <Separator /> */}
         <KITFooter />
       </Context>
     </Provider>

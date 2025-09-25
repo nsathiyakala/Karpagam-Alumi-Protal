@@ -42,7 +42,7 @@ const UpCommingEvents = (props) => {
                 title="Edit"
               >
                 <i
-                  className="feather-edit pl--0 text-black "
+                  className="feather-edit pl--0 text-white "
                   style={{ fontSize: "14px" }}
                 />
               </a>
@@ -54,7 +54,7 @@ const UpCommingEvents = (props) => {
                   onClick={() => showDeleteConfirm(event)}
                 >
                   <i
-                    className="feather-check-circle pl--0 text-black "
+                    className="feather-check-circle pl--0 text-white "
                     style={{ fontSize: "14px" }}
                   />
                 </a>
@@ -66,7 +66,7 @@ const UpCommingEvents = (props) => {
                   onClick={() => showDeleteConfirm(event)}
                 >
                   <i
-                    className="feather-x-circle pl--0 text-black "
+                    className="feather-x-circle pl--0 text-white "
                     style={{ fontSize: "14px" }}
                   />
                 </a>

@@ -138,7 +138,7 @@ const WaitingForApproval = () => {
             </div>
           </div>
 
-          <Separator />
+           {/* <Separator /> */}
           <KITFooter />
         </Context>
       </Provider>

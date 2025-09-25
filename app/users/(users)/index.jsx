@@ -311,7 +311,7 @@ const Users = () => {
             </Modal>
           </div>
 
-          <Separator />
+           {/* <Separator /> */}
           <KITFooter />
         </Context>
       </Provider>

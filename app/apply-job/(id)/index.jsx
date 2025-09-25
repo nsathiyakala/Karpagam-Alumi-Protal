@@ -39,7 +39,7 @@ const ApplyJob = () => {
 
          <ApplyJobMain/> 
 
-        <Separator />
+         {/* <Separator /> */}
         <KITFooter />
       </Context>
     </Provider>

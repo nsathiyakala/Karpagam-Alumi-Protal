@@ -45,7 +45,7 @@ const MyProfilePicture = () => {
 
        
 
-        <Separator />
+         {/* <Separator /> */}
         <KITFooter />
       </Context>
     </Provider>

@@ -284,7 +284,7 @@ const PostDirectoryForm = () => {
         <div className="row justify-content-center">
           <div className="col-lg-10">
             <div className="form-wrapper">
-              <div className="rbt-contact-form contact-form-style-1 max-width-auto">
+              <div className="rbt-contact-form contact-form-style-1 max-width-auto bg-gray">
                 <form
                   id="contact-form"
                   method="POST"

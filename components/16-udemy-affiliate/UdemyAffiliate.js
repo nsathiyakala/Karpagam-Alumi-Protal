@@ -76,7 +76,7 @@ const UdemyAffiliate = () => {
         </div>
       </div>
 
-      <Separator />
+       {/* <Separator /> */}
 
       <div className="rbt-brand-area bg-color-white rbt-section-gap">
         <div className="container">

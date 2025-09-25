@@ -55,7 +55,7 @@ const JobDescription = () => {
         <div className="col-lg-8">
           {/* <div className="jd-main-card p-4 "> */}
           {/* Header */}
-          <div className="rbt-shadow-box">
+          <div className="rbt-shadow-box bg-liblue">
             <div className="d-flex align-items-start justify-content-between jd-header ">
               <div>
                 <h1 className="jd-title">{SingleData.job_title}</h1>

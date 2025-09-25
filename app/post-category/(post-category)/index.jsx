@@ -60,7 +60,7 @@ const PostCategory = () => {
             </div>
           </div>
 
-          <Separator />
+           {/* <Separator /> */}
           <KITFooter />
         </Context>
       </Provider>

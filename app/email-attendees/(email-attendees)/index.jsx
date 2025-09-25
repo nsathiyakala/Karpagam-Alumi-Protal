@@ -39,7 +39,7 @@ const EmailAttendees = () => {
         <EmailAttendeesMain/>
 
 
-        <Separator />
+         {/* <Separator /> */}
         <KITFooter />
       </Context>
     </Provider>

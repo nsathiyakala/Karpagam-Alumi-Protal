@@ -42,7 +42,7 @@ const PostJob = () => {
 
          {/* <JobBoardMain />  */}
 
-        <Separator />
+         {/* <Separator /> */}
         <KITFooter />
       </Context>
     </Provider>

@@ -4,7 +4,6 @@ import { useRouter } from "next/navigation";
 import React, { useState, useEffect } from "react";
 import { message } from "antd";
 import FormField from "@/commonComponents/FormFields";
-import axios from "axios";
 import Models from "@/imports/models.import";
 import Loader from "./Loader";
 
@@ -18,12 +17,19 @@ const LoginMain = () => {
   const [errMsg, setErrMsg] = useState({});
   const [loading, setLoading] = useState(false);
 
+  // AntD message
   const [messageApi, contextHolder] = message.useMessage();
 
-  // useEffect(() => {
-  //   const token = localStorage.getItem("token");
-  //   if (token) router.push("/");
-  // }, []);
+  // hold toast to trigger inside useEffect
+  const [toast, setToast] = useState(null); // {type:'success'|'error', content:'text'}
+
+  // show message only when toast changes (React-18 safe)
+  useEffect(() => {
+    if (toast) {
+      messageApi.open(toast);
+      setToast(null);
+    }
+  }, [toast, messageApi]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -34,8 +40,8 @@ const LoginMain = () => {
   };
 
   const handleSubmit1 = async (e) => {
+    e.preventDefault();
     try {
-      e.preventDefault();
       setLoading(true);
 
       const validationRules = {
@@ -46,86 +52,64 @@ const LoginMain = () => {
       const isValid = validateForm(formData, validationRules, setErrMsg);
       if (!isValid) {
         setLoading(false);
-
         return;
       }
 
       const res = await Models.auth.login(formData);
 
+      // Save tokens and group flags
       localStorage.setItem("token", res.access);
       localStorage.setItem("user_id", res.id);
       localStorage.setItem("member_id", res.member_id);
-
       localStorage.setItem("isAdmin", res?.groups?.Administrator);
       localStorage.setItem("isAlumniManager", res?.groups?.Alumni_Manager);
-
       localStorage.setItem("isAlumni", res?.groups?.Alumni);
-
       localStorage.setItem("isFaculty", res?.groups?.Faculty);
-
       localStorage.setItem("isAlumniProfile", res?.modules?.module1);
-
       localStorage.setItem("isAlumniEducation", res?.modules?.module2);
-
       localStorage.setItem("isAlumniExperience", res?.modules?.module3);
-
       localStorage.setItem("isAlumniContact", res?.modules?.module4);
       localStorage.setItem("isMilestone", res?.modules?.milestone);
+
       const group = res?.groups?.Student
         ? "student"
         : res?.groups?.Alumni
         ? "alumni"
         : null;
-
       localStorage.setItem("group", group);
 
-      success();
+      // show success toast
+      setToast({ type: "success", content: "Successfully Logged In" });
 
-      // router?.push("/");
-
-      // if (
-      //   res?.groups?.Alumni_Manager === true ||
-      //   res?.groups?.Administrator === true ||
-      //   res?.groups?.Student === true ||
-      //   res?.groups?.Alumni === true
-      // ) {
-      //   router?.push("/users");
+      // redirect logic
       if (
         res?.groups?.Alumni_Manager === true ||
         res?.groups?.Administrator === true
       ) {
-        router?.push("/users");
+        router.push("/users");
       } else if (res?.groups?.Alumni === true) {
         const modules = res?.modules;
-        console.log("✌️modules --->", modules);
 
-        // Ensure modules exists before checking individual module status
         if (!objIsEmpty(modules)) {
           if (modules.module1 === false) {
-            router?.push("/profile-photograph");
+            router.push("/profile-photograph");
           } else if (modules.module2 === false) {
-            router?.push("/profile-education");
+            router.push("/profile-education");
           } else if (modules.module3 === false) {
-            router?.push("/profile-experience");
+            router.push("/profile-experience");
           } else if (modules.module4 === false) {
-            router?.push("/profile-alumni");
+            router.push("/profile-alumni");
           } else if (modules.milestone === false) {
-            router?.push("/profile-milestone");
-          } else if (
-            modules.module1 === true &&
-            modules.module2 === true &&
-            modules.module3 === true &&
-            modules.module4 === true &&
-            modules.milestone === true
-          ) {
-            router?.push("/home");
+            router.push("/profile-milestone");
+          } else {
+            router.push("/home");
           }
         } else {
-          router?.push("/home");
+          router.push("/home");
           console.error("Modules data is missing.");
         }
       } else if (res?.groups?.Faculty === true) {
-        router?.push("/help-desk/all-support-tickets");
+        router.push("/help-desk/all-support-tickets");
       } else {
         console.log("User does not belong to Alumni or Admin groups.");
       }
@@ -136,38 +120,20 @@ const LoginMain = () => {
       });
       setLoading(false);
     } catch (error) {
-      console.log(error);
-
-      errorNotification(error.error);
+      console.error(error);
+      setToast({
+        type: "error",
+        content: error.error || "An error occurred. Please try again.",
+      });
       setLoading(false);
     }
-  };
-
-  const success = () => {
-    messageApi.open({
-      type: "success",
-      content: "Successfully Logged In",
-    });
-  };
-
-  const errorNotification = (error) => {
-    messageApi.open({
-      type: "error",
-      content: error || "An error occurred. Please try again.",
-    });
   };
 
   return (
     <>
       {loading ? (
-        <div
-          className="text-center pt-10 d-flex justify-content-center align-items-center"
-          // style={{
-          //   height: "500px",
-          //   maxWidth: "100%",
-          // }}
-        >
-          <Loader  />
+        <div className="text-center pt-10 d-flex justify-content-center align-items-center">
+          <Loader />
         </div>
       ) : (
         <div className="col-lg-6">
@@ -195,7 +161,6 @@ const LoginMain = () => {
                   value={formData.password}
                   onChange={handleChange}
                   error={errMsg.password}
-                  // className="applicant-input"
                   required={true}
                 />
                 <span className="focus-border"></span>

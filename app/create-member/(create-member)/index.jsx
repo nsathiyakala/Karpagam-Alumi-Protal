@@ -28,7 +28,7 @@ const CreateMember = () => {
           <BreadCrumb title="New Member" text="New-Member" />
 
           <CreateMemberForm />
-          <Separator />
+           {/* <Separator /> */}
           <KITFooter />
         </Context>
       </Provider>

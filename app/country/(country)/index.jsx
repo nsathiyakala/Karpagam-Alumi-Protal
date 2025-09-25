@@ -58,7 +58,7 @@ const Country = () => {
             </div>
           </div>
 
-          <Separator />
+           {/* <Separator /> */}
           <KITFooter />
         </Context>
       </Provider>

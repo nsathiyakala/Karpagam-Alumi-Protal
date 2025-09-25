@@ -41,7 +41,7 @@ const ProfileExperience = () => {
 
        
 
-        <Separator />
+         {/* <Separator /> */}
         <KITFooter />
       </Context>
     </Provider>

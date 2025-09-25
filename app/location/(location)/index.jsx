@@ -57,7 +57,7 @@ const Locations = () => {
             </div>
           </div>
 
-          <Separator />
+           {/* <Separator /> */}
           <KITFooter />
         </Context>
       </Provider>

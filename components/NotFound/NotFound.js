@@ -35,7 +35,7 @@ const NotFound = () => {
             </div>
           </div>
 
-          <Separator />
+           {/* <Separator /> */}
           <FooterOne />
         </Context>
       </Provider>

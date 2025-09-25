@@ -56,7 +56,7 @@ const Department = () => {
             </div>
           </div>
 
-          <Separator />
+           {/* <Separator /> */}
           <KITFooter />
         </Context>
       </Provider>

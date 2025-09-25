@@ -44,7 +44,7 @@ const MyBasicDetails = () => {
 
        
 
-        <Separator />
+         {/* <Separator /> */}
         <KITFooter />
       </Context>
     </Provider>

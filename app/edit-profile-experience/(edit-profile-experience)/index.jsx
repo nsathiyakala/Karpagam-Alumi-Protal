@@ -47,7 +47,7 @@ const MyProfileExperience = () => {
 
        
 
-        <Separator />
+         {/* <Separator /> */}
         <KITFooter />
       </Context>
     </Provider>

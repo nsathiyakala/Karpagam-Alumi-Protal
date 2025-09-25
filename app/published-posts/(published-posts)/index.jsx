@@ -37,7 +37,7 @@ const PublishPost = () => {
 
          <PublishPostMain /> 
 
-        <Separator />
+         {/* <Separator /> */}
         <KITFooter />
       </Context>
     </Provider>

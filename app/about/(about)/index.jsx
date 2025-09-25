@@ -31,7 +31,7 @@ console.log('✌️About --->', );
 
         <Cart />
 
-        <Separator />
+         {/* <Separator /> */}
         <KITFooter />
       </Context>
     </Provider>

@@ -25,7 +25,7 @@ const Home = ({ getBlog }) => {
 
         <HomeMain />
 
-        <Separator />
+         {/* <Separator /> */}
         <KITFooter />
       </Context>
     </Provider>

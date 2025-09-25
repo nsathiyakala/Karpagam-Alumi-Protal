@@ -451,7 +451,7 @@ const PostDetailMain = () => {
                         state.memoriesDetails?.is_owner) && ( */}
                       <>
                         <a
-                          className="rbt-btn btn-xs bg-white radius-round text-primary"
+                          className="rbt-btn btn-xs bg-white radius-round text-white"
                           href="#"
                           title="Edit Memory"
                           onClick={() => editPost(state?.postList)}

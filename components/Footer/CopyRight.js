@@ -4,7 +4,7 @@ import Separator from '../Common/Separator';
 const CopyRight = () => {
   return (
     <>
-      <Separator />
+       {/* <Separator /> */}
       <div
         className='copyright-area copyright-style-1 ptb--20'
         style={{backgroundColor:'#192f59'}}

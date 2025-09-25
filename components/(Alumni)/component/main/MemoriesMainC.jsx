@@ -290,7 +290,7 @@ const MemoriesMainC = () => {
                         state.memoriesDetails?.is_owner) && (
                         <>
                           <a
-                            className="rbt-btn btn-xs bg-white radius-round text-primary"
+                            className="rbt-btn btn-xs bg-white radius-round text-white"
                             href="#"
                             title="Edit Memory"
                             onClick={() => setState({ isMemoriesOpen: true })}
@@ -298,7 +298,7 @@ const MemoriesMainC = () => {
                             <i className="feather-edit pl--0" />
                           </a>
                           <a
-                            className="rbt-btn btn-xs bg-white radius-round text-danger"
+                            className="rbt-btn btn-xs bg-white radius-round text-white"
                             href="#"
                             title="Delete Memory"
                             onClick={() => showDeleteConfirm()}

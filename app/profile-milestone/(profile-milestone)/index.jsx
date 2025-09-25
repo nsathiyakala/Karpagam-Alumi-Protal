@@ -40,7 +40,7 @@ const ProfileMilestone = () => {
 
        
 
-        <Separator />
+         {/* <Separator /> */}
         <KITFooter />
       </Context>
     </Provider>

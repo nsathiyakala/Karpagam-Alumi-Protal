@@ -46,7 +46,7 @@ const ProfileEducation = () => {
 
        
 
-        <Separator />
+         {/* <Separator /> */}
         <KITFooter />
       </Context>
     </Provider>

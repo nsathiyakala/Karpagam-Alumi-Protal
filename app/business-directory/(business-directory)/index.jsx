@@ -38,7 +38,7 @@ const BusinessDirectory = () => {
 
          <BusinessDirectoryMain /> 
 
-        <Separator />
+         {/* <Separator /> */}
         <KITFooter />
       </Context>
     </Provider>

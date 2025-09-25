@@ -39,7 +39,7 @@ const MyJobList = () => {
 
          <MyJobListMain /> 
 
-        <Separator />
+         {/* <Separator /> */}
         <KITFooter />
       </Context>
     </Provider>

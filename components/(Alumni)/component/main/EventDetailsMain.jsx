@@ -285,7 +285,7 @@ const EventDetailsMain = ({ getMatchEvent, id }) => {
       <div className='row g-5 event-details'>
         <div className='col-lg-8'>
           <div className='course-details-content'>
-            <div className='rbt-feature-box rbt-shadow-box thuumbnail'>
+            <div className='rbt-feature-box rbt-shadow-box thuumbnail bg-liblue'>
               <img
                 className='w-100'
                 src={
@@ -306,7 +306,7 @@ const EventDetailsMain = ({ getMatchEvent, id }) => {
             </div>
 
             {state?.eventData?.description && (
-              <div className='rbt-feature-box rbt-shadow-box mt--40'>
+              <div className='rbt-feature-box rbt-shadow-box mt--40 bg-liblue'>
                 <div className='row g-5'>
                   <div className='col-lg-12'>
                     <div className='section-title'>
@@ -332,7 +332,7 @@ const EventDetailsMain = ({ getMatchEvent, id }) => {
             )}
 
             {state.userData?.length > 0 && (
-              <div className='rbt-participants-area mt--40'>
+              <div className='rbt-feature-box rbt-shadow-box rbt-participants-area mt--40 bg-liblue'>
                 <EventParticipants userData={state?.userData} />
 
                 {state.userData?.length > 0 && (
@@ -351,7 +351,7 @@ const EventDetailsMain = ({ getMatchEvent, id }) => {
           </div>
         </div>
         <div className='col-lg-4 mt_md--60 mt_sm--60'>
-          <div className='course-sidebar rbt-gradient-border sticky-top rbt-shadow-box course-sidebar-top'>
+          <div className='course-sidebar  sticky-top rbt-shadow-box course-sidebar-top bg-liblue'>
             <div className='inner'>
               <div
                 className={`video-popup-with-text video-popup-wrapper text-center popup-video sidebar-video-hidden mb--15 ${

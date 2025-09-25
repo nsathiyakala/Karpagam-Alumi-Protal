@@ -39,7 +39,7 @@ const BusinessDirDetail = () => {
 
          <BusinessDirDetailMain /> 
 
-        <Separator />
+         {/* <Separator /> */}
         <KITFooter />
       </Context>
     </Provider>

@@ -115,7 +115,7 @@ const MyProfileMain = () => {
             />
           </div> */}
 
-          <div className="custom-profile-card rbt-default-sidebar sticky-top rbt-shadow-box rbt-gradient-border">
+          <div className="custom-profile-card rbt-default-sidebar sticky-top rbt-shadow-box rbt-gradient-border my-0">
             <div className="custom-profile-header">
               <img
                 src={

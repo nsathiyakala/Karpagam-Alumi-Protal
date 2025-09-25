@@ -239,7 +239,7 @@ const Salutation = () => {
             </Modal>
           </div>
 
-          <Separator />
+           {/* <Separator /> */}
           <KITFooter />
         </Context>
       </Provider>

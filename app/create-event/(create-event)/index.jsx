@@ -39,7 +39,7 @@ const CreateEvents = () => {
         <CreateEventForm/>
 
 
-        <Separator />
+         {/* <Separator /> */}
         <KITFooter />
       </Context>
     </Provider>

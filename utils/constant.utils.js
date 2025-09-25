@@ -745,11 +745,11 @@ export const convertAllUrlToFile = async (url, filename) => {
 
 export const memberType = [
   {
-    id: "Alumni",
+    id: 1,
     name: "Alumni",
   },
   {
-    id: "Faculty",
+    id: 2,
     name: "Faculty",
   },
 ];
@@ -919,11 +919,11 @@ export const eventRegistrationOptions = [
 
 export const registeredMember = [
   {
-    name: "Registered",
+    name:1,
     label: "Registered",
   },
   {
-    name: "Non Registered",
+    name:2,
     label: "Non Registered",
   },
 ];

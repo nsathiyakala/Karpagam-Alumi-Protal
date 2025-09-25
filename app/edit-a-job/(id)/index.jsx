@@ -38,7 +38,7 @@ const EditJob = () => {
 
         <EditJobForm/>
 
-        <Separator />
+         {/* <Separator /> */}
         <KITFooter />
       </Context>
     </Provider>

@@ -598,7 +598,7 @@ const OpenTicketsMain = () => {
 
           <hr className="mt--30" />
 
-          <div className="rbt-dashboard-table table-responsive mobile-table-750 mt--30">
+          <div className="rbt-dashboard-table table-responsive mobile-table-750 mt--30" style={{scrollbarColor:"transparnt"}}>
             {token && (isAdmin == "true" || isAlumniManager == "true") && (
               <>
                 {departmentDatas?.length === 0 ? (

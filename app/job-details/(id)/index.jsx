@@ -38,7 +38,7 @@ const JobDetail = () => {
 
          <JobDetailMain /> 
 
-        <Separator />
+         {/* <Separator /> */}
         <KITFooter />
       </Context>
     </Provider>

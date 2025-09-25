@@ -40,7 +40,7 @@ const ApplicantDetail = () => {
 
          <ApplicantDetailMain /> 
 
-        <Separator />
+         {/* <Separator /> */}
         <KITFooter />
       </Context>
     </Provider>

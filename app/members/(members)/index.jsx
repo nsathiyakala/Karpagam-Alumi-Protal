@@ -36,7 +36,7 @@ const Members = () => {
         <KITHeader headerSticky="rbt-sticky" headerType="" />
         <BreadCrumb title="Members" text="Members" />
         {token ? <MembersLoginMain /> : <MembersMain />}
-        <Separator />
+         {/* <Separator /> */}
         <KITFooter />
       </Context>
     </Provider>

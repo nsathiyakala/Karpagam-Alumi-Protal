@@ -355,7 +355,7 @@ const Course = () => {
             </Modal>
           </div>
 
-          <Separator />
+           {/* <Separator /> */}
           <KITFooter />
         </Context>
       </Provider>

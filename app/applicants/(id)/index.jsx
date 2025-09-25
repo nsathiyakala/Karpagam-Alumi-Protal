@@ -39,7 +39,7 @@ const Applicants = () => {
 
          <ApplicantsMain /> 
 
-        <Separator />
+         {/* <Separator /> */}
         <KITFooter />
       </Context>
     </Provider>

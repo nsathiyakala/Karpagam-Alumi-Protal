@@ -39,7 +39,7 @@ const MyPost = () => {
 
          <MyPostMain /> 
 
-        <Separator />
+         {/* <Separator /> */}
         <KITFooter />
       </Context>
     </Provider>

@@ -43,7 +43,7 @@ const AlumniTicketsMain = () => {
 
          {/* <JobBoardMain />  */}
 
-        <Separator />
+         {/* <Separator /> */}
         <KITFooter />
       </Context>
     </Provider>

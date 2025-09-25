@@ -292,7 +292,7 @@ const MemoriesMain = () => {
                           state.memoriesDetails?.is_owner) && (
                           <>
                             <a
-                              className="rbt-btn btn-xs bg-white radius-round text-primary"
+                              className="rbt-btn btn-xs bg-white radius-round text-white"
                               href="#"
                               title="Edit Memory"
                               onClick={() => setState({ isMemoriesOpen: true })}
@@ -300,7 +300,7 @@ const MemoriesMain = () => {
                               <i className="feather-edit pl--0" />
                             </a>
                             <a
-                              className="rbt-btn btn-xs bg-white radius-round text-danger"
+                              className="rbt-btn btn-xs bg-white radius-round text-white"
                               href="#"
                               title="Delete Memory"
                               onClick={() => showDeleteConfirm()}
@@ -493,7 +493,7 @@ const MemoriesMain = () => {
                             state.memoriesDetails?.is_owner) && (
                             <>
                               <a
-                                className="rbt-btn btn-xs bg-white radius-round text-primary"
+                                className="rbt-btn btn-xs bg-white radius-round text-white"
                                 href="#"
                                 title="Edit Memory"
                                 onClick={() =>
@@ -503,7 +503,7 @@ const MemoriesMain = () => {
                                 <i className="feather-edit pl--0" />
                               </a>
                               <a
-                                className="rbt-btn btn-xs bg-white radius-round text-danger"
+                                className="rbt-btn btn-xs bg-white radius-round text-white"
                                 href="#"
                                 title="Delete Memory"
                                 onClick={() => showDeleteConfirm()}
@@ -575,14 +575,14 @@ const MemoriesMain = () => {
                             }}
                             onClick={PostLike}
                           >
-                            <i className="feather-thumbs-up me-1" style={{color:'#2f65df'}}></i>
+                            <i className="feather-thumbs-up me-1" style={{cursor:"not-allowed"}}></i>
                           </button>
                           <button
                             className="btn btn-ghost kit-memo-comment-toggle disabled"
                             data-bs-toggle="collapse"
                             data-bs-target="#kitMemoComments"
                           >
-                           <i className="feather-message-circle me-1" style={{color:'#43ad27'}}></i> 
+                           <i className="feather-message-circle me-1" style={{cursor:"not-allowed"}}></i> 
                           </button>
                            <RWebShare
                           data={{

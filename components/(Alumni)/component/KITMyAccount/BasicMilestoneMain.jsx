@@ -345,7 +345,7 @@ const BasicMilestoneMain = () => {
                                     <div className="widget-content">
                                       {getMemberEducation?.map((edu, index) => (
                                         <div
-                                          className="py-3 px-5 bg-color-darker mb-3  rounded-3"
+                                          className="py-3 px-5 bg-liblue mb-3  rounded-3"
                                           key={index}
                                           style={{ position: "relative" }}
                                         >
@@ -354,7 +354,7 @@ const BasicMilestoneMain = () => {
                                               href="#"
                                               style={{
                                                 textTransform: "capitalize",
-                                                color: "white",
+                                                color: "#000",
                                               }}
                                             >
                                               {edu?.title}
@@ -364,7 +364,7 @@ const BasicMilestoneMain = () => {
                                           {edu?.year && (
                                             <div
                                               style={{
-                                                color: "white",
+                                                color: "#000",
                                                 fontSize: "14px",
                                               }}
                                             >
@@ -375,7 +375,7 @@ const BasicMilestoneMain = () => {
                                           {edu?.description && (
                                             <div
                                               style={{
-                                                color: "white",
+                                                color: "#000",
                                                 fontSize: "14px",
                                               }}
                                             >
@@ -398,7 +398,7 @@ const BasicMilestoneMain = () => {
                                               title="Edit"
                                             >
                                               <i
-                                                className="feather-edit pl--0 text-black "
+                                                className="feather-edit pl--0 text-white "
                                                 style={{ fontSize: "14px" }}
                                               ></i>
                                             </button>
@@ -410,7 +410,7 @@ const BasicMilestoneMain = () => {
                                               title="Active"
                                             >
                                               <i
-                                                className="feather-trash pl--0 text-black "
+                                                className="feather-trash pl--0 text-white "
                                                 style={{ fontSize: "14px" }}
                                               ></i>
                                             </button>

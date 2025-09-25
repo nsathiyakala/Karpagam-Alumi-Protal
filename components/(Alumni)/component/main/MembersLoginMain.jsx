@@ -330,7 +330,7 @@ const MembersLoginMain = () => {
       body.search = state.search;
     }
     if (state.member_type) {
-      body.member_type = state.member_type;
+      body.member_type = state.member_type.label;
     }
     if (state.member_type == "Alumni") {
       if (state.batch) {
@@ -362,7 +362,7 @@ const MembersLoginMain = () => {
       body.dob = state.dob;
     }
     if (state.registered) {
-      body.registered = state.registered == "Registered" ? true : false;
+      body.registered = state.registered.label == "Registered" ? true : false;
     }
     return body;
   };
@@ -623,20 +623,26 @@ const MembersLoginMain = () => {
                               <nav className="mainmenu-nav">
                                 <ul className="dashboard-mainmenu rbt-default-sidebar-list">
                                   <li className="nav-item" role="presentation">
-                                    
-                                      <FormField
-                                        type="select"
-                                        onChange={(e) =>
-                                          setState({
-                                            member_type: e.target.value,
-                                          })
-                                        }
-                                        name="member_type"
-                                        value={state.member_type}
-                                        options={memberTypeOption}
-                                        placeholder={"Member Type"}
-                                      />
-                                    
+                                     <a
+                                      className={`w-100 ${
+                                        pathname === "#" ? "active" : ""
+                                      }`}
+                                      href="#"
+                                    >
+                                    <FormField
+                                      type="loadMoreSelect"
+                                      className="member-dd"
+                                      onChange={(e) =>
+                                        setState({
+                                          member_type: e,
+                                        })
+                                      }
+                                      name="member_type"
+                                      value={state.member_type}
+                                      options={memberTypeOption}
+                                      placeholder={"Member Type"}
+                                    />
+                                    </a>
                                   </li>
 
                                   <li className="nav-item" role="presentation">
@@ -793,7 +799,13 @@ const MembersLoginMain = () => {
                                     </a>
                                   </li>
 
-                                  <li className="nav-item" role="presentation">
+                                  <li
+                                    className="nav-item pb-3"
+                                    role="presentation"
+                                    style={{
+                                      borderBottom: "1px solid #e6e3f1",
+                                    }}
+                                  >
                                     <a
                                       className={`w-100 ${
                                         pathname === "#" ? "active" : ""
@@ -814,6 +826,15 @@ const MembersLoginMain = () => {
                                       />
                                     </a>
                                   </li>
+
+                                  <label
+                                    className="mb-0"
+                                    style={{ fontSize: "16px" }}
+                                    htmlFor="date"
+                                  >
+                                    {" "}
+                                    Date
+                                  </label>
 
                                   <li className="nav-item" role="presentation">
                                     <a
@@ -843,15 +864,15 @@ const MembersLoginMain = () => {
                                       href="#"
                                     >
                                       <FormField
-                                        type="select"
+                                        type="loadMoreSelect"
+                                        className="member-dd"
                                         name="registered"
                                         placeholder={"Member Status"}
                                         value={state.registered}
-                                        onChange={(e) =>
-                                          setState({
-                                            registered: e.target.value,
-                                          })
+                                         onChange={(e) =>
+                                          setState({ registered: e })
                                         }
+                                       
                                         options={RegisterdOption}
                                       />
                                     </a>
@@ -955,7 +976,10 @@ const MembersLoginMain = () => {
                                             <div className="thumbnail">
                                               <img
                                                 // src=
-                                                src={member?.profile_picture ?? "/images/dummy-member.png"}
+                                                src={
+                                                  member?.profile_picture ??
+                                                  "/images/dummy-member.png"
+                                                }
                                                 width={415}
                                                 height={555}
                                                 priority

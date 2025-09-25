@@ -329,6 +329,10 @@ body {
   background: #f4f7f7 !important;
 }
 
+.rbt-show-more-btn::before{
+      background: linear-gradient(rgba(255, 255, 255, 0) 0%, #e8edf5 100%);
+}
+
 .rbt-table thead tr th {
   background: #192f59;
   color: white !important;
@@ -346,13 +350,30 @@ body {
   color: #192f59 !important;
 }
 
+.rbt-meta li {
+   color: #192f59 !important;
+}
+
+.rbt-page-banner-wrapper .rbt-banner-content-top .title{
+  color: #fff !important;
+}
+
+.rbt-breadcrumb-item{
+  color: #000 !important;
+}
+
+.rbt-accordion-style.rbt-accordion-01 .card{
+  background: #f4f7f7 !important;
+  box-shadow: none;
+}
+
 // .rbt-btn-g{
 //   background-color: #2B8F4F;
 // }
 
 // .rbt-btn:hover{
 //   background-color: #2B8F4F;
-// }
+// }  
 
 .KITgallery {
   padding: 50px 10px;
@@ -363,7 +384,8 @@ body {
 }
 
 [data-gradient-overlay]:before {
- background: linear-gradient(90deg, #000000, #000000) !important;
+//  background: linear-gradient(90deg, #000000, #000000) !important;
+background: none !important;
 }
 
 .home-events .rbt-card{
@@ -386,7 +408,26 @@ body {
 
 
 
+input {
+  background: #f4f7f7 !important;
 
+}
+textarea{
+   background: #f4f7f7 !important;
+}
+
+.css-1xqkn6g-control {
+  background: #f4f7f7 !important;
+}
+
+
+.css-1xqkn6g-control input{
+  background: transparent !important;
+}
+
+.event-form select {
+  background-color: #f4f7f7 !important;
+}
 
 // .rbt-card {
 //     overflow: hidden;
@@ -822,7 +863,7 @@ select {
 
 /* Action Buttons */
 .kit-memo-actions button {
-  font-size: 15px;
+  font-size: 20px;
   font-weight: 500;
   color: #444;
   transition: 0.3s ease;
@@ -893,7 +934,7 @@ select {
 
 .event-form select {
   width: 100%;
-  border: 1px solid #ccc !important;
+  border: 1px solid #e6e3f1 !important;
   height: 48px !important;
   border-radius: 5px !important;
   padding: 10px !important;
@@ -982,7 +1023,7 @@ select {
   color: #333;
 }
 .event-actions .btn-border:hover {
-  // border-color: #0072ff;
+  border: 1px solid #3caf65;
   // color: #0072ff;
 }
 
@@ -1411,13 +1452,13 @@ select {
 }
 
 .jd-company-line {
-  color: #6b7280;
+  color: #000;
   font-size: 14px;
 }
 
 .jd-posted {
   font-size: 13px;
-  color: #94a3b8;
+  color: #6b7280;
   margin-top: 6px;
 }
 
@@ -1453,7 +1494,7 @@ select {
 
 .jd-stat-label {
   font-size: 13px;
-  color: #94a3b8;
+  color: #000;
   text-transform: none;
   margin-bottom: 8px;
 }
@@ -1483,6 +1524,7 @@ select {
 .jd-section {
   // padding: 18px 0;
   border-bottom: 1px solid #f8fafc;
+  background: #e8edf5;
 }
 .jd-section-title {
   font-size: 18px;
@@ -1492,7 +1534,7 @@ select {
 }
 
 .jd-text {
-  color: #475569;
+  color: #000;
   line-height: 1.7;
   font-size: 15px;
 }
@@ -1514,7 +1556,7 @@ select {
 
 /* Sidebar cards */
 .jd-side-card {
-  background: #fff;
+   background: #e8edf5;
   border: 1px solid #eef3f7;
   border-radius: 10px;
   padding: 18px;
@@ -1532,14 +1574,15 @@ select {
 }
 
 .jd-side-small {
-  color: #6b7280;
+  color: #000;
   font-size: 14px;
   margin-bottom: 4px;
 }
 
 .jd-side-text {
-  color: #475569;
+  color: #000;
   line-height: 1.6;
+  font-size: 16px;
 }
 
 /* Similar jobs */
@@ -1744,7 +1787,7 @@ select {
   width: 100%;
   height: 100%;
   border-radius: 5px !important;
-  border: 1px solid #005385 !important;
+  border: 1px solid #2a8c4d !important;
 }
 
 .home-mem .team .thumbnail img {

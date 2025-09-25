@@ -517,7 +517,7 @@ const MyProfileExperienceMain = () => {
                                     <div className='widget-content'>
                                       {getMemberEducation?.map((edu, index) => (
                                         <div
-                                          className='py-3 px-5 bg-color-darker mb-3  rounded-3'
+                                          className='py-3 px-5 bg-liblue mb-3  rounded-3'
                                           key={index}
                                           style={{ position: 'relative' }}
                                         >
@@ -526,7 +526,7 @@ const MyProfileExperienceMain = () => {
                                               href='#'
                                               style={{
                                                 textTransform: 'capitalize',
-                                                color: 'white',
+                                                color: '#000',
                                               }}
                                             >
                                               {edu?.industry}
@@ -537,7 +537,7 @@ const MyProfileExperienceMain = () => {
                                             true && (
                                             <span
                                               style={{
-                                                color: 'white',
+                                                color: '#000',
                                                 fontSize: '14px',
                                               }}
                                             >
@@ -550,7 +550,7 @@ const MyProfileExperienceMain = () => {
                                             true && (
                                             <span
                                               style={{
-                                                color: 'white',
+                                                color: '#000',
                                                 fontSize: '14px',
                                               }}
                                             >
@@ -577,7 +577,7 @@ const MyProfileExperienceMain = () => {
                                               title='Edit'
                                             >
                                               <i
-                                                className='feather-edit pl--0 text-black '
+                                                className='feather-edit pl--0 text-white '
                                                 style={{ fontSize: '14px' }}
                                               ></i>
                                             </button>
@@ -589,7 +589,7 @@ const MyProfileExperienceMain = () => {
                                               title='Delete'
                                             >
                                               <i
-                                                className='feather-trash pl--0 text-black '
+                                                className='feather-trash pl--0 text-white '
                                                 style={{ fontSize: '14px' }}
                                               ></i>
                                             </button>

@@ -39,7 +39,7 @@ const EditEvents = () => {
         <EditEventForm/>
 
 
-        <Separator />
+         {/* <Separator /> */}
         <KITFooter />
       </Context>
     </Provider>

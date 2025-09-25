@@ -127,7 +127,7 @@ const AllSupportTicketsMain = () => {
               </div>
             </div>
 
-            <Separator />
+             {/* <Separator /> */}
             <KITFooter />
           </>
         )}

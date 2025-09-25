@@ -6,8 +6,8 @@
         max-width: 490px;
         padding-left: 60px;
         z-index: 2;
-        background: var(--color-white);
-        box-shadow: var(--shadow-1);
+        background: #f4f7f7;
+        box-shadow: none;
         border-radius: var(--radius);
 
         @media #{$lg-layout} {

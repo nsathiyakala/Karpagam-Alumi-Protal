@@ -47,7 +47,7 @@ const MyProfileSkills = () => {
 
        
 
-        <Separator />
+         {/* <Separator /> */}
         <KITFooter />
       </Context>
     </Provider>

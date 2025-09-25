@@ -42,7 +42,7 @@ const ProfileAlumni = () => {
 
        
 
-        <Separator />
+         {/* <Separator /> */}
         <KITFooter />
       </Context>
     </Provider>

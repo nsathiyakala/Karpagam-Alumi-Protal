@@ -39,7 +39,7 @@ const EditDirectory = () => {
         <EditDirectoryForm/>
 
 
-        <Separator />
+         {/* <Separator /> */}
         <KITFooter />
       </Context>
     </Provider>

@@ -40,7 +40,7 @@ const PostDirectory = () => {
         <PostDirectoryForm/>
 
 
-        <Separator />
+         {/* <Separator /> */}
         <KITFooter />
       </Context>
     </Provider>

@@ -45,7 +45,7 @@ const ProfilePhotograph = () => {
 
        
 
-        <Separator />
+         {/* <Separator /> */}
         <KITFooter />
       </Context>
     </Provider>
