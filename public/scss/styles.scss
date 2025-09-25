@@ -363,7 +363,15 @@ body {
 }
 
 [data-gradient-overlay]:before {
- background: linear-gradient(90deg, #3f4040, #474948) !important;
+ background: linear-gradient(90deg, #000000, #000000) !important;
+}
+
+.home-events .rbt-card{
+  background-color: #192f59 !important;
+}
+
+.home-jobs .rbt-card{
+  background-color: #e8edf5 !important;
 }
 
 .rbt-card{
@@ -371,6 +379,10 @@ body {
   border: 1px solid #dfdfdf;
   box-shadow: none !important;
 }
+
+
+
+
 
 // .rbt-card {
 //     overflow: hidden;
