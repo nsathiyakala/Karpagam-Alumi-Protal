@@ -25,7 +25,7 @@ const NewsRoom = () => {
           <KITHeader headerSticky="rbt-sticky" headerType="" />
           <BreadCrumb title="Newsroom" text="Newsroom" />
 
-          <div className="rbt-dashboard-area section-pad">
+          <div className="rbt-dashboard-area section-pad home-jobs">
             <div className="container">
               <div className="row">
                 <div className="col-lg-12">

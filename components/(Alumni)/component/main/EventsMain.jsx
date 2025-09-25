@@ -7,7 +7,7 @@ import Link from "next/link";
 const EventsMain = () => {
   let getAllCourse = EventDetails;
   return (
-    <div className="rbt-rbt-card-area  bg-color-white section-pad">
+    <div className="rbt-rbt-card-area  bg-color-white section-pad home-events">
       <div className="container">
         {/* <div className="row ">
           <div className="col-lg-12">
@@ -53,7 +53,7 @@ const EventsMain = () => {
                     </li>
                   </ul>
                   <h4 className="rbt-card-title">
-                    <Link href={`/login`}>
+                    <Link className="text-white" href={`/login`}>
                       {data.courseTitle}
                     </Link>
                   </h4>
@@ -61,7 +61,7 @@ const EventsMain = () => {
 
                   <div className="rbt-card-bottom">
                     <Link
-                      className="rbt-btn-link color-primary"
+                      className="rbt-btn-link text-white"
                       href={`/login`}
                     >
                      View Events

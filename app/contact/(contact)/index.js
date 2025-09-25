@@ -23,7 +23,7 @@ const Contact = () => {
 
           {/* <BreadCrumb title="Members" text="Members" /> */}
 
-          <div className='rbt-conatct-area bg-gradient-11 rbt-section-gap'>
+          <div className='rbt-conatct-area bg-gradient-11 section-pad'>
             <div className='container'>
               <div className='row'>
                 <div className='col-lg-12'>

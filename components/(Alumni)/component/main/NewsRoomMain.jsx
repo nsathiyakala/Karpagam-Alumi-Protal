@@ -46,7 +46,7 @@ const NewsRoomMain = ({ selectedYear }) => {
                       </li>
                     </ul>
                     <h4 className='rbt-card-title'>{data.courseTitle}</h4>
-                    <p className='rbt-card-text' style={{ width: '100%' }}>
+                    <p className='rbt-card-text text-dark' style={{ width: '100%' }}>
                       {data.desc}
                     </p>
                   </div>
