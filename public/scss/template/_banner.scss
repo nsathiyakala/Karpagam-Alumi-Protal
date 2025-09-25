@@ -1119,12 +1119,16 @@
     // Home 13
 
     &.variation-03 {
-        height: 750px;
+        height: 750px ;
         display: flex;
         align-items: center;
 
         @media #{$smlg-device} {
-            height: auto;
+            height: 750px;
+        }
+
+        @media (max-width:770px) {
+            height: 500px;
         }
 
         .wrapper {

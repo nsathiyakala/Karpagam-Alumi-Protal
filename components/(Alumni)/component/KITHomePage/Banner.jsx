@@ -30,13 +30,13 @@ const Banner = () => {
             <div
               className='rbt-banner-area rbt-banner-6 variation-03 bg_image bg_image--17'
               data-gradient-overlay='5'
-              style={{ backgroundImage: 'url("/images/category/image/banner-1.jpg")' }}
+              style={{ backgroundImage: 'url("/images/category/image/banner-option-2.jpg")' }}
             >
-              {/* <div className='wrapper w-100'>
+              <div className='wrapper w-100'>
                 <div className='container'>
                   <div className='row align-items-center'>
                     <div className='col-lg-12'>
-                      <div className='inner text-center'>
+                      {/* <div className='inner text-center'>
                         <div className='section-title'>
                           <span className='subtitle bg-white-opacity d-inline-block'>
                             Alumni Day 2024
@@ -104,163 +104,38 @@ const Banner = () => {
                             Follow By Facebook, Twitter, Instagram, and Linkedin
                           </span>
                         </div>
-                      </div>
+                      </div> */}
                     </div>
                   </div>
                 </div>
-              </div> */}
+              </div>
             </div>
           </SwiperSlide>
 
-          <SwiperSlide className='swiper-slide'>
+          {/* <SwiperSlide className='swiper-slide'>
             <div
               className='rbt-banner-area rbt-banner-6 variation-03 bg_image bg_image--21'
               data-black-overlay='5'
               style={{ backgroundImage: 'url("/images/category/image/banner-2.jpg")' }}
             >
               <div className='wrapper w-100'>
-                {/* <div className='container'>
-                  <div className='row align-items-center'>
-                    <div className='col-lg-12'>
-                      <div className='inner text-center'>
-                        <div className='section-title'>
-                          <span className='subtitle bg-white-opacity d-inline-block'>
-                            THE BEST TEMPLATE FOR EDUCATION
-                          </span>
-                        </div>
-                        <h1 className='title w-700'>
-                          Histudy Starter is a community <br />
-                          <strong className='color-white'>
-                            for creative people.
-                          </strong>
-                        </h1>
-                        <div className='call-to-btn  mt-0 d-flex justify-content-center'>
-                          <Link
-                            className='rbt-btn btn-gradient hover-icon-reverse radius-round d-flex align-items-center'
-                            href='/about'
-                          >
-                            <span className='icon-reverse-wrapper'>
-                              <span className='btn-text'>
-                                {' '}
-                                More About University
-                              </span>
-                              <span className='btn-icon'>
-                                <i className='feather-arrow-right'></i>
-                              </span>
-                              <span className='btn-icon'>
-                                <i className='feather-arrow-right'></i>
-                              </span>
-                            </span>
-                          </Link>
-                        </div>
-                        <div className='social-share-wrapper mt--40'>
-                          <ul className='social-icon social-default transparent-with-border'>
-                            <li>
-                              <Link href='https://www.facebook.com/'>
-                                <i className='feather-facebook' style={{color:'#43ad27'}}></i>
-                              </Link>
-                            </li>
-                            <li>
-                              <Link href='https://www.twitter.com'>
-                                <i className='feather-twitter' style={{color:'#43ad27'}}></i>
-                              </Link>
-                            </li>
-                            <li>
-                              <Link href='https://www.instagram.com/'>
-                                <i className='feather-instagram' style={{color:'#43ad27'}}></i>
-                              </Link>
-                            </li>
-                            <li>
-                              <Link href='https://www.linkdin.com/'>
-                                <i className='feather-linkedin' style={{color:'#43ad27'}}></i>
-                              </Link>
-                            </li>
-                          </ul>
-                          <span className='follow-us-text'>
-                            Follow By Facebook, Twitter, Instagram, and Linkedin
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div> */}
+               
               </div>
             </div>
-          </SwiperSlide>
+          </SwiperSlide> */}
 
-          <SwiperSlide className='swiper-slide'>
+          {/* <SwiperSlide className='swiper-slide'>
             <div
               className='rbt-banner-area rbt-banner-6 variation-03 bg_image bg_image--16'
               data-gradient-overlay='5'
               style={{ backgroundImage: 'url("/images/category/image/banner-3.jpg")' }}
             >
               <div className='wrapper w-100'>
-                {/* <div className='container'>
-                  <div className='row align-items-center'>
-                    <div className='col-lg-12'>
-                      <div className='inner text-center'>
-                        <div className='section-title'>
-                          <span className='subtitle bg-white-opacity d-inline-block'>
-                            THE BEST TEMPLATE FOR EDUCATION
-                          </span>
-                        </div>
-                        <h1 className='title w-700'>
-                          Learning keeps you <br />
-                          <strong className='color-white'>in the lead</strong>
-                        </h1>
-                        <div className='call-to-btn  mt-0 d-flex justify-content-center'>
-                          <Link
-                            className='rbt-btn btn-gradient hover-icon-reverse radius-round d-flex align-items-center'
-                            href='/about'
-                          >
-                            <span className='icon-reverse-wrapper'>
-                              <span className='btn-text'>
-                                {' '}
-                                More About University
-                              </span>
-                              <span className='btn-icon'>
-                                <i className='feather-arrow-right'></i>
-                              </span>
-                              <span className='btn-icon'>
-                                <i className='feather-arrow-right'></i>
-                              </span>
-                            </span>
-                          </Link>
-                        </div>
-                        <div className='social-share-wrapper mt--40'>
-                          <ul className='social-icon social-default transparent-with-border'>
-                            <li>
-                              <Link href='https://www.facebook.com/'>
-                                <i className='feather-facebook' style={{color:'#43ad27'}}></i>
-                              </Link>
-                            </li>
-                            <li>
-                              <Link href='https://www.twitter.com'>
-                                <i className='feather-twitter' style={{color:'#43ad27'}}></i>
-                              </Link>
-                            </li>
-                            <li>
-                              <Link href='https://www.instagram.com/'>
-                                <i className='feather-instagram' style={{color:'#43ad27'}}></i>
-                              </Link>
-                            </li>
-                            <li>
-                              <Link href='https://www.linkdin.com/'>
-                                <i className='feather-linkedin' style={{color:'#43ad27'}}></i>
-                              </Link>
-                            </li>
-                          </ul>
-                          <span className='follow-us-text'>
-                            Follow By Facebook, Twitter, Instagram, and Linkedin
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div> */}
+               
               </div>
             </div>
-          </SwiperSlide>
+          </SwiperSlide> */}
+          
         </div>
         <div className='rbt-swiper-arrow rbt-arrow-left'>
           <div className='custom-overfolow'>
