@@ -36,14 +36,14 @@
     &.style-2 {
         .content-wrapper {
             background-color: var(--color-white);
-            padding: 70px 50px;
+            padding: 15px 50px;
             box-shadow: var(--shadow-1);
             border-radius: 6px;
             @media #{$md-layout} {
-                padding: 40px 30px;
+                padding: 10px 30px;
             }
             @media #{$sm-layout} {
-                padding: 40px 30px;
+                padding: 10px 30px;
             }
         }
         .content {

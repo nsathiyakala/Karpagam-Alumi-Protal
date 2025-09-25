@@ -48,8 +48,9 @@ const HeaderTopEight = ({ gapSpaceBetween, container, flexDirection }) => {
                           ) : (
                             <li>
                               <Link className='text-white' href='tel:04223502440'>
-                                <i className='fas fa-phone'></i>
+                              <i className='fas fa-phone' style={{ transform: 'scaleX(-1)' }}></i>
                                 0422 3502440
+                                
                               </Link>
                             </li>
                           )}

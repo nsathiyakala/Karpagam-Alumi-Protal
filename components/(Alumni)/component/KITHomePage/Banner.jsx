@@ -32,7 +32,7 @@ const Banner = () => {
               data-gradient-overlay='5'
               style={{ backgroundImage: 'url("/images/category/image/banner-1.jpg")' }}
             >
-              <div className='wrapper w-100'>
+              {/* <div className='wrapper w-100'>
                 <div className='container'>
                   <div className='row align-items-center'>
                     <div className='col-lg-12'>
@@ -46,7 +46,7 @@ const Banner = () => {
                           Karpagam Institute Of Technology <br />
                           <strong className='color-white'></strong>
                         </h1>
-                        {/* <div className="button-group mt--30">
+                        <div className="button-group mt--30">
                           <Link
                             className="rbt-btn btn-gradient rbt-marquee-btn"
                             href="#"
@@ -55,7 +55,7 @@ const Banner = () => {
                               More About University
                             </span>
                           </Link>
-                        </div> */}
+                        </div>
 
                         <div className='call-to-btn  mt-0 d-flex justify-content-center'>
                           <Link
@@ -108,7 +108,7 @@ const Banner = () => {
                     </div>
                   </div>
                 </div>
-              </div>
+              </div> */}
             </div>
           </SwiperSlide>
 
@@ -119,7 +119,7 @@ const Banner = () => {
               style={{ backgroundImage: 'url("/images/category/image/banner-2.jpg")' }}
             >
               <div className='wrapper w-100'>
-                <div className='container'>
+                {/* <div className='container'>
                   <div className='row align-items-center'>
                     <div className='col-lg-12'>
                       <div className='inner text-center'>
@@ -183,7 +183,7 @@ const Banner = () => {
                       </div>
                     </div>
                   </div>
-                </div>
+                </div> */}
               </div>
             </div>
           </SwiperSlide>
@@ -195,7 +195,7 @@ const Banner = () => {
               style={{ backgroundImage: 'url("/images/category/image/banner-3.jpg")' }}
             >
               <div className='wrapper w-100'>
-                <div className='container'>
+                {/* <div className='container'>
                   <div className='row align-items-center'>
                     <div className='col-lg-12'>
                       <div className='inner text-center'>
@@ -257,7 +257,7 @@ const Banner = () => {
                       </div>
                     </div>
                   </div>
-                </div>
+                </div> */}
               </div>
             </div>
           </SwiperSlide>

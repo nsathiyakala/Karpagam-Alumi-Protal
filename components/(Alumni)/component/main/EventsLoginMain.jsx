@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-
+import { Filter } from 'react-feather';
 import MembersLoginCard from './MembersLoginCard';
 import Link from 'next/link';
 import { message, Modal } from 'antd';
@@ -78,7 +78,7 @@ const EventsLoginMain = () => {
   ]);
 
   const GetAllEventsAdmin = async (page) => {
-    setState({ pageLoading: true }); 
+    setState({ pageLoading: true });
     console.log('✌️page --->', page);
     try {
       const res = await Models?.event?.GetAllEventsAdminData(page);
@@ -97,7 +97,7 @@ const EventsLoginMain = () => {
       }
       console.log(error);
       setState({ pageLoading: false });
-    } 
+    }
   };
 
   const filterData = async (page) => {
@@ -288,7 +288,17 @@ const EventsLoginMain = () => {
                   <div className='row mb-4'>
                     <div className='col-12'>
                       <div className='d-flex justify-content-between '>
-                        <h5>Filter</h5>
+                        <h5>
+                          Filter
+                          <Filter
+                            style={{
+                              marginLeft: '4px',
+                              color: '#192335',
+                              height: '18px',
+                              width: '18px',
+                            }}
+                          />
+                        </h5>
                         <Link
                           className='rbt-btn btn-gradient radius-round sm-btn'
                           href='/create-event'

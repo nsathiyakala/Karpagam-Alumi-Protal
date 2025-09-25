@@ -1,24 +1,24 @@
-import React, { useEffect, useRef, useState } from "react";
-import FormField from "@/commonComponents/FormFields";
-
-import { useRouter, usePathname } from "next/navigation";
+import React, { useEffect, useRef, useState } from 'react';
+import FormField from '@/commonComponents/FormFields';
+import { Filter } from 'react-feather';
+import { useRouter, usePathname } from 'next/navigation';
 import {
   Dropdown,
   setDropdownData,
   TrimText,
   useSetState,
   validateForm,
-} from "@/utils/commonFunction.utils";
-import { message, Modal, Tooltip } from "antd";
+} from '@/utils/commonFunction.utils';
+import { message, Modal, Tooltip } from 'antd';
 
-import Link from "next/link";
-import axios from "axios";
-import { BaseURL } from "@/utils/BaseUrl";
-import Models from "@/imports/models.import";
-import { jobTypeOption, VisibilityPosts } from "@/utils/constant.utils";
-import Loader from "../../Loader";
-import DashboardListCom from "./DashboardListCom";
-import Pagination from "@/commonComponents/Pagination";
+import Link from 'next/link';
+import axios from 'axios';
+import { BaseURL } from '@/utils/BaseUrl';
+import Models from '@/imports/models.import';
+import { jobTypeOption, VisibilityPosts } from '@/utils/constant.utils';
+import Loader from '../../Loader';
+import DashboardListCom from './DashboardListCom';
+import Pagination from '@/commonComponents/Pagination';
 
 const DashboardMain = () => {
   const imgInputRef = useRef(null);
@@ -36,37 +36,37 @@ const DashboardMain = () => {
     isOpenNewPost: false,
     fileInputKey: Date.now(),
     imageFile: null,
-    title: "",
-    blog: "",
+    title: '',
+    blog: '',
     // attachmentFile: null,
-    content: "",
-    visibility: "",
+    content: '',
+    visibility: '',
     newPostCategory: [],
     error: {},
     postList: [],
     postCatOption: [],
     editPostId: null,
     myPost: [],
-    filterTitle: "",
-    filterCategory: "",
+    filterTitle: '',
+    filterCategory: '',
     filterShowList: {},
     AdminLogin: false,
     AlumniManagerLogin: false,
     latestBirthDayList: [],
     currentPage: 1,
-    pageLoading:false
+    pageLoading: false,
   });
 
   useEffect(() => {
-    const Token = localStorage.getItem("token");
+    const Token = localStorage.getItem('token');
     if (!Token) {
-      router.push("/login");
+      router.push('/login');
     }
 
-    const admin = localStorage.getItem("isAdmin");
+    const admin = localStorage.getItem('isAdmin');
     setState({ AdminLogin: admin });
 
-    const alumniManager = localStorage.getItem("isAlumniManager");
+    const alumniManager = localStorage.getItem('isAlumniManager');
     setState({ AlumniManagerLogin: alumniManager });
   }, []);
 
@@ -79,7 +79,7 @@ const DashboardMain = () => {
 
   const GetMyPostData = async (page) => {
     try {
-      setState({pageLoading:true})
+      setState({ pageLoading: true });
       const res = await Models.post.GetPostData(page);
       setState({
         myPost: res?.results,
@@ -87,16 +87,16 @@ const DashboardMain = () => {
         next: res?.next,
         previous: res?.previous,
         total: res?.count,
-        pageLoading:false
+        pageLoading: false,
       });
     } catch (error) {
-      console.log("error: ", error);
-      setState({pageLoading:false})
+      console.log('error: ', error);
+      setState({ pageLoading: false });
     }
   };
 
   const GetPostData = async (page) => {
-    setState({pageLoading:true})
+    setState({ pageLoading: true });
     try {
       const res = await Models.post.GetAllPostData(page);
       setState({
@@ -105,27 +105,27 @@ const DashboardMain = () => {
         next: res?.next,
         previous: res?.previous,
         total: res?.count,
-        pageLoading:false,
+        pageLoading: false,
       });
     } catch (error) {
       if (error?.messages?.length > 0) {
-        if (error.messages[0]?.message == "Token is invalid or expired") {
-          router.push("/login");
-          localStorage.removeItem("token");
+        if (error.messages[0]?.message == 'Token is invalid or expired') {
+          router.push('/login');
+          localStorage.removeItem('token');
         }
       }
-      console.log("error: ", error);
-      setState({pageLoading:false})
+      console.log('error: ', error);
+      setState({ pageLoading: false });
     }
   };
 
   const GetPostCategory = async () => {
     try {
       const res = await Models?.masters?.GetPostCategoryData(1);
-      const dropdown = Dropdown(res?.results, "name");
+      const dropdown = Dropdown(res?.results, 'name');
       setState({ postCatOption: dropdown });
     } catch (error) {
-      console.log("error: ", error);
+      console.log('error: ', error);
     }
   };
 
@@ -134,12 +134,12 @@ const DashboardMain = () => {
       const res = await Models?.post?.UpcommingBirthdays();
       setState({ latestBirthDayList: res });
     } catch (error) {
-      console.log("error: ", error);
+      console.log('error: ', error);
     }
   };
 
   const handleFiltersSubmit = async (page) => {
-    setState({pageLoading:true})
+    setState({ pageLoading: true });
     const Body = {
       title: state.filterTitle,
       post_category: state.filterCategory,
@@ -154,24 +154,24 @@ const DashboardMain = () => {
         previous: res?.previous,
         total: res?.count,
         filterShowList: Body,
-        pageLoading:false
+        pageLoading: false,
       });
     } catch (error) {
-      console.log("error: ", error);
+      console.log('error: ', error);
       if (error?.messages?.length > 0) {
-        if (error.messages[0]?.message == "Token is invalid or expired") {
-          router.push("/login");
-          localStorage.removeItem("token");
+        if (error.messages[0]?.message == 'Token is invalid or expired') {
+          router.push('/login');
+          localStorage.removeItem('token');
         }
       }
-      setState({pageLoading:false})
+      setState({ pageLoading: false });
     }
   };
 
   const handleClearFilter = async () => {
     const Body = {
-      title: "",
-      post_category: "",
+      title: '',
+      post_category: '',
     };
     try {
       // const res = await Models.post.FilterPostData(Body,1);
@@ -180,19 +180,19 @@ const DashboardMain = () => {
       setState({
         postList: res?.results,
         filterShowList: Body,
-        filterTitle: "",
-        filterCategory: "",
+        filterTitle: '',
+        filterCategory: '',
         currentPage: 1,
         next: res?.next,
         previous: res?.previous,
         total: res?.count,
       });
     } catch (error) {
-      console.log("error: ", error);
+      console.log('error: ', error);
       if (error?.messages?.length > 0) {
-        if (error.messages[0]?.message == "Token is invalid or expired") {
-          router.push("/login");
-          localStorage.removeItem("token");
+        if (error.messages[0]?.message == 'Token is invalid or expired') {
+          router.push('/login');
+          localStorage.removeItem('token');
         }
       }
     }
@@ -200,7 +200,7 @@ const DashboardMain = () => {
 
   const handleFileChange = (e, type) => {
     const file = e.target.files[0];
-    if (type === "image") {
+    if (type === 'image') {
       setState({ imageFile: file });
     }
     // else if (type === "attachment") {
@@ -210,7 +210,7 @@ const DashboardMain = () => {
   };
 
   const removeFile = (type) => {
-    if (type === "image") {
+    if (type === 'image') {
       setState({ imageFile: null });
     }
     // else if (type === "attachment") {
@@ -242,47 +242,47 @@ const DashboardMain = () => {
     const isValid = validateForm(body, validationRules, errorFun);
 
     if (!isValid) {
-      console.log("Validation errors:", state.error); // Log any validation errors
+      console.log('Validation errors:', state.error); // Log any validation errors
       return;
     }
 
-    console.log("body: ", body);
+    console.log('body: ', body);
     const formData = new FormData();
 
     if (state.imageFile) {
-      formData.append("featured_image", state.imageFile);
+      formData.append('featured_image', state.imageFile);
     }
     // if (state.attachmentFile) {
     //   formData.append("attach", state.attachmentFile);
     // }
-    formData.append("title", state.title || "");
-    formData.append("blog", state.blog || "");
-    formData.append("content", state.content || "");
-    formData.append("post_category", state.newPostCategory || []);
+    formData.append('title', state.title || '');
+    formData.append('blog', state.blog || '');
+    formData.append('content', state.content || '');
+    formData.append('post_category', state.newPostCategory || []);
     formData.append(
-      "visible_to_public",
-      (state.visibility == "1" && "True") ||
-        (state?.visibility == "2" && "False") ||
+      'visible_to_public',
+      (state.visibility == '1' && 'True') ||
+        (state?.visibility == '2' && 'False') ||
         false
     );
 
     try {
       const res = await Models.post.CreatePostData(formData);
-      console.log("✌️res --->", res);
+      console.log('✌️res --->', res);
       GetPostData(1);
       GetMyPostData(1);
       setState({
         isOpenNewPost: false,
         imageFile: null,
         // attachmentFile: null,
-        title: "",
-        blog: "",
-        content: "",
-        visibility: "",
+        title: '',
+        blog: '',
+        content: '',
+        visibility: '',
         newPostCategory: [],
       });
     } catch (error) {
-      console.log("error: ", error);
+      console.log('error: ', error);
     }
   };
 
@@ -310,28 +310,28 @@ const DashboardMain = () => {
     const isValid = validateForm(body, validationRules, errorFun);
 
     if (!isValid) {
-      console.log("Validation errors:", state.error); // Log any validation errors
+      console.log('Validation errors:', state.error); // Log any validation errors
       return;
     }
 
-    console.log("body: ", body);
+    console.log('body: ', body);
     const formData = new FormData();
 
     if (state.imageFile) {
-      formData.append("featured_image", state.imageFile);
+      formData.append('featured_image', state.imageFile);
     }
     // if (state.attachmentFile) {
     //   formData.append("attach", state.attachmentFile);
     // }
-    formData.append("title", state.title || "");
-    formData.append("blog", state.blog || "");
-    formData.append("content", state.content || "");
-    formData.append("post_category", state.newPostCategory || []);
+    formData.append('title', state.title || '');
+    formData.append('blog', state.blog || '');
+    formData.append('content', state.content || '');
+    formData.append('post_category', state.newPostCategory || []);
     formData.append(
-      "visible_to_public",
-      (state.visibility == "1" && "True") ||
-        (state?.visibility == "2" && "False") ||
-        "False"
+      'visible_to_public',
+      (state.visibility == '1' && 'True') ||
+        (state?.visibility == '2' && 'False') ||
+        'False'
     );
 
     try {
@@ -339,21 +339,21 @@ const DashboardMain = () => {
         state?.singleData?.id,
         formData
       );
-      console.log("✌️res --->", res);
+      console.log('✌️res --->', res);
       GetPostData(state.currentPage);
 
       setState({
         isOpenNewPost: false,
         imageFile: null,
-        title: "",
-        blog: "",
-        content: "",
-        visibility: "",
+        title: '',
+        blog: '',
+        content: '',
+        visibility: '',
         newPostCategory: [],
         editPostId: null,
       });
     } catch (error) {
-      console.log("error: ", error);
+      console.log('error: ', error);
     }
   };
 
@@ -361,7 +361,7 @@ const DashboardMain = () => {
     setState({ error: errors });
   };
 
-  const VisibilityDropDown = Dropdown(VisibilityPosts, "name");
+  const VisibilityDropDown = Dropdown(VisibilityPosts, 'name');
 
   const editPost = async (item) => {
     try {
@@ -371,7 +371,7 @@ const DashboardMain = () => {
       let file = null;
       if (res.featured_image) {
         const url = new URL(res.featured_image);
-        const filename = url.pathname.split("/").pop();
+        const filename = url.pathname.split('/').pop();
         file = await convertUrlToFile(res.featured_image, filename);
       }
 
@@ -380,12 +380,12 @@ const DashboardMain = () => {
         title: res?.title,
         blog: res?.blog,
         content: res?.content,
-        visibility: res?.visible_to_public == true ? "1" : "2",
+        visibility: res?.visible_to_public == true ? '1' : '2',
         newPostCategory: res?.post_category?.id,
         singleData: res,
       });
     } catch (error) {
-      console.log("error: ", error);
+      console.log('error: ', error);
       setState({ isOpenNewPost: false });
     }
   };
@@ -393,14 +393,14 @@ const DashboardMain = () => {
   const PostLike = async (id) => {
     try {
       const res = await Models.post.PostLike(id);
-      console.log("✌️res --->", res);
+      console.log('✌️res --->', res);
       GetPostData(state.currentPage);
     } catch (error) {
-      console.log("error: ", error?.messages[0]?.message);
+      console.log('error: ', error?.messages[0]?.message);
       if (error?.messages?.length > 0) {
-        error?.messages[0]?.message == "Token is invalid or expired" &&
-          router.push("/login");
-        localStorage.removeItem("token");
+        error?.messages[0]?.message == 'Token is invalid or expired' &&
+          router.push('/login');
+        localStorage.removeItem('token');
       }
     }
   };
@@ -427,21 +427,31 @@ const DashboardMain = () => {
 
   return (
     <>
-      <div className="rbt-dashboard-area section-pad">
-        <div className="container-fluid">
-          <div className="row justify-content-center">
-            <div className="col-11 col-xl-10 con-wid">
-              <div className="container-fluid">
-                <div className="row">
-                  <div className="col-lg-12">
-                    <div className="row mb-4">
-                      <div className="col-12">
-                        <div className="d-flex justify-content-between ">
-                          <h5>Filter</h5>
-                          <div className="d-flex gap-3">
+      <div className='rbt-dashboard-area section-pad'>
+        <div className='container-fluid'>
+          <div className='row justify-content-center'>
+            <div className='col-11 col-xl-10 con-wid'>
+              <div className='container-fluid'>
+                <div className='row'>
+                  <div className='col-lg-12'>
+                    <div className='row mb-4'>
+                      <div className='col-12'>
+                        <div className='d-flex justify-content-between '>
+                          <h5>
+                            Filter{' '}
+                            <Filter
+                              style={{
+                                marginLeft: '4px',
+                                color: '#192335',
+                                height: '18px',
+                                width: '18px',
+                              }}
+                            />
+                          </h5>
+                          <div className='d-flex gap-3'>
                             <div
-                              className="rbt-btn btn-gradient radius-round sm-btn"
-                              onClick={() => router?.push("/my-posts")}
+                              className='rbt-btn btn-gradient radius-round sm-btn'
+                              onClick={() => router?.push('/my-posts')}
                             >
                               My Post
                             </div>
@@ -453,7 +463,7 @@ const DashboardMain = () => {
                             </div> */}
 
                             <div
-                              className="rbt-btn btn-gradient radius-round sm-btn"
+                              className='rbt-btn btn-gradient radius-round sm-btn'
                               onClick={() =>
                                 setState({
                                   isOpenNewPost: true,
@@ -468,60 +478,60 @@ const DashboardMain = () => {
                       </div>
                     </div>
 
-                    <div className="row g-5">
+                    <div className='row g-5'>
                       {/* --------------------sidebar start--------------------- */}
 
-                      <div className="col-lg-3 d-sidebar">
-                        <div className="rbt-default-sidebar sticky-top rbt-shadow-box rbt-gradient-border">
-                          <div className="inner">
-                            <div className="content-item-content">
-                              <div className="rbt-default-sidebar-wrapper">
-                                <nav className="mainmenu-nav">
-                                  <ul className="dashboard-mainmenu rbt-default-sidebar-list">
+                      <div className='col-lg-3 d-sidebar'>
+                        <div className='rbt-default-sidebar sticky-top rbt-shadow-box rbt-gradient-border'>
+                          <div className='inner'>
+                            <div className='content-item-content'>
+                              <div className='rbt-default-sidebar-wrapper'>
+                                <nav className='mainmenu-nav'>
+                                  <ul className='dashboard-mainmenu rbt-default-sidebar-list'>
                                     <li
-                                      className="nav-item"
-                                      role="presentation"
+                                      className='nav-item'
+                                      role='presentation'
                                     >
                                       <a
                                         className={`${
-                                          pathname === "#" ? "active" : ""
+                                          pathname === '#' ? 'active' : ''
                                         }`}
-                                        href="#"
+                                        href='#'
                                       >
                                         <FormField
-                                          type="text"
-                                          className="applicant-input"
+                                          type='text'
+                                          className='applicant-input'
                                           onChange={(e) =>
                                             setState({
                                               filterTitle: e.target.value,
                                             })
                                           }
-                                          name="filterTitle"
-                                          placeholder={"Filter Title"}
+                                          name='filterTitle'
+                                          placeholder={'Filter Title'}
                                           value={state.filterTitle}
                                         />
                                       </a>
                                     </li>
 
                                     <li
-                                      className="nav-item"
-                                      role="presentation"
+                                      className='nav-item'
+                                      role='presentation'
                                     >
                                       <a
                                         className={`w-100 ${
-                                          pathname === "#" ? "active" : ""
+                                          pathname === '#' ? 'active' : ''
                                         }`}
-                                        href="#"
+                                        href='#'
                                       >
                                         <FormField
-                                          type="select"
+                                          type='select'
                                           onChange={(e) =>
                                             setState({
                                               filterCategory: e.target.value,
                                             })
                                           }
-                                          name="filterCategory"
-                                          placeholder={"Category Filter"}
+                                          name='filterCategory'
+                                          placeholder={'Category Filter'}
                                           value={state.filterCategory}
                                           options={state.postCatOption}
                                         />
@@ -531,19 +541,19 @@ const DashboardMain = () => {
                                 </nav>
 
                                 <div
-                                  className=" d-flex flex-wrap mt-5"
-                                  style={{ columnGap: "10px", rowGap: "8px" }}
+                                  className=' d-flex flex-wrap mt-5'
+                                  style={{ columnGap: '10px', rowGap: '8px' }}
                                 >
                                   <Link
-                                    className="rbt-btn btn-gradient radius-round sm-btn"
-                                    href="#"
+                                    className='rbt-btn btn-gradient radius-round sm-btn'
+                                    href='#'
                                     onClick={() => handleFiltersSubmit(1)}
                                   >
                                     Filter
                                   </Link>
                                   <Link
-                                    className="rbt-btn btn-border-gradient radius-round sm-btn"
-                                    href="#"
+                                    className='rbt-btn btn-border-gradient radius-round sm-btn'
+                                    href='#'
                                     onClick={handleClearFilter}
                                   >
                                     Clear all
@@ -582,7 +592,7 @@ const DashboardMain = () => {
 
                       {/* --------------------table start--------------------- */}
 
-                      <div className="col-lg-9">
+                      <div className='col-lg-9'>
                         {state.pageLoading ? (
                           <Loader />
                         ) : (
@@ -610,8 +620,8 @@ const DashboardMain = () => {
                             </div>
                           </div> */}
 
-                            <div className="rbt-dashboard-content  p-0">
-                              <div className="content">
+                            <div className='rbt-dashboard-content  p-0'>
+                              <div className='content'>
                                 {/* <div className="section-title d-flex justify-content-between ">
                             <h4 className="rbt-title-style-3">
                               {" "}
@@ -626,8 +636,8 @@ const DashboardMain = () => {
                             </Link>
                           </div> */}
 
-                                <div className="rbt-dashboard-table table-responsive mobile-table-750">
-                                  <div className="row g-5 m-0">
+                                <div className='rbt-dashboard-table table-responsive mobile-table-750'>
+                                  <div className='row g-5 m-0'>
                                     {state?.postList.length > 0 ? (
                                       state?.postList.map((item, index) => (
                                         <DashboardListCom
@@ -648,28 +658,26 @@ const DashboardMain = () => {
                                       <div> No Posts Found</div>
                                     )}
                                   </div>
-
-                                 
                                 </div>
 
-                                 {state?.postList.length > 9 && (
-                                    <div>
-                                      <div
-                                        className="mb-20 "
-                                        style={{
-                                          display: "flex",
-                                          justifyContent: "center",
-                                          alignItems: "center",
-                                        }}
-                                      >
-                                        <Pagination
-                                          activeNumber={handlePageChange}
-                                          totalPage={state.total}
-                                          currentPages={state.currentPage}
-                                        />
-                                      </div>
+                                {state?.postList.length > 9 && (
+                                  <div>
+                                    <div
+                                      className='mb-20 '
+                                      style={{
+                                        display: 'flex',
+                                        justifyContent: 'center',
+                                        alignItems: 'center',
+                                      }}
+                                    >
+                                      <Pagination
+                                        activeNumber={handlePageChange}
+                                        totalPage={state.total}
+                                        currentPages={state.currentPage}
+                                      />
                                     </div>
-                                  )}
+                                  </div>
+                                )}
                               </div>
                             </div>
                           </>
@@ -688,8 +696,8 @@ const DashboardMain = () => {
 
       <Modal
         title={
-          <div className="custom-modal-header">
-            {state.editPostId ? "Edit Post" : "New Post"}
+          <div className='custom-modal-header'>
+            {state.editPostId ? 'Edit Post' : 'New Post'}
           </div>
         }
         open={state.isOpenNewPost}
@@ -698,10 +706,10 @@ const DashboardMain = () => {
             isOpenNewPost: false,
             imageFile: null,
             // attachmentFile: null,
-            title: "",
-            blog: "",
-            content: "",
-            visibility: "",
+            title: '',
+            blog: '',
+            content: '',
+            visibility: '',
             newPostCategory: [],
             error: null,
           });
@@ -710,44 +718,44 @@ const DashboardMain = () => {
         centered
       >
         <form
-          className="applicants-form"
+          className='applicants-form'
           onSubmit={(e) => (state.editPostId ? updatePost(e) : createPost(e))}
         >
           {/* Faculty Selection */}
-          <div style={{ marginTop: "15px" }}>
+          <div style={{ marginTop: '15px' }}>
             <FormField
-              type="text"
-              name="title"
-              label="Title"
+              type='text'
+              name='title'
+              label='Title'
               required
               value={state.title}
               onChange={(e) => setState({ title: e.target.value })}
-              style={{ width: "100%" }}
+              style={{ width: '100%' }}
               error={state.error?.title}
             />
           </div>
 
           {/* Message */}
-          <div style={{ marginTop: "15px" }}>
+          <div style={{ marginTop: '15px' }}>
             <FormField
-              type="text"
-              name="blog"
-              label="Blog"
+              type='text'
+              name='blog'
+              label='Blog'
               required
               value={state.blog}
               onChange={(e) => setState({ blog: e.target.value })}
-              style={{ width: "100%" }}
+              style={{ width: '100%' }}
               error={state.error?.blog}
             />
           </div>
 
-          <div style={{ marginTop: "15px" }}>
+          <div style={{ marginTop: '15px' }}>
             <FormField
-              type="select"
+              type='select'
               onChange={(e) => setState({ newPostCategory: e.target.value })}
-              name="Post Category"
-              label="Post Category"
-              placeholder={"Post Category"}
+              name='Post Category'
+              label='Post Category'
+              placeholder={'Post Category'}
               value={state.newPostCategory}
               options={state.postCatOption}
               required
@@ -755,13 +763,13 @@ const DashboardMain = () => {
             />
           </div>
 
-          <div style={{ marginTop: "15px" }}>
+          <div style={{ marginTop: '15px' }}>
             <FormField
-              type="select"
+              type='select'
               onChange={(e) => setState({ visibility: e.target.value })}
-              name="Visibility"
-              label="Visibility"
-              placeholder={"Visibility"}
+              name='Visibility'
+              label='Visibility'
+              placeholder={'Visibility'}
               value={state.visibility}
               options={VisibilityDropDown}
               required
@@ -769,84 +777,84 @@ const DashboardMain = () => {
             />
           </div>
 
-          <div style={{ marginTop: "15px" }}>
+          <div style={{ marginTop: '15px' }}>
             <FormField
-              type="file"
-              name="imageFile"
-              label="Upload Picture"
+              type='file'
+              name='imageFile'
+              label='Upload Picture'
               ref={imgInputRef}
               key={state.imageFile}
-              onChange={(e) => handleFileChange(e, "image")}
-              accept="image/*"
-              className={"p-0 "}
+              onChange={(e) => handleFileChange(e, 'image')}
+              accept='image/*'
+              className={'p-0 '}
               required={true}
               error={state.error?.imageFile}
             />
 
             <div
-              className="uploaded-images mt_10"
-              style={{ display: "flex", flexWrap: "wrap", gap: "10px" }}
+              className='uploaded-images mt_10'
+              style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}
             >
               {state.imageFile && (
                 <>
-                  <div className="uploaded-image-item">
+                  <div className='uploaded-image-item'>
                     <img
                       src={URL.createObjectURL(state.imageFile)}
                       alt={`Uploaded `}
                       style={{
-                        width: "50px", // Make image take full width of the container
-                        height: "50px", // Fixed height for the images
-                        objectFit: "cover",
-                        borderRadius: "5px",
-                        position: "relative",
+                        width: '50px', // Make image take full width of the container
+                        height: '50px', // Fixed height for the images
+                        objectFit: 'cover',
+                        borderRadius: '5px',
+                        position: 'relative',
                       }}
                     />
                   </div>
 
                   {/* Remove button below the image */}
                   <button
-                    type="button"
-                    onClick={() => removeFile("image")}
+                    type='button'
+                    onClick={() => removeFile('image')}
                     style={{
-                      background: "rgba(255, 0, 0, 0.7)",
-                      color: "white",
-                      border: "none",
-                      cursor: "pointer",
-                      padding: "2px 4px",
-                      borderRadius: "5px",
-                      marginTop: "0px", // Space between image and button
-                      fontSize: "10px",
-                      position: "absolute",
+                      background: 'rgba(255, 0, 0, 0.7)',
+                      color: 'white',
+                      border: 'none',
+                      cursor: 'pointer',
+                      padding: '2px 4px',
+                      borderRadius: '5px',
+                      marginTop: '0px', // Space between image and button
+                      fontSize: '10px',
+                      position: 'absolute',
 
-                      right: "20px",
+                      right: '20px',
                     }}
                   >
-                    <i className="feather-trash"></i>
+                    <i className='feather-trash'></i>
                   </button>
                 </>
               )}
             </div>
           </div>
 
-          <div style={{ marginTop: "15px" }}>
+          <div style={{ marginTop: '15px' }}>
             <FormField
-              type="textarea"
-              name="content"
-              label="Content"
-              placeholder="Type here to start a discussion"
+              type='textarea'
+              name='content'
+              label='Content'
+              placeholder='Type here to start a discussion'
               value={state.content}
               onChange={(e) => setState({ content: e.target.value })}
               // error={errMsg.about_me}
 
-              style={{ height: "100px" }}
+              style={{ height: '100px' }}
             />
           </div>
 
           {/* Action */}
-          <div className="d-flex justify-content-end mt-3">
+          <div className='d-flex justify-content-end mt-3'>
             <button
-              className="rbt-btn btn-gradient radius-round sm-btn"
-              type="submit"
+              className='rbt-btn btn-gradient radius-round sm-btn'
+              type='submit'
             >
               Submit
             </button>

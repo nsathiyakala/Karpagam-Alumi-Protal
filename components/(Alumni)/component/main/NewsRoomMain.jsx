@@ -21,15 +21,13 @@ const NewsRoomMain = ({ selectedYear }) => {
               <div className='col-12 ' key={index}>
                 <div className='rbt-card variation-04 rbt-hover newsroom-card'>
                   <div className='rbt-card-img d-none d-md-block'>
-                    <Link className='h-100' href={`/course-details/${data.id}`}>
-                      <Image
-                        src={data.courseImg}
-                        width={355}
-                        height={244}
-                        alt='Card image'
-                        className='h-100'
-                      />
-                    </Link>
+                    <Image
+                      src={data.courseImg}
+                      width={355}
+                      height={244}
+                      alt='Card image'
+                      className='h-100'
+                    />
                   </div>
                   <div
                     className='rbt-card-body'
@@ -46,7 +44,10 @@ const NewsRoomMain = ({ selectedYear }) => {
                       </li>
                     </ul>
                     <h4 className='rbt-card-title'>{data.courseTitle}</h4>
-                    <p className='rbt-card-text text-dark' style={{ width: '100%' }}>
+                    <p
+                      className='rbt-card-text text-dark'
+                      style={{ width: '100%' }}
+                    >
                       {data.desc}
                     </p>
                   </div>

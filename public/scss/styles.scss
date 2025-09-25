@@ -1404,7 +1404,7 @@ select {
 
 /* Header */
 .jd-title {
-  font-size: 30px;
+  font-size: 20px;
   font-weight: 700;
   margin-bottom: 6px;
   color: #0f1724;
@@ -1566,7 +1566,7 @@ select {
 /* Medium screens: collapse header actions into top-right smaller */
 @media (max-width: 1199px) {
   .jd-title {
-    font-size: 28px;
+    font-size: 18px;
   }
   .jd-apply-btn {
     padding: 6px 14px;
@@ -1599,7 +1599,7 @@ select {
     padding-right: 16px;
   }
   .jd-title {
-    font-size: 22px;
+    font-size: 16px;
   }
   .jd-stat-value {
     font-size: 15px;
@@ -1748,8 +1748,8 @@ select {
 }
 
 .home-mem .team .thumbnail img {
-  min-height: 400px;
-  max-height: 400px;
+  min-height: 300px;
+  max-height: 300px;
   object-fit: cover;
 }
 
@@ -1799,7 +1799,7 @@ select {
 }
 
 .rbt-team-thumbnail img {
-  min-height: 360px;
+  min-height: 300px;
   object-fit: cover;
 }
 

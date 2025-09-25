@@ -107,7 +107,7 @@ KITFooter = () => {
                         <h5 className="ft-title">Get Contact</h5>
                         <ul className="ft-link">
                           <li>
-                            <span>Phone: </span>
+                            <span className="text-black">Phone: </span>
                             {footer.phone ? (
                               <Link href={`tel:${footer.phone}`}>
                                 {footer.phone}
@@ -115,7 +115,7 @@ KITFooter = () => {
                             ) : null}
                           </li>
                           <li>
-                            <span>E-mail: </span>
+                            <span className="text-black">E-mail: </span>
                             {footer.mail ? (
                               <Link href={`mailto:${footer.mail}`}>
                                 {footer.mail}
@@ -123,7 +123,7 @@ KITFooter = () => {
                             ) : null}
                           </li>
                           <li>
-                            <span>Location:</span> <br />
+                            <span className="text-black">Location:</span><br />
                             {footer.address}
                           </li>
                         </ul>
