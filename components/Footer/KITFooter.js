@@ -67,7 +67,7 @@ KITFooter = () => {
                           </Link>
                         </div>
 
-                        <p className="description mt--20">
+                        <p className="description mt--20" style={{color:"#6b7385"}}>
                           {footer.description}
                         </p>
 

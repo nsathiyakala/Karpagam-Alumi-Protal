@@ -455,12 +455,12 @@ const DashboardMain = () => {
                             >
                               My Post
                             </div>
-                            {/* <div
+                            <div
                               className="rbt-btn btn-gradient radius-round sm-btn"
                               onClick={() => router?.push("/published-posts")}
                             >
                               Publish Post
-                            </div> */}
+                            </div>
 
                             <div
                               className='rbt-btn btn-gradient radius-round sm-btn'
