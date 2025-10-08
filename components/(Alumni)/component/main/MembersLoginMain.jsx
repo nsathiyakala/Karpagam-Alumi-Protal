@@ -615,7 +615,7 @@ const MembersLoginMain = () => {
               <div className="row">
                 <div className="col-lg-12">
                   <div className="row g-5">
-                    <div className="col-11 col-lg-3 d-sidebar">
+                    <div className="col-12 col-lg-3 d-sidebar">
                       <div className="rbt-default-sidebar sticky-top rbt-shadow-box rbt-gradient-border">
                         <div className="inner">
                           <div className="content-item-content">
@@ -928,7 +928,7 @@ const MembersLoginMain = () => {
                       </div>
                     </div>
 
-                    <div className="col-11 col-lg-9">
+                    <div className="col-12 col-lg-9">
                       <div className="rbt-video-area bg-color-white overflow-hidden">
                         <div className="rbt-elements-area bg-color-extra2 mb-5">
                           <div className="container">
