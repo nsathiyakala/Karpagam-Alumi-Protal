@@ -116,7 +116,7 @@ const MyContactsMain = () => {
         });
         const AlumniContact = localStorage.setItem(
           'isAlumniContact',
-          res.data?.modules?.module4
+          response.data?.modules?.module4
         );
         setIsAlumniContact(AlumniContact);
         setState({
@@ -163,7 +163,7 @@ const MyContactsMain = () => {
       member: Number(memberId),
       website: formData.website,
       linked_in: formData.linked_in,
-      location: formData.location.value,
+      location: formData.location?.value || null,
       twitter_handle: formData.twitter_handle,
       address: formData.address,
       postal_code: formData.postal_code,
@@ -195,12 +195,12 @@ const MyContactsMain = () => {
         messageApi.open({
           type: 'error',
           content: error.response.data.linked_in
-            ? error.response.data.linked_in[0]
-            : error.response.data.website
-            ? error.response.data.website[0]
-            : error.response.data.twitter_handle
-            ? error.response.data.twitter_handle[0]
-            : error.response.data.message,
+            ? error.response?.data.linked_in[0]
+            : error.response?.data.website
+            ? error.response?.data.website[0]
+            : error.response?.data.twitter_handle
+            ? error.response?.data.twitter_handle[0]
+            : error.response?.data.message,
         });
         setState({btnLoading:false})
       }
@@ -263,6 +263,7 @@ const MyContactsMain = () => {
   ) : (
     <>
       <div className='my-account-section bg-color-white section-pad'>
+        {contextHolder}
         <div className='container'>
           <div className='row'>
             <div className='col-12'>

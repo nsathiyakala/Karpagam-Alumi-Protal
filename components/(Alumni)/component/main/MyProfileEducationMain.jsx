@@ -1,20 +1,20 @@
-import Link from 'next/link';
-import React, { useEffect, useRef, useState } from 'react';
-import AccountInfo from '../../../../data/myAccount.json';
-import MyAccount from '../../../My-Account/MyAccount';
-import FormField from '@/commonComponents/FormFields';
-import { useRouter } from 'next/navigation';
+import Link from "next/link";
+import React, { useEffect, useRef, useState } from "react";
+import AccountInfo from "../../../../data/myAccount.json";
+import MyAccount from "../../../My-Account/MyAccount";
+import FormField from "@/commonComponents/FormFields";
+import { useRouter } from "next/navigation";
 import {
   setDropdownData,
   useSetState,
   validateForm,
-} from '@/utils/commonFunction.utils';
-import { message, Modal } from 'antd';
-import { BloodGroupChooice } from '@/utils/constant.utils';
-import Models from '@/imports/models.import';
-import axios from 'axios';
-import { BaseURL } from '@/utils/BaseUrl';
-import Loader from '../../Loader';
+} from "@/utils/commonFunction.utils";
+import { message, Modal } from "antd";
+import { BloodGroupChooice } from "@/utils/constant.utils";
+import Models from "@/imports/models.import";
+import axios from "axios";
+import { BaseURL } from "@/utils/BaseUrl";
+import Loader from "../../Loader";
 
 const MyProfileEducationMain = () => {
   const { confirm } = Modal;
@@ -30,14 +30,14 @@ const MyProfileEducationMain = () => {
     key: 1,
   });
   const [formData, setFormData] = useState({
-    institute: '',
-    degree: '',
-    location: '',
-    start_year: '',
+    institute: "",
+    degree: "",
+    location: "",
+    start_year: "",
     end_year: null,
     is_currently_pursuing: false,
   });
-  const [memberId, setMemberId] = useState('');
+  const [memberId, setMemberId] = useState("");
   const [getMemberEducation, setMemberEducation] = useState([]);
   const [institute, setInstitute] = useState([]);
   const [location, setLocation] = useState([]);
@@ -62,11 +62,11 @@ const MyProfileEducationMain = () => {
   }, []);
 
   useEffect(() => {
-    const MEMBERID = localStorage.getItem('member_id');
+    const MEMBERID = localStorage.getItem("member_id");
     setMemberId(MEMBERID);
 
-    const Admin = localStorage.getItem('isAdmin');
-    Admin == true || (Admin == 'true' && router.push('/users'));
+    const Admin = localStorage.getItem("isAdmin");
+    Admin == true || (Admin == "true" && router.push("/users"));
   }, []);
 
   useEffect(() => {
@@ -78,26 +78,26 @@ const MyProfileEducationMain = () => {
   const GetInstitute = async () => {
     try {
       const res = await Models.masters.institutions();
-      const dropdown = setDropdownData(res?.results, 'title');
+      const dropdown = setDropdownData(res?.results, "title");
       setInstitute(dropdown);
       setState({
         hasInstitutionLoadMore: res?.next,
       });
     } catch (error) {
-      console.log('✌️error --->', error);
+      console.log("✌️error --->", error);
     }
   };
 
   const GetLocation = async () => {
     try {
       const res = await Models.masters.locationList(1);
-      const dropdown = setDropdownData(res?.results, 'location');
+      const dropdown = setDropdownData(res?.results, "location");
       setLocation(dropdown);
       setState({
         hasLocationLoadMore: res?.next,
       });
     } catch (error) {
-      console.log('✌️error --->', error);
+      console.log("✌️error --->", error);
     }
   };
 
@@ -112,24 +112,24 @@ const MyProfileEducationMain = () => {
         pageLoading: false,
       });
     } catch (error) {
-      console.log('✌️error --->', error);
+      console.log("✌️error --->", error);
       setState({
         pageLoading: false,
       });
     }
   };
 
-  console.log('setMemberEducation', getMemberEducation);
+  console.log("setMemberEducation", getMemberEducation);
 
   const UpdateMemberGetEducation = (department) => {
     axios
       .get(`${BaseURL}/update_member_education/${department?.id}/`, {
         headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`,
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       })
       .then((response) => {
-        console.log('response:', response.data);
+        console.log("response:", response.data);
         // setFormData(response.data);
         setFormData({
           member: response?.data?.id,
@@ -148,11 +148,11 @@ const MyProfileEducationMain = () => {
         });
       })
       .catch((error) => {
-        console.log('error:', error);
+        console.log("error:", error);
       });
   };
 
-  console.log('setFormData', formData);
+  console.log("setFormData", formData);
 
   //
 
@@ -160,21 +160,22 @@ const MyProfileEducationMain = () => {
     const { name, value, type, checked } = event.target;
     setFormData((prevData) => ({
       ...prevData,
-      [name]: type === 'checkbox' ? checked : value, // Set to checked for checkboxes
+      [name]: type === "checkbox" ? checked : value, // Set to checked for checkboxes
     }));
   };
   const success = (success) => {
     messageApi.open({
-      type: 'success',
-      content: success || 'Successfully Registered',
+      type: "success",
+      content: success || "Successfully Registered",
     });
   };
   const errorNotification = (error) => {
     messageApi.open({
-      type: 'error',
-      content: error || 'An error occurred. Please try again.',
+      type: "error",
+      content: error || "An error occurred. Please try again.",
     });
   };
+
   const handleEducationSubmit = async (e) => {
     e.preventDefault();
 
@@ -193,6 +194,19 @@ const MyProfileEducationMain = () => {
     const isValid = validateForm(formData, validationRules, setErrMsg);
     if (!isValid) return;
 
+    // Additional validation: end_year must be greater than start_year
+    if (
+      !formData.is_currently_pursuing && // Only check if not currently pursuing
+      formData.end_year &&
+      parseInt(formData.end_year) <= parseInt(formData.start_year)
+    ) {
+      setErrMsg((prev) => ({
+        ...prev,
+        end_year: "End Year should be greater than Start Year",
+      }));
+      return; // Stop form submission
+    }
+
     const body = {
       member: memberId,
       institute: formData.institute.value,
@@ -202,7 +216,7 @@ const MyProfileEducationMain = () => {
       is_currently_pursuing: formData.is_currently_pursuing,
     };
 
-    console.log('body', body);
+    console.log("body", body);
 
     // Conditionally add end_year if not currently pursuing
     if (!formData.is_currently_pursuing) {
@@ -211,44 +225,43 @@ const MyProfileEducationMain = () => {
 
     if (isEditing) {
       try {
-         setState({ btnLoading: true });
+        setState({ btnLoading: true });
         const res = await axios.post(
           `${BaseURL}/update_member_education/${formData.member}/`,
           body,
           {
             headers: {
-              Authorization: `Bearer ${localStorage.getItem('token')}`,
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
             },
           }
         );
-        
 
         messageApi.open({
-          type: 'success',
+          type: "success",
           content: res.data.message,
         });
- setState({ btnLoading: false });
+        setState({ btnLoading: false });
         setIsModalOpen(false);
 
         GetMemberEducation();
 
         setFormData({
-          institute: '',
-          degree: '',
-          location: '',
-          start_year: '',
+          institute: "",
+          degree: "",
+          location: "",
+          start_year: "",
           end_year: null,
           is_currently_pursuing: false,
         });
 
         // router.push("/profile-photograph");
       } catch (error) {
-        console.log('error :', error);
+        console.log("error :", error);
         messageApi.open({
-          type: 'error',
+          type: "error",
           content: error.response.data.message,
         });
-         setState({ btnLoading: false });
+        setState({ btnLoading: false });
       }
     } else {
       try {
@@ -257,13 +270,13 @@ const MyProfileEducationMain = () => {
           body,
           {
             headers: {
-              Authorization: `Bearer ${localStorage.getItem('token')}`,
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
             },
           }
         );
 
         messageApi.open({
-          type: 'success',
+          type: "success",
           content: res.data.message,
         });
 
@@ -272,19 +285,19 @@ const MyProfileEducationMain = () => {
         GetMemberEducation();
 
         setFormData({
-          institute: '',
-          degree: '',
-          location: '',
-          start_year: '',
+          institute: "",
+          degree: "",
+          location: "",
+          start_year: "",
           end_year: null,
           is_currently_pursuing: false,
         });
 
         // router.push("/profile-photograph");
       } catch (error) {
-        console.log('error :', error);
+        console.log("error :", error);
         messageApi.open({
-          type: 'error',
+          type: "error",
           content: error.response.data.message,
         });
       }
@@ -295,10 +308,10 @@ const MyProfileEducationMain = () => {
     setIsModalOpen(false);
     setIsEditing(false);
     setFormData({
-      institute: '',
-      degree: '',
-      location: '',
-      start_year: '',
+      institute: "",
+      degree: "",
+      location: "",
+      start_year: "",
       end_year: null,
       is_currently_pursuing: false,
     });
@@ -306,10 +319,10 @@ const MyProfileEducationMain = () => {
 
   const showModal = () => {
     setFormData({
-      institute: '',
-      degree: '',
-      location: '',
-      start_year: '',
+      institute: "",
+      degree: "",
+      location: "",
+      start_year: "",
       end_year: null,
       is_currently_pursuing: false,
     });
@@ -318,7 +331,7 @@ const MyProfileEducationMain = () => {
   };
 
   const editDepartment = (department) => () => {
-    console.log('✌️department --->', department);
+    console.log("✌️department --->", department);
 
     setIsEditing(true);
     setIsModalOpen(true);
@@ -328,41 +341,41 @@ const MyProfileEducationMain = () => {
   };
 
   const showDeleteConfirm = (department) => {
-    console.log('✌️department --->', department);
+    console.log("✌️department --->", department);
 
     confirm({
-      title: 'Delete this Education Details?',
-      content: 'Are you sure you want to delete this Education Details?',
-      okText: 'Delete',
-      okType: 'danger',
-      cancelText: 'Cancel',
+      title: "Delete this Education Details?",
+      content: "Are you sure you want to delete this Education Details?",
+      okText: "Delete",
+      okType: "danger",
+      cancelText: "Cancel",
       onOk() {
         axios
           .delete(`${BaseURL}/delete_member_education/${department.id}/`, {
             headers: {
-              Authorization: `Bearer ${localStorage.getItem('token')}`,
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
             },
           })
           .then((response) => {
-            console.log('✌️response --->', response);
-            message.success(response.data.message || 'Operation successful!');
+            console.log("✌️response --->", response);
+            message.success(response.data.message || "Operation successful!");
 
             GetMemberEducation();
           })
           .catch((error) => {
-            console.log('❌error --->', error);
+            console.log("❌error --->", error);
             message.error(
               error.response?.data?.error ||
-                'An error occurred. Please try again.'
+                "An error occurred. Please try again."
             );
           });
       },
       onCancel() {
-        console.log('Cancel');
+        console.log("Cancel");
       },
     });
 
-    console.log('Deleting department:', department);
+    console.log("Deleting department:", department);
     // Perform is_active logic here if needed
   };
 
@@ -373,7 +386,7 @@ const MyProfileEducationMain = () => {
           state.currenInstitutionPage + 1
         );
 
-        const InstitutionOption = setDropdownData(res?.results, 'title');
+        const InstitutionOption = setDropdownData(res?.results, "title");
         setInstitute([...institute, ...InstitutionOption]);
 
         setState({
@@ -384,7 +397,7 @@ const MyProfileEducationMain = () => {
         setInstitute(institute);
       }
     } catch (error) {
-      console.log('error: ', error);
+      console.log("error: ", error);
     }
   };
 
@@ -393,8 +406,8 @@ const MyProfileEducationMain = () => {
       if (state.hasLocationLoadMore) {
         const res = await Models.job.locationList(state.currenLocationPage + 1);
 
-        const LocationOption = setDropdownData(res?.results, 'location');
-        console.log('loadmore location res', res);
+        const LocationOption = setDropdownData(res?.results, "location");
+        console.log("loadmore location res", res);
 
         setLocation([...location, ...LocationOption]);
         setState({
@@ -405,7 +418,7 @@ const MyProfileEducationMain = () => {
         setLocation(location);
       }
     } catch (error) {
-      console.log('error: ', error);
+      console.log("error: ", error);
     }
   };
 
@@ -413,74 +426,74 @@ const MyProfileEducationMain = () => {
     <Loader /> // 👈 show loader
   ) : (
     <>
-      <div className='my-account-section bg-color-white section-pad'>
-        <div className='container'>
-          <div className='row'>
-            <div className='col-12'>
-              <div className='row g-5'>
-                <div className='col-lg-3 col-12'>
-                  <div className='rbt-my-account-tab-button nav' role='tablist'>
-                    <Link href='edit-basic-profile'>Basic Details</Link>
-                    <Link href='edit-profile-picture'>Profile Picture</Link>
-                    <Link href='edit-profile-education' className='active'>
+      <div className="my-account-section bg-color-white section-pad">
+        <div className="container">
+          <div className="row">
+            <div className="col-12">
+              <div className="row g-5">
+                <div className="col-lg-3 col-12">
+                  <div className="rbt-my-account-tab-button nav" role="tablist">
+                    <Link href="edit-basic-profile">Basic Details</Link>
+                    <Link href="edit-profile-picture">Profile Picture</Link>
+                    <Link href="edit-profile-education" className="active">
                       Education
                     </Link>
-                    <Link href='edit-profile-skills'>Skills</Link>
+                    <Link href="edit-profile-skills">Skills</Link>
 
-                    <Link href='edit-profile-experience'>Experience</Link>
-                    <Link href='edit-profile-contact'>Contact</Link>
-                    <Link href='edit-milestone'>Milestone</Link>
+                    <Link href="edit-profile-experience">Experience</Link>
+                    <Link href="edit-profile-contact">Contact</Link>
+                    <Link href="edit-milestone">Milestone</Link>
                   </div>
                 </div>
-                <div className='col-lg-9 col-12'>
-                  <div className='rbt-video-area bg-color-white overflow-hidden event-form rbt-shadow-box'>
-                    <div className='container'>
-                      <div className='row row--15 gy-5'>
-                        <div className='section-title d-flex justify-content-between'>
-                          <h4 class='rbt-title-style-3 mb-0'>
+                <div className="col-lg-9 col-12">
+                  <div className="rbt-video-area bg-color-white overflow-hidden event-form rbt-shadow-box">
+                    <div className="container">
+                      <div className="row row--15 gy-5">
+                        <div className="section-title d-flex justify-content-between">
+                          <h4 class="rbt-title-style-3 mb-0">
                             Education
                             <div
-                              className='text-gray mt-2'
-                              style={{ fontSize: '14px' }}
+                              className="text-gray mt-2"
+                              style={{ fontSize: "14px" }}
                             >
                               Please update profile details here
                             </div>
                           </h4>
 
-                          <div class='rbt-button-group align-items-start'>
+                          <div class="rbt-button-group align-items-start">
                             <div
-                              class='rbt-btn btn-xs  radius-round'
-                              title='Add Education'
+                              class="rbt-btn btn-xs  radius-round"
+                              title="Add Education"
                               onClick={showModal}
                             >
-                              <i className='feather-plus pl--0'></i>
+                              <i className="feather-plus pl--0"></i>
                             </div>
                           </div>
                         </div>
 
-                        <div className='form-wrapper'>
-                          <div className=' contact-form-style-1 max-width-auto py-0 px-3'>
+                        <div className="form-wrapper">
+                          <div className=" contact-form-style-1 max-width-auto py-0 px-3">
                             <div
-                              id='contact-form'
-                              className='rainbow-dynamic-form max-width-auto'
+                              id="contact-form"
+                              className="rainbow-dynamic-form max-width-auto"
                               onSubmit={(e) => handleSubmit(e)}
                             >
                               {getMemberEducation?.length > 0 ? (
-                                <div className=''>
-                                  <div className='sidebar-widget category-widget'>
-                                    <div className='widget-content'>
+                                <div className="">
+                                  <div className="sidebar-widget category-widget">
+                                    <div className="widget-content">
                                       {getMemberEducation?.map((edu, index) => (
                                         <div
-                                          className='py-3 px-5 bg-liblue mb-3  rounded-3'
+                                          className="py-3 px-5 bg-liblue mb-3  rounded-3"
                                           key={index}
-                                          style={{ position: 'relative' }}
+                                          style={{ position: "relative" }}
                                         >
-                                          <h5 className='mb-2'>
+                                          <h5 className="mb-2">
                                             <Link
-                                              href='#'
+                                              href="#"
                                               style={{
-                                                textTransform: 'capitalize',
-                                                color: 'black',
+                                                textTransform: "capitalize",
+                                                color: "black",
                                               }}
                                             >
                                               {edu?.institute}
@@ -491,11 +504,11 @@ const MyProfileEducationMain = () => {
                                             true && (
                                             <span
                                               style={{
-                                                color: 'black',
-                                                fontSize: '14px',
+                                                color: "black",
+                                                fontSize: "14px",
                                               }}
                                             >
-                                              {edu?.degree}( {edu?.start_year} -{' '}
+                                              {edu?.degree}( {edu?.start_year} -{" "}
                                               {edu?.end_year} )
                                             </span>
                                           )}
@@ -504,8 +517,8 @@ const MyProfileEducationMain = () => {
                                             true && (
                                             <span
                                               style={{
-                                                color: 'black',
-                                                fontSize: '14px',
+                                                color: "black",
+                                                fontSize: "14px",
                                               }}
                                             >
                                               {edu?.degree}( {edu?.start_year} -
@@ -514,34 +527,34 @@ const MyProfileEducationMain = () => {
                                           )}
 
                                           <div
-                                            className='rbt-button-group'
+                                            className="rbt-button-group"
                                             style={{
-                                              position: 'absolute',
-                                              top: '15px',
-                                              right: '15px',
-                                              zIndex: '10',
+                                              position: "absolute",
+                                              top: "15px",
+                                              right: "15px",
+                                              zIndex: "10",
                                             }}
                                           >
                                             <button
-                                              className='rbt-btn bg-white btn-xs  radius-round eve-edit'
+                                              className="rbt-btn bg-white btn-xs  radius-round eve-edit"
                                               onClick={editDepartment(edu)}
-                                              title='Edit'
+                                              title="Edit"
                                             >
                                               <i
-                                                className='feather-edit pl--0 text-white '
-                                                style={{ fontSize: '14px' }}
+                                                className="feather-edit pl--0 text-white "
+                                                style={{ fontSize: "14px" }}
                                               ></i>
                                             </button>
                                             <button
-                                              className='rbt-btn bg-white btn-xs  radius-round '
+                                              className="rbt-btn bg-white btn-xs  radius-round "
                                               onClick={() =>
                                                 showDeleteConfirm(edu)
                                               }
-                                              title='Active'
+                                              title="Active"
                                             >
                                               <i
-                                                className='feather-trash pl--0 text-white '
-                                                style={{ fontSize: '14px' }}
+                                                className="feather-trash pl--0 text-white "
+                                                style={{ fontSize: "14px" }}
                                               ></i>
                                             </button>
                                           </div>
@@ -553,8 +566,8 @@ const MyProfileEducationMain = () => {
                               ) : (
                                 <>
                                   <div
-                                    className='text-gray mt-2'
-                                    style={{ fontSize: '14px' }}
+                                    className="text-gray mt-2"
+                                    style={{ fontSize: "14px" }}
                                   >
                                     No Educations details added
                                   </div>
@@ -575,8 +588,8 @@ const MyProfileEducationMain = () => {
 
       <Modal
         title={
-          <div className='custom-modal-header'>
-            {isEditing ? 'Edit Profile Education' : 'Create Profile Education'}
+          <div className="custom-modal-header">
+            {isEditing ? "Edit Profile Education" : "Create Profile Education"}
           </div>
         }
         open={isModalOpen}
@@ -585,13 +598,13 @@ const MyProfileEducationMain = () => {
         centered
       >
         {/* 4. Form Wrapper */}
-        <form className='applicants-form' onSubmit={handleEducationSubmit}>
+        <form className="applicants-form" onSubmit={handleEducationSubmit}>
           {/* 5. Status Select (Load More) */}
-          <div style={{ marginTop: '15px' }}>
+          <div style={{ marginTop: "15px" }}>
             <FormField
-              type='loadMoreSelect'
-              name='institute'
-              label='Institute'
+              type="loadMoreSelect"
+              name="institute"
+              label="Institute"
               // className={"applicant-input "}
               onChange={(value) =>
                 setFormData({
@@ -607,11 +620,11 @@ const MyProfileEducationMain = () => {
             />
           </div>
 
-          <div style={{ marginTop: '15px' }}>
+          <div style={{ marginTop: "15px" }}>
             <FormField
-              type='text'
-              name='degree'
-              label='Degree'
+              type="text"
+              name="degree"
+              label="Degree"
               // className={"applicant-input"}
               onChange={handleChange}
               value={formData.degree}
@@ -620,31 +633,31 @@ const MyProfileEducationMain = () => {
             />
           </div>
 
-          <div style={{ marginTop: '15px' }}>
+          <div style={{ marginTop: "15px" }}>
             <input
-              type='checkbox'
-              name='is_currently_pursuing'
+              type="checkbox"
+              name="is_currently_pursuing"
               onChange={handleChange}
               checked={formData?.is_currently_pursuing || false}
-              id='currentlyPursuing'
+              id="currentlyPursuing"
             />
             <label
               htmlFor={`currentlyPursuing`}
               style={{
-                marginRight: '5px',
-                color: 'black',
-                marginTop: '2px',
+                marginRight: "5px",
+                color: "black",
+                marginTop: "2px",
               }}
             >
               Currently Pursuing?
             </label>
           </div>
 
-          <div style={{ marginTop: '15px' }}>
+          <div style={{ marginTop: "15px" }}>
             <FormField
-              type='text'
-              name='start_year'
-              label='Start Year'
+              type="text"
+              name="start_year"
+              label="Start Year"
               // className={"applicant-input"}
               onChange={handleChange}
               value={formData.start_year}
@@ -653,11 +666,11 @@ const MyProfileEducationMain = () => {
             />
           </div>
 
-          <div style={{ marginTop: '15px' }}>
+          <div style={{ marginTop: "15px" }}>
             <FormField
-              type='text'
-              name='end_year'
-              label='End Year'
+              type="text"
+              name="end_year"
+              label="End Year"
               // className={"applicant-input"}
               onChange={handleChange}
               value={formData.end_year}
@@ -666,21 +679,23 @@ const MyProfileEducationMain = () => {
           </div>
 
           {/* 7. Submit Button */}
-          <div className='d-flex justify-content-end mt-3 gap-3'>
+          <div className="d-flex justify-content-end mt-3 gap-3">
             <button
-              className='rbt-btn btn-gradient radius-round sm-btn'
-              type='button'
+              className="rbt-btn btn-gradient radius-round sm-btn"
+              type="button"
               onClick={() => handleCancel()}
             >
               Cancel
             </button>
 
             <button
-              className={`rbt-btn btn-gradient radius-round sm-btn ${state.btnLoading ? 'loading' : ''}`}
-              type='submit'
+              className={`rbt-btn btn-gradient radius-round sm-btn ${
+                state.btnLoading ? "loading" : ""
+              }`}
+              type="submit"
               disabled={state.btnLoading}
             >
-              {isEditing ? 'Update' : 'Create'}
+              {isEditing ? "Update" : "Create"}
             </button>
           </div>
         </form>

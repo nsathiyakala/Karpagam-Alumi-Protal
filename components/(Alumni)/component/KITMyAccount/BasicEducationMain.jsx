@@ -158,6 +158,11 @@ const BasicEducationMain = () => {
       [name]: type === 'checkbox' ? checked : value, // Set to checked for checkboxes
     }));
   };
+
+  
+
+
+
   const success = (success) => {
     messageApi.open({
       type: 'success',
@@ -171,120 +176,79 @@ const BasicEducationMain = () => {
     });
   };
   const handleEducationSubmit = async (e) => {
-    e.preventDefault();
+  e.preventDefault();
 
-    const validationRules = {
-      institute: {
-        required: true,
-      },
-      degree: {
-        required: true,
-      },
-      start_year: {
-        required: true,
-      },
-    };
-
-    const isValid = validateForm(formData, validationRules, setErrMsg);
-    if (!isValid) return;
-
-    const body = {
-      member: id,
-      institute: formData.institute.value,
-      degree: formData.degree,
-      location: formData.location.value,
-      start_year: formData.start_year,
-      is_currently_pursuing: formData.is_currently_pursuing,
-    };
-
-    console.log('body', body);
-
-    // Conditionally add end_year if not currently pursuing
-    if (!formData.is_currently_pursuing) {
-      body.end_year = formData.end_year;
-    }
-
-    if (isEditing) {
-      try {
-         setState({ btnLoading: true });
-        const res = await axios.post(
-          `${BaseURL}/update_member_education/${formData.member}/`,
-          body,
-          {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem('token')}`,
-            },
-          }
-        );
-        
-
-        messageApi.open({
-          type: 'success',
-          content: res.data.message,
-        });
- setState({ btnLoading: false });
-        setIsModalOpen(false);
-
-        GetMemberEducation();
-
-        setFormData({
-          institute: '',
-          degree: '',
-          location: '',
-          start_year: '',
-          end_year: null,
-          is_currently_pursuing: false,
-        });
-
-        // router.push("/profile-photograph");
-      } catch (error) {
-        console.log('error :', error);
-        messageApi.open({
-          type: 'error',
-          content: error.response.data.message,
-        });
-         setState({ btnLoading: false });
-      }
-    } else {
-      try {
-        const res = await axios.post(
-          `${BaseURL}/create_member_education/`,
-          body,
-          {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem('token')}`,
-            },
-          }
-        );
-
-        messageApi.open({
-          type: 'success',
-          content: res.data.message,
-        });
-
-        setIsModalOpen(false);
-
-        GetMemberEducation();
-
-        setFormData({
-          institute: '',
-          degree: '',
-          location: '',
-          start_year: '',
-          end_year: null,
-          is_currently_pursuing: false,
-        });
-
-        // router.push("/profile-photograph");
-      } catch (error) {
-        console.log('error :', error);
-        messageApi.open({
-          type: 'error',
-          content: error.response.data.message,
-        });
-      }
-    }
+  const validationRules = {
+    institute: { required: true },
+    degree: { required: true },
+    start_year: { required: true },
   };
+
+  const isValid = validateForm(formData, validationRules, setErrMsg);
+  if (!isValid) return;
+
+  // Additional validation: end_year must be greater than start_year
+  if (
+    !formData.is_currently_pursuing && // Only check if not currently pursuing
+    formData.end_year &&
+    parseInt(formData.end_year) <= parseInt(formData.start_year)
+  ) {
+    setErrMsg((prev) => ({
+      ...prev,
+      end_year: 'End Year should be greater than Start Year',
+    }));
+    return; // Stop form submission
+  }
+
+  const body = {
+    member: id,
+    institute: formData.institute.value,
+    degree: formData.degree,
+    location: formData.location.value,
+    start_year: formData.start_year,
+    is_currently_pursuing: formData.is_currently_pursuing,
+  };
+
+  if (!formData.is_currently_pursuing) {
+    body.end_year = formData.end_year;
+  }
+
+  try {
+    setState({ btnLoading: true });
+
+    const url = isEditing
+      ? `${BaseURL}/update_member_education/${formData.member}/`
+      : `${BaseURL}/create_member_education/`;
+
+    const res = await axios.post(url, body, {
+      headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
+    });
+
+    messageApi.open({ type: 'success', content: res.data.message });
+
+    setIsModalOpen(false);
+    GetMemberEducation();
+
+    setFormData({
+      institute: '',
+      degree: '',
+      location: '',
+      start_year: '',
+      end_year: null,
+      is_currently_pursuing: false,
+    });
+
+  } catch (error) {
+    console.log('error :', error);
+    messageApi.open({
+      type: 'error',
+      content: error.response?.data?.message || 'Something went wrong',
+    });
+  } finally {
+    setState({ btnLoading: false });
+  }
+};
+
 
   const handleCancel = () => {
     setIsModalOpen(false);

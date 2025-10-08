@@ -5,7 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import 'venobox/dist/venobox.min.css';
 import { useRouter, useParams } from 'next/navigation';
-import { message, Modal } from 'antd';
+import { Divider, message, Modal } from 'antd';
 import {
   ConvertFormData,
   useSetState,
@@ -183,9 +183,12 @@ const AlbumMain = () => {
     }
   };
 
-  const uploadPhoto = async () => {
+  const uploadPhoto = async (e) => {
+    e.preventDefault();
     try {
       setState({ uploadLoading: true });
+      console.log("uploadPhoto");
+      
 
       for (const image of state.uploadedImages) {
         const formData = new FormData();
@@ -354,15 +357,15 @@ const AlbumMain = () => {
               <div className=' album-none'>
                 <h5>Album is Empty !</h5>
 
-                <a
+                <div
                   className='rbt-btn btn-xs  radius-round'
-                  href='#'
+                  
                   title='Create Album'
                   onClick={() => setState({ isUploadPic: true })}
                 >
                   Upload Images
                   <i className='feather-plus-circle pl--2' />
-                </a>
+                </div>
               </div>
             </>
           )}

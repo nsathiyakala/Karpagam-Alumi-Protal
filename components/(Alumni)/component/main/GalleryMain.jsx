@@ -12,10 +12,10 @@ import GalleryData from '../../../../data/elements/gallery.json';
 
 const GalleryMain = () => {
   const [state, setState] = useState({
-    pageLoading: true, // Start with loading true
+    // pageLoading: true, // Start with loading true
   });
   useEffect(() => {
-    setState({ pageLoading: true });
+    // setState({ pageLoading: true });
     import('venobox/dist/venobox.min.js').then((venobox) => {
       new venobox.default({
         selector: '.child-gallery-single',
@@ -23,12 +23,12 @@ const GalleryMain = () => {
         infinigall: true,
         spinner: 'rotating-plane',
       });
-      setState({ pageLoading: false });
+      // setState({ pageLoading: false });
     });
   }, []);
-  if (state.pageLoading) {
-    return <Loader />;
-  }
+  // if (state.pageLoading) {
+  //   return <Loader />;
+  // }
   return (
     <div className='container'>
       <div className='row g-3 parent-gallery-container KITgallery'>
@@ -52,13 +52,7 @@ const GalleryMain = () => {
                     />
                   </div>
 
-                  <span className='user-info'>
-                    <span className='icon'>
-                      <i className='icon-instagram'></i>
-                    </span>
-                    <span className='user-name'>Batch 2</span>
-                    <div className='gallery-dec'>2 Photos</div>
-                  </span>
+                  
                 </Link>
               </div>
             </div>

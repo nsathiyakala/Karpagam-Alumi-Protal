@@ -20,7 +20,7 @@ const GalleryMain = () => {
     });
   }, []);
   return (
-    <div className="container">
+    <div className="container-fluid">
       <div className="row g-3 parent-gallery-container KITgallery">
       {GalleryData &&
         GalleryData.gallery.slice(1, 7).map((data, index) => (

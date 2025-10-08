@@ -275,28 +275,32 @@ body {
     transform: rotate(360deg);
   }
 }
-@media(max-width:990px){
- .col-lg-9{
-  padding-inline: 0;
- }
- .con-wid{
- width: 100%;
- }
+@media (max-width: 990px) {
+  
+  .con-wid {
+    width: 100%;
+  }
+}
+
+@media (max-width: 600px) {
+  .col-lg-9 {
+    padding-inline: 0;
+  }
 }
 
 @media (max-width: 990px) {
-          .rbt-btn.btn-border {
+  .rbt-btn.btn-border {
     background: var(--color-primary) !important;
     border: 2px solid var(--color-primary) !important;
     color: white;
-    }
+  }
 
-    .rbt-btn.btn-border:hover {
+  .rbt-btn.btn-border:hover {
     background: transparent !important;
     border-color: var(--color-primary) !important;
     color: var(--color-dark) !important;
-}
   }
+}
 
 .home-connect {
   padding-top: 50px !important;
@@ -351,8 +355,8 @@ body {
   background: #f4f7f7 !important;
 }
 
-.rbt-show-more-btn::before{
-      background: linear-gradient(rgba(255, 255, 255, 0) 0%, #e8edf5 100%);
+.rbt-show-more-btn::before {
+  background: linear-gradient(rgba(255, 255, 255, 0) 0%, #e8edf5 100%);
 }
 
 .rbt-table thead tr th {
@@ -373,18 +377,18 @@ body {
 }
 
 .rbt-meta li {
-   color: #192f59 !important;
+  color: #192f59 !important;
 }
 
-.rbt-page-banner-wrapper .rbt-banner-content-top .title{
+.rbt-page-banner-wrapper .rbt-banner-content-top .title {
   color: #fff !important;
 }
 
-.rbt-breadcrumb-item{
+.rbt-breadcrumb-item {
   color: #000 !important;
 }
 
-.rbt-accordion-style.rbt-accordion-01 .card{
+.rbt-accordion-style.rbt-accordion-01 .card {
   background: #f4f7f7 !important;
   box-shadow: none;
 }
@@ -395,7 +399,7 @@ body {
 
 // .rbt-btn:hover{
 //   background-color: #2B8F4F;
-// }  
+// }
 
 .KITgallery {
   padding: 50px 10px;
@@ -406,44 +410,40 @@ body {
 }
 
 [data-gradient-overlay]:before {
-//  background: linear-gradient(90deg, #000000, #000000) !important;
-background: none !important;
+  //  background: linear-gradient(90deg, #000000, #000000) !important;
+  background: none !important;
 }
 
-.home-events .rbt-card{
+.home-events .rbt-card {
   background-color: #192f59 !important;
 }
 
-.home-jobs .rbt-card{
+.home-jobs .rbt-card {
   background-color: #e8edf5 !important;
 }
 
-.rbt-card{
+.rbt-card {
   background-color: transparent !important;
   border: 1px solid #dfdfdf;
   box-shadow: none !important;
 }
 
-.home-events a.rbt-btn-link:hover{
+.home-events a.rbt-btn-link:hover {
   color: var(--color-white-off) !important;
 }
 
-
-
 input {
   background: #f4f7f7 !important;
-
 }
-textarea{
-   background: #f4f7f7 !important;
+textarea {
+  background: #f4f7f7 !important;
 }
 
 .css-1xqkn6g-control {
   background: #f4f7f7 !important;
 }
 
-
-.css-1xqkn6g-control input{
+.css-1xqkn6g-control input {
   background: transparent !important;
 }
 
@@ -1578,7 +1578,7 @@ select {
 
 /* Sidebar cards */
 .jd-side-card {
-   background: #e8edf5;
+  background: #e8edf5;
   border: 1px solid #eef3f7;
   border-radius: 10px;
   padding: 18px;

@@ -99,15 +99,16 @@ const Members = () => {
 
         {latestMembers?.map((item, index) => (
           <div
-            className='rbt-team-modal modal fade rbt-modal-default'
+            className='rbt-team-modal modal fade rbt-modal-default '
             id={`exampleModal${index}`}
             tabIndex='-1'
             aria-labelledby={`exampleModal${index}`}
             aria-hidden='true'
             key={index}
+            style={{background:"transparent"}}
           >
             <div className='modal-dialog modal-dialog-centered'>
-              <div className='modal-content'>
+              <div className='modal-content p-0'>
                 <div className='modal-header'>
                   <button
                     type='button'
@@ -131,7 +132,7 @@ const Members = () => {
                                 item?.profile_picture &&
                                 !item.profile_picture.includes('undefined')
                                   ? item.profile_picture
-                                  : '/images/1.webp'
+                                  : '/images/team/3.webp'
                               }
                               width={415}
                               height={555}

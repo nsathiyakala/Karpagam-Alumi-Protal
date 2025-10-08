@@ -645,6 +645,8 @@ const MembersLoginMain = () => {
                                     </a>
                                   </li>
 
+                                 {state.member_type == "Alumni" &&
+                                 <>
                                   <li className="nav-item" role="presentation">
                                     <a
                                       className={`w-100 ${
@@ -686,6 +688,9 @@ const MembersLoginMain = () => {
                                       />
                                     </a>
                                   </li>
+                                 </>}
+
+                                 
 
                                   <li className="nav-item" role="presentation">
                                     <a

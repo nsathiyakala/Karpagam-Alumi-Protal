@@ -90,22 +90,22 @@ const HeaderTopEight = ({ gapSpaceBetween, container, flexDirection }) => {
                         <div className='header-info d-none d-xl-block'>
                           <ul className='social-share-transparent'>
                             <li>
-                              <Link className='text-white' href='#'>
+                              <Link className='text-white' href='https://www.facebook.com/' target='blank'>
                                 <i className='fab fa-facebook-f'></i>
                               </Link>
                             </li>
                             <li>
-                              <Link className='text-white' href='#'>
+                              <Link className='text-white' href='https://x.com/i/flow/login' target='blank'>
                                 <i className='fab fa-twitter'></i>
                               </Link>
                             </li>
                             <li>
-                              <Link className='text-white' href='#'>
+                              <Link className='text-white' href='https://www.linkedin.com/login/in' target='blank'>
                                 <i className='fab fa-linkedin-in'></i>
                               </Link>
                             </li>
                             <li>
-                              <Link className='text-white' href='#'>
+                              <Link className='text-white' href='https://www.instagram.com/accounts/login/' target='blank'>
                                 <i className='fab fa-instagram'></i>
                               </Link>
                             </li>

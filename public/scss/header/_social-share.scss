@@ -45,7 +45,7 @@
                 margin-right: 0px;
             }
             &:hover {
-                color: var(--color-primary);
+                color: var(--color-primary) !important;
                 &::before {
                     opacity: 1;
                     transform: scale(1);

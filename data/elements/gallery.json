@@ -1,40 +1,32 @@
 {
   "gallery": [
     {
-      "img": "/images/gallery/11.webp"
+      "img": "/images/KITGallery/pic-1.jpg"
     },
     {
-      "img": "/images/gallery/12.webp"
+      "img": "/images/KITGallery/pic-2.jpg"
     },
     {
-      "img": "/images/gallery/13.webp"
+      "img": "/images/KITGallery/pic-3.jpg"
     },
     {
-      "img": "/images/gallery/14.webp"
+      "img": "/images/KITGallery/pic-4.jpg"
     },
     {
-      "img": "/images/gallery/15.webp"
+      "img":  "/images/KITGallery/pic-5.jpg"
     },
     {
-      "img": "/images/gallery/11.webp"
+      "img":  "/images/KITGallery/pic-6.jpg"
     },
     {
-      "img": "/images/gallery/12.webp"
+      "img":  "/images/KITGallery/pic-7.jpg"
     },
     {
-      "img": "/images/gallery/gallery-thumb-08.jpg"
+      "img":  "/images/KITGallery/pic-8.jpg"
     },
     {
-      "img": "/images/gallery/gallery-thumb-09.jpg"
-    },
-    {
-      "img": "/images/gallery/gallery-thumb-10.jpg"
-    },
-    {
-      "img": "/images/gallery/gallery-thumb-11.jpg"
-    },
-    {
-      "img": "/images/gallery/gallery-thumb-12.jpg"
+      "img":  "/images/KITGallery/pic-9.jpg"
     }
+    
   ]
 }
